@@ -1,0 +1,70 @@
+aid: restaurant-brands
+name: Restaurant Brands International
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/apis.yml
+type: Index
+position: Consuming
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Fortune 500
+  - Franchising
+  - Hospitality
+  - NYSE QSR
+  - Quick Service Restaurants
+  - Restaurants
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.19'
+kind: company
+x-type: company
+x-tier: 3
+x-tier-reason: no-apis
+description: >-
+  Restaurant Brands International (RBI, NYSE: QSR) is one of the world's
+  largest quick service restaurant companies, with nearly $45 billion in
+  annual system-wide sales and over 32,000 restaurants in more than 120
+  countries and territories. RBI operates four iconic brands — Tim Hortons,
+  Burger King, Popeyes Louisiana Kitchen, and Firehouse Subs — and in May
+  2024 closed its $1B acquisition of Carrols Restaurant Group, Burger King's
+  largest U.S. franchisee. RBI publishes no public developer program; its
+  consumer ordering, loyalty (Royal Perks, Tims Rewards, Popeyes Rewards,
+  Firehouse Rewards), and franchisee/POS surfaces run on a private GraphQL
+  backend operated by RBI Tech Group (rbictg.com) and integrate with
+  NCR Voyix BSP POS APIs via HMAC. The public-facing GitHub presence
+  (github.com/rbilabs) is limited to internal tooling forks (GraphQL schema
+  utilities, Apollo Server DynamoDB cache, AWS API Gateway Developer Portal,
+  Cypress autorecord, Jira PR link action) and an archived hackathon repo.
+apis: []
+common:
+  - type: Website
+    url: https://www.rbi.com
+  - type: About
+    url: https://www.rbi.com/English/about-us/default.aspx
+  - type: Investors
+    url: https://www.rbi.com/English/investors/default.aspx
+  - type: News
+    url: https://www.rbi.com/English/news/default.aspx
+  - type: Sustainability
+    url: https://www.rbi.com/English/sustainability/default.aspx
+  - type: Careers
+    url: https://careers.rbi.com
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/restaurant-brands-international
+  - type: GitHub
+    url: https://github.com/rbilabs
+  - type: SEC Filings
+    url: https://www.rbi.com/English/investors/sec-filings/default.aspx
+  - type: Burger King
+    url: https://www.bk.com
+  - type: Tim Hortons
+    url: https://www.timhortons.com
+  - type: Popeyes
+    url: https://www.popeyes.com
+  - type: Firehouse Subs
+    url: https://www.firehousesubs.com
+  - type: Carrols Acquisition
+    url: https://www.rbi.com/English/news/news-details/2024/Restaurant-Brands-International-Inc.-Completes-Acquisition-of-Carrols-Restaurant-Group/default.aspx
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
