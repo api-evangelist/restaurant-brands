@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-timezone-structure.json",
+  "name": "Timezone",
+  "description": "Timezone from the IANA\n[tz database](https://en.wikipedia.org/wiki/Tz_database)\n",
+  "type": "string",
+  "example": "America/New_York"
+}

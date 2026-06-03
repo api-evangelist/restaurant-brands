@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderError",
+  "description": "Standard order error format",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-order-error-schema.json",
+  "type": "object",
+  "properties": {
+    "status": {
+      "description": "HTTP status code",
+      "type": "number",
+      "example": 400
+    },
+    "code": {
+      "description": "Unique error code. Same as errors[0].code",
+      "type": "string",
+      "example": "ValidationError"
+    },
+    "message": {
+      "description": "Human readable error mesage. Same as errors[0].message",
+      "type": "string",
+      "example": "isAvailable must be a boolean value"
+    },
+    "errors": {
+      "description": "All errors",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Unique error code",
+            "type": "string",
+            "example": "ValidationError"
+          },
+          "message": {
+            "description": "Human readable error mesage",
+            "type": "string"
+          },
+          "details": {
+            "description": "Detailed error information",
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string",
+            "description": "Location the error occurred. Interpreation depends on `locationType`",
+            "example": "isAvailable"
+          },
+          "locationType": {
+            "type": "string",
+            "description": "How to interpret the location property",
+            "example": "requestBody"
+          },
+          "sendReport": {
+            "description": "URL to report this error",
+            "type": "string"
+          },
+          "extendedHelp": {
+            "description": "URL with additional information about the error type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      }
+    },
+    "order": {
+      "$ref": "#/components/schemas/Order"
+    }
+  },
+  "required": [
+    "code",
+    "message",
+    "errors"
+  ]
+}

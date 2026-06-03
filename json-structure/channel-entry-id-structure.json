@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-entry-id-structure.json",
+  "name": "EntryId",
+  "description": "Unique identifier for a menu entity",
+  "type": "string",
+  "example": "entry-id"
+}

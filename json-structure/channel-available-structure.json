@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-available-structure.json",
+  "name": "Available",
+  "description": "Information about store availability",
+  "type": "object",
+  "properties": {
+    "isEnabled": {
+      "description": "Detailed availability per service mode.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/ServiceMode"
+          },
+          "value": {
+            "type": "boolean",
+            "description": "Returns true if the store is Operating Available.\n\n\"Operating Available\" considers the current date and time to calculate the current availability for the \nservice mode.\n"
+          }
+        }
+      }
+    },
+    "isOpen": {
+      "description": "True if the store is available for ordering.",
+      "type": "boolean",
+      "example": true
+    }
+  },
+  "required": [
+    "isOpen"
+  ]
+}

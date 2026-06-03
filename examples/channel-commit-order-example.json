@@ -1,0 +1,13 @@
+{
+  "charges": {
+    "tax": {},
+    "mpfTax": {},
+    "subTotal": {},
+    "total": {},
+    "fees": {}
+  },
+  "mpfOrderId": "123456789",
+  "paymentMethod": "APPLE_PAY",
+  "fireOrderInSeconds": 600,
+  "readyInSeconds": 600
+}

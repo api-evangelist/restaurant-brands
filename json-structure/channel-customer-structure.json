@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-customer-structure.json",
+  "name": "Customer",
+  "description": "Customer personal details",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Internal user ID",
+      "example": "500123"
+    },
+    "externalReferenceId": {
+      "$ref": "#/components/schemas/ExternalReferenceId"
+    },
+    "name": {
+      "type": "string",
+      "description": "Customers's name. Format will depend on the context (full name, first name and initials, etc)\n",
+      "example": "Whopper"
+    },
+    "username": {
+      "type": "string",
+      "description": "Customer's username in the given context",
+      "example": "example"
+    },
+    "phone": {
+      "$ref": "#/components/schemas/Phone"
+    },
+    "email": {
+      "type": "string",
+      "description": "Customer's email",
+      "format": "email",
+      "example": "guest@example.com"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ]
+}

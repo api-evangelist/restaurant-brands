@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IdentifyResponse",
+  "description": "IdentifyResponse schema from Burger King's Partners API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-identify-response-schema.json",
+  "type": "object",
+  "properties": {
+    "cart": {
+      "$ref": "#/components/schemas/Cart"
+    },
+    "customer": {
+      "$ref": "#/components/schemas/Customer"
+    },
+    "loyalty": {
+      "$ref": "#/components/schemas/IdentifyLoyalty"
+    },
+    "storeId": {
+      "$ref": "#/components/schemas/StoreId"
+    },
+    "serviceMode": {
+      "$ref": "#/components/schemas/ServiceMode"
+    }
+  },
+  "required": [
+    "cart",
+    "storeId",
+    "serviceMode"
+  ]
+}

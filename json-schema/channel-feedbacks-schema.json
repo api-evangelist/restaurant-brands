@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Feedbacks",
+  "description": "Feedback on cart prices and availability for cart menu selections. Cart\nfeedback will only be provided for adjusted entries.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-feedbacks-schema.json",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/Feedback"
+  }
+}

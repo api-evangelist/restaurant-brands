@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loyalty",
+  "description": "User and transaction information regarding loyalty",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-loyalty-schema.json",
+  "type": "object",
+  "properties": {
+    "loyaltyId": {
+      "$ref": "#/components/schemas/LoyaltyId"
+    },
+    "transactionId": {
+      "$ref": "#/components/schemas/LoyaltyTransactionId"
+    }
+  },
+  "required": [
+    "loyaltyId",
+    "transactionId"
+  ]
+}

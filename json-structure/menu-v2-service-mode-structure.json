@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-service-mode-structure.json",
+  "name": "ServiceMode",
+  "description": "How a customer would like their order served.\n\nNote that not all service modes will be available at all restaurants.\n",
+  "type": "string",
+  "enum": [
+    "CURBSIDE",
+    "DELIVERY",
+    "DRIVE_THRU",
+    "EAT_IN",
+    "TABLE_SERVICE",
+    "TAKEOUT"
+  ],
+  "example": "TAKEOUT"
+}

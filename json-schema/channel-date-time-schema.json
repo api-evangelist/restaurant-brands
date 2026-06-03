@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DateTime",
+  "description": "DateTime schema from Burger King's Partners API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-date-time-schema.json",
+  "type": "string",
+  "format": "ISO 8601 Date Time",
+  "example": "1991-02-11T20:30:19Z"
+}

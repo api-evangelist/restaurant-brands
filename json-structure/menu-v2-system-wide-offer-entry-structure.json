@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-system-wide-offer-entry-structure.json",
+  "name": "SystemWideOfferEntry",
+  "description": "SystemWideOfferEntry schema from Burger King's Partners API v2",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LoyaltyEntry"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Option"
+          },
+          "description": "Optional list of options"
+        },
+        "type": {
+          "description": "Unique identifier for a reward entry",
+          "enum": [
+            "SYSTEM_WIDE_OFFER"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ]
+}

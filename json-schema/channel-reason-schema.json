@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reason",
+  "description": "Reason for the change in store status",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-reason-schema.json",
+  "type": "string",
+  "example": "store was deactivated due to high error rate"
+}

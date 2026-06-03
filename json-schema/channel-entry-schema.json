@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Entry",
+  "description": "Any entry available for selection on the store menu.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-entry-schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/EntryId"
+    },
+    "referenceId": {
+      "$ref": "#/components/schemas/EntryId"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "COMBO",
+        "ITEM",
+        "GROUP",
+        "MODIFIER"
+      ],
+      "example": "COMBO"
+    },
+    "groupType": {
+      "type": "string",
+      "enum": [
+        "ASPECT_OPTION",
+        "COMBO_SLOT",
+        "MENU",
+        "MODIFIER_GROUP",
+        "PICKER",
+        "PICKER_ASPECT",
+        "SECTION",
+        "SLOT_OPTION"
+      ],
+      "example": "ASPECT_OPTION"
+    },
+    "name": {
+      "$ref": "#/components/schemas/LocalizedText",
+      "example": "Whopper"
+    },
+    "description": {
+      "$ref": "#/components/schemas/LocalizedText",
+      "example": "A delicious burger"
+    },
+    "available": {
+      "description": "Whether or not the entry is available.\nIf this property is undefined, then the entry will be marked as available.\n",
+      "type": "boolean",
+      "example": true
+    },
+    "image": {
+      "$ref": "#/components/schemas/Image"
+    },
+    "price": {
+      "$ref": "#/components/schemas/PriceRange"
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "quantityConstraints": {
+          "$ref": "#/components/schemas/QuantityConstraints"
+        },
+        "defaultSelections": {
+          "type": "array",
+          "description": "Options which should be selected by default\n",
+          "items": {
+            "$ref": "#/components/schemas/EntryId"
+          }
+        },
+        "displayType": {
+          "description": "Recommendations for display of options\n\n* `LIST`: Display options in any \"list\" format, to make all options visible (\"Lettuce\", \"Tomato\")\n* `STEPPER`: Display options in a \"stepper\" format, to mask options behind an increment/decrement interface (\"No Lettuce\", \"Lettuce\", \"Extra Lettuce\")\n* `BOOLEAN`: Display options in a \"boolean\" format, allowing guests to toggle between options (\"No Bacon\", \"Bacon\")\n* `SINGLE_ENTRY`: One option that maps to options to select from\n* `SELECT`: Group with Single Selection Option\n* `MULTI-SELECT`: Group with Multiple Selection Options\n* `COLLAPSED`: Group that should be collapsed\n",
+          "type": "string",
+          "enum": [
+            "LIST",
+            "STEPPER",
+            "BOOLEAN",
+            "SINGLE_ENTRY",
+            "SELECT",
+            "MULTI_SELECT",
+            "COLLAPSED"
+          ]
+        },
+        "entries": {
+          "description": "Collection of references to the item's options. Options may\nthemselves be items or a grouping of items collected in an\n\"Options Group\". The item's options define a parent-child\nrelationship.\n",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/EntryRef"
+          }
+        }
+      },
+      "example": {}
+    },
+    "dayParts": {
+      "description": "Collection of references to the item's day parts. The item should only\nbe available during the associated day parts.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DayPartId"
+      }
+    },
+    "nutrition": {
+      "$ref": "#/components/schemas/Nutrition"
+    },
+    "translations": {
+      "description": "Translation details per language.\n",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "description": "The entry 2 character language code.\n",
+            "type": "string",
+            "example": "fr"
+          },
+          "name": {
+            "description": "The translated name.\n",
+            "type": "string",
+            "example": "Le Whopper."
+          },
+          "description": {
+            "description": "The translated decription.\n",
+            "type": "string",
+            "example": "Notre sandwich WHOPPER\u00ae est fait d'un quart de livre de savoureux b\u0153uf grill\u00e9 sur le feu, garni de tomates juteuses, de laitue fra\u00eeche, de mayonnaise onctueuse, de cornichons croquants et d'oignons blancs \u00e9minc\u00e9s.\nLe tout est servi sur un pain aux graines de s\u00e9same grill\u00e9 \u00e0 point.\n"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}

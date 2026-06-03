@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StoreStatus",
+  "description": "The current marketplace status of the store",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-store-status-schema.json",
+  "type": "string",
+  "enum": [
+    "ACTIVE",
+    "INACTIVE"
+  ]
+}

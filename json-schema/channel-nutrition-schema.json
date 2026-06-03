@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nutrition",
+  "description": "Nutrition Details",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-nutrition-schema.json",
+  "type": "object",
+  "properties": {
+    "calories": {
+      "$ref": "#/components/schemas/Calories"
+    },
+    "nutrients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Nutrient"
+      }
+    },
+    "allergens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Allergen"
+      }
+    }
+  }
+}

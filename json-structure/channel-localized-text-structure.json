@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-localized-text-structure.json",
+  "name": "LocalizedText",
+  "description": "Text that has been translated to the correct locale for the current context",
+  "type": "string"
+}

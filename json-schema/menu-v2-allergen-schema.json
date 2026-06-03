@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Allergen",
+  "description": "Allergen schema from Burger King's Partners API v2",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-allergen-schema.json",
+  "type": "object",
+  "properties": {
+    "celery": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for celery | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "eggs": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for eggs | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "fish": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for fish | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "gluten": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for gluten | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "lupin": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for lupin | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "milk": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for milk | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "mustard": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for mustard | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "peanuts": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for peanuts | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "sesame": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for sesame | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "shellfish": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for shellfish | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "soy": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for soy | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "sulphurDioxide": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for sulphur dioxide | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "treeNuts": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for tree nuts | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    },
+    "wheat": {
+      "type": "string",
+      "enum": [
+        "_0",
+        "_1",
+        "_2",
+        "_3"
+      ],
+      "description": "Optional allergen info for wheat | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From",
+      "example": "_0"
+    }
+  }
+}

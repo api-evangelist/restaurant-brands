@@ -1,0 +1,13 @@
+{
+  "administrativeArea": "FL",
+  "coordinates": {
+    "latitude": 25.782379,
+    "longitude": -80.289207
+  },
+  "formattedAddress": "5701 BLUE LAGOON DR, MIAMI, FL 33126",
+  "locality": "MIAMI",
+  "phoneNumber": "555-555-5555",
+  "postalCode": "33126",
+  "regionCode": "US",
+  "route": "5701 BLUE LAGOON DR"
+}

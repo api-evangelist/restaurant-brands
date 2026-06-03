@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DayPartSchedule",
+  "description": "Contains the detailed schedule for a specific daypart",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-day-part-schedule-schema.json",
+  "type": "object",
+  "properties": {
+    "friClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "friOpen": {
+      "type": "string",
+      "example": "00:00"
+    },
+    "monClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "monOpen": {
+      "type": "string",
+      "example": "00:00"
+    },
+    "satClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "satOpen": {
+      "type": "string",
+      "example": "00:00"
+    },
+    "sunClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "sunOpen": {
+      "type": "string",
+      "example": "00:00"
+    },
+    "thrClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "thrOpen": {
+      "type": "string",
+      "example": "00:00"
+    },
+    "tueClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "tueOpen": {
+      "type": "string",
+      "example": "00:00"
+    },
+    "wedClose": {
+      "type": "string",
+      "example": 1439
+    },
+    "wedOpen": {
+      "type": "string",
+      "example": "00:00"
+    }
+  },
+  "required": [
+    "friClose",
+    "friOpen",
+    "monClose",
+    "monOpen",
+    "satClose",
+    "satOpen",
+    "sunClose",
+    "sunOpen",
+    "thrClose",
+    "thrOpen",
+    "tueClose",
+    "tueOpen",
+    "wedClose",
+    "wedOpen"
+  ]
+}

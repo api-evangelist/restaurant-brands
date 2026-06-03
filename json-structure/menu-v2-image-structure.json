@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-image-structure.json",
+  "name": "Image",
+  "description": "Image resource with optional localized alt text",
+  "type": "object",
+  "properties": {
+    "altText": {
+      "$ref": "#/components/schemas/LocalizedString"
+    },
+    "resource": {
+      "type": "string",
+      "description": "URI or path to the image resource  Image resource with optional localized alt text.\nThis is only the resource part of the url, which needs to be concatenated to the baseUrl listed in the Menu metadata object\n",
+      "example": "example"
+    }
+  }
+}

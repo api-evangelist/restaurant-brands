@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DayPart",
+  "description": "DayPart schema from Burger King's Partners API v2",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-day-part-schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "Breakfast",
+      "description": "Unique identifier for the day part"
+    },
+    "schedule": {
+      "$ref": "#/components/schemas/DayPartSchedule",
+      "description": "Schedule details for the day part"
+    }
+  },
+  "required": [
+    "id",
+    "schedule"
+  ]
+}

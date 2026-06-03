@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DayPart",
+  "description": "Day parts define a window of time during which any associated menu items should be available for orders.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-day-part-schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/DayPartId"
+    },
+    "daysOfWeek": {
+      "description": "Days of week for which daypart is applicable\n",
+      "type": "array",
+      "example": [
+        "saturday",
+        "sunday"
+      ],
+      "items": {
+        "type": "string",
+        "enum": [
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday",
+          "sunday"
+        ]
+      }
+    },
+    "startTime": {
+      "description": "Restaurant local start time formatted as ISO 8601 time.\n",
+      "type": "string",
+      "format": "hh:mm:ss",
+      "example": "07:00:00"
+    },
+    "endTime": {
+      "description": "Restaurant local end time formatted as ISO 8601 time.\n",
+      "type": "string",
+      "format": "hh:mm:ss",
+      "example": 79200
+    }
+  }
+}

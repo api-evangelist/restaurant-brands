@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GeoPoint",
+  "description": "The coordinates (latitude and longitude) for a given address.",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-geo-point-schema.json",
+  "type": "object",
+  "properties": {
+    "latitude": {
+      "description": "Latitude",
+      "type": "number",
+      "example": 25.782379
+    },
+    "longitude": {
+      "description": "Latitude",
+      "type": "number",
+      "example": -80.289207
+    }
+  },
+  "required": [
+    "latitude",
+    "longitude"
+  ]
+}

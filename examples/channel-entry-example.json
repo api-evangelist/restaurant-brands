@@ -1,0 +1,38 @@
+{
+  "id": "entry-id",
+  "referenceId": "entry-id",
+  "type": "COMBO",
+  "groupType": "ASPECT_OPTION",
+  "name": "Whopper",
+  "description": "Whopper",
+  "available": true,
+  "image": {
+    "url": "https://bk-partners.rbictg.com",
+    "altText": {}
+  },
+  "price": {
+    "default": 1.0,
+    "max": 1.0,
+    "min": 1.0
+  },
+  "options": {},
+  "dayParts": [
+    "breakfast"
+  ],
+  "nutrition": {
+    "calories": {},
+    "nutrients": [
+      {}
+    ],
+    "allergens": [
+      {}
+    ]
+  },
+  "translations": [
+    {
+      "lang": "fr",
+      "name": "Le Whopper.",
+      "description": "Notre sandwich WHOPPER\u00ae est fait d'un quart de livre de savoureux b\u0153uf grill\u00e9 sur le feu, garni de tomates juteuses, de laitue fra\u00eeche, de mayonnaise onctueuse, de cornichons croquants et d'oignons blancs \u00e9minc\u00e9s.\nLe tout est servi sur un pain aux graines de s\u00e9same grill\u00e9 \u00e0 point.\n"
+    }
+  ]
+}

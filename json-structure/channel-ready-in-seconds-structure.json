@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-ready-in-seconds-structure.json",
+  "name": "ReadyInSeconds",
+  "description": "Time in seconds when the order will be ready.\n\nThis value incorporates the order `preparationTimeInSeconds` plus the \nvalue of `fireOrderInSeconds`. When `fireOrderInSeconds=0`, then `readyInSeconds`\nwill match the value of `preparationTimeInSeconds`, and when \n`fireOrderInSeconds=null`, then `readyInSeconds=null` as well.\n",
+  "type": [
+    "integer",
+    "null"
+  ],
+  "minimum": 0,
+  "example": 600
+}

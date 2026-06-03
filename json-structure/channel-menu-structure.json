@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-menu-structure.json",
+  "name": "Menu",
+  "description": "Store menu\n",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "description": "Metadata about the menu document",
+      "properties": {
+        "brand": {
+          "$ref": "#/components/schemas/Brand"
+        },
+        "currency": {
+          "$ref": "#/components/schemas/Currency"
+        },
+        "locale": {
+          "$ref": "#/components/schemas/Locale"
+        },
+        "serviceMode": {
+          "type": "string",
+          "enum": [
+            "delivery",
+            "pickup"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "example": "xyz1"
+        }
+      },
+      "example": "example"
+    },
+    "dayParts": {
+      "description": "Categories of menu availability by day and time\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DayPart"
+      }
+    },
+    "rootMenuEntryId": {
+      "$ref": "#/components/schemas/EntryId",
+      "description": "Reference to root menu entry"
+    },
+    "entries": {
+      "description": "All valid menu entries\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Entry"
+      }
+    },
+    "systemWideOfferEntries": {
+      "description": "All System-Wide Offer Entries\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SystemWideOfferEntry"
+      }
+    },
+    "rewardEntries": {
+      "description": "All Reward Entries\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/RewardEntry"
+      }
+    },
+    "configOfferEntries": {
+      "description": "All Config Offer Entries\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ConfigOfferEntry"
+      }
+    }
+  },
+  "required": [
+    "meta",
+    "dayParts",
+    "rootMenuEntryId",
+    "entries"
+  ]
+}

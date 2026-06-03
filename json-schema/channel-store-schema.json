@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Store",
+  "description": "Information about a store",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-store-schema.json",
+  "type": "object",
+  "properties": {
+    "availability": {
+      "$ref": "#/components/schemas/Available",
+      "description": "True if the store is available for ordering."
+    },
+    "franchiseGroupName": {
+      "description": "Store franchise group name.",
+      "type": "string",
+      "example": "Acme Group"
+    },
+    "location": {
+      "$ref": "#/components/schemas/Location"
+    },
+    "name": {
+      "description": "Store name",
+      "type": "string",
+      "example": "Example test lab"
+    },
+    "posVendor": {
+      "$ref": "#/components/schemas/PosVendor"
+    },
+    "serviceHour": {
+      "description": "Store operating hours by serviceMode",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ServiceHour"
+      }
+    },
+    "storeId": {
+      "$ref": "#/components/schemas/StoreId"
+    },
+    "timezone": {
+      "$ref": "#/components/schemas/Timezone"
+    }
+  },
+  "required": [
+    "availability",
+    "name",
+    "storeId",
+    "timezone",
+    "posVendor",
+    "location",
+    "serviceHour"
+  ]
+}

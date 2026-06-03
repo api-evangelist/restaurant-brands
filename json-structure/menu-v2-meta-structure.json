@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-meta-structure.json",
+  "name": "Meta",
+  "description": "Metadata about the menu document",
+  "type": "object",
+  "properties": {
+    "currency": {
+      "type": "string",
+      "description": "Currency code in ISO-4217 alpha format",
+      "pattern": "^[A-Z]{3}$",
+      "example": "USD"
+    },
+    "imageBaseUrl": {
+      "type": "string",
+      "description": "Base URL for all images served by this menu",
+      "example": "https://bk-partners.rbictg.com"
+    }
+  },
+  "required": [
+    "imageBaseUrl"
+  ]
+}

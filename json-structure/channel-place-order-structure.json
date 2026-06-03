@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-place-order-structure.json",
+  "name": "PlaceOrder",
+  "description": "PlaceOrder schema from Burger King's Partners API",
+  "type": "object",
+  "properties": {
+    "externalReferenceId": {
+      "$ref": "#/components/schemas/ExternalReferenceId"
+    },
+    "storeId": {
+      "$ref": "#/components/schemas/StoreId"
+    },
+    "serviceMode": {
+      "$ref": "#/components/schemas/ServiceMode"
+    },
+    "cart": {
+      "$ref": "#/components/schemas/Cart"
+    },
+    "customer": {
+      "$ref": "#/components/schemas/Customer"
+    },
+    "charges": {
+      "$ref": "#/components/schemas/Charges"
+    },
+    "deliveryAddress": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "paymentMethod": {
+      "$ref": "#/components/schemas/PaymentMethod"
+    },
+    "fireOrderInSeconds": {
+      "$ref": "#/components/schemas/FireOrderInSeconds"
+    },
+    "readyInSeconds": {
+      "$ref": "#/components/schemas/ReadyInSeconds"
+    },
+    "mpfOrderId": {
+      "$ref": "#/components/schemas/MpfOrderId"
+    }
+  },
+  "required": [
+    "storeId",
+    "serviceMode",
+    "cart",
+    "customer",
+    "paymentMethod",
+    "fireOrderInSeconds"
+  ]
+}

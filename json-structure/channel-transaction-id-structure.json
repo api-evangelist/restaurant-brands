@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-transaction-id-structure.json",
+  "name": "TransactionId",
+  "description": "The Partner specific order lookup id.",
+  "type": "string",
+  "example": "ORD-000002"
+}

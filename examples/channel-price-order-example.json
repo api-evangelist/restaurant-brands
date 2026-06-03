@@ -1,0 +1,43 @@
+{
+  "externalReferenceId": "500123",
+  "storeId": "42",
+  "serviceMode": "TAKEOUT",
+  "cart": {
+    "menuSelections": [
+      {}
+    ]
+  },
+  "customer": {
+    "id": "500123",
+    "externalReferenceId": {},
+    "name": "Whopper",
+    "username": "example",
+    "phone": {},
+    "email": "guest@example.com"
+  },
+  "charges": {
+    "tax": {},
+    "mpfTax": {},
+    "subTotal": {},
+    "total": {},
+    "fees": {}
+  },
+  "mpfOrderId": "123456789",
+  "deliveryAddress": {
+    "administrativeArea": "FL",
+    "coordinates": {},
+    "formattedAddress": "5707 Blue Lagoon Drive",
+    "instructions": "example",
+    "locality": "Miami-Dade County",
+    "postalCode": "33126",
+    "regionCode": "US",
+    "route": "Blue Lagoon Drive",
+    "streetNumber": "5707",
+    "sublocality": "example",
+    "subpremise": "Suite 101"
+  },
+  "loyalty": {
+    "loyaltyId": {},
+    "transactionId": {}
+  }
+}

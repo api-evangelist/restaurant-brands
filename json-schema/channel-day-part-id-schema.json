@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DayPartId",
+  "description": "Unique identifier for a day part",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-day-part-id-schema.json",
+  "type": "string",
+  "example": "breakfast"
+}

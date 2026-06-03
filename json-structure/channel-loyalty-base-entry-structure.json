@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-loyalty-base-entry-structure.json",
+  "name": "LoyaltyBaseEntry",
+  "description": "LoyaltyBaseEntry schema from Burger King's Partners API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/EntryId",
+      "example": "foo-discount-id"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "DISCOUNT"
+      ],
+      "example": "DISCOUNT"
+    },
+    "name": {
+      "$ref": "#/components/schemas/LocalizedText",
+      "example": "40% OFF"
+    },
+    "description": {
+      "$ref": "#/components/schemas/LocalizedText",
+      "example": "40% OFF of your cart"
+    },
+    "availability": {
+      "description": "Whether or not the entry is available.\nIf this property is undefined, then the entry will be marked as available.\n",
+      "type": "boolean",
+      "example": true
+    },
+    "discountType": {
+      "type": "string",
+      "enum": [
+        "AMOUNT",
+        "PERCENTAGE"
+      ],
+      "example": "PERCENTAGE",
+      "description": "Provides if the discount should be calculated as a percentage or an amount.\n\n*Note: this is only available for `\"DISCOUNT\"` type.*\n\n| Discount Type | Calculation |\n|---|---|\n| `\"AMOUNT\"` | `Price - discountValue` |\n| `\"PERCENTAGE\"` | `Price - (discountValue% of Price)` |\n"
+    },
+    "discountValue": {
+      "type": "double",
+      "example": 40,
+      "description": "Amount that should be discounted.\n\n*Note: this is only available for `\"DISCOUNT\"` type.*\n\n| Discount Type | Discount Value unit |\n|---|---|\n| `\"AMOUNT\"` | Dollar amount |\n| `\"PERCENTAGE\"` | Percentage discount |\n"
+    },
+    "loyaltyPoints": {
+      "type": "double",
+      "example": 100,
+      "description": "Amount of Loyalty Points required to redeem this offer\n"
+    },
+    "price": {
+      "$ref": "#/components/schemas/PriceRange"
+    },
+    "quantityConstraints": {
+      "$ref": "#/components/schemas/QuantityConstraints"
+    },
+    "options": {
+      "type": "object",
+      "description": "Collection of typed references to other entities in the menu.\n",
+      "properties": {
+        "entries": {
+          "description": "Depending of the type, the entity referenced will be located\nin different places of the menu:\n\n| Type | Entity Location |\n|---|---|\n| `\"ENTRY\"` | `entries` |\n| `\"SYSTEM_WIDE_OFFER\"` | `systemWideOfferEntries` |\n| `\"REWARD\"` | `rewardEntries` |\n| `\"CONFIG_OFFER\"` | `configOfferEntries` |\n",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "entryId": {
+                "$ref": "#/components/schemas/EntryId"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ENTRY",
+                  "SYSTEM_WIDE_OFFER",
+                  "REWARD",
+                  "CONFIG_OFFER"
+                ]
+              }
+            },
+            "required": [
+              "entryId",
+              "type"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "example": {}
+    }
+  }
+}

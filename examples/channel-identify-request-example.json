@@ -1,0 +1,11 @@
+{
+  "identifier": "1234",
+  "identifierType": "OTP",
+  "storeId": "42",
+  "serviceMode": "TAKEOUT",
+  "details": {
+    "operator": {},
+    "terminal": {},
+    "transactionId": {}
+  }
+}

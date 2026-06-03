@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Discounts",
+  "description": "Any discounts which ought to be applied to the order",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-discounts-schema.json",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/Discount"
+  }
+}

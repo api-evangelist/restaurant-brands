@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-balance-structure.json",
+  "name": "Balance",
+  "description": "The amount of a given currency the user has",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "double",
+      "example": 599
+    },
+    "currency": {
+      "type": "string",
+      "example": "USD"
+    }
+  }
+}

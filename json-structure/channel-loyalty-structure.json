@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-loyalty-structure.json",
+  "name": "Loyalty",
+  "description": "User and transaction information regarding loyalty",
+  "type": "object",
+  "properties": {
+    "loyaltyId": {
+      "$ref": "#/components/schemas/LoyaltyId"
+    },
+    "transactionId": {
+      "$ref": "#/components/schemas/LoyaltyTransactionId"
+    }
+  },
+  "required": [
+    "loyaltyId",
+    "transactionId"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "type": "DISCOUNT",
+  "total": {
+    "currency": {},
+    "amount": 100
+  }
+}

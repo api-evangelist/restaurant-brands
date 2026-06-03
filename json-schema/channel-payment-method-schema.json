@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentMethod",
+  "description": "How the customer has paid or will pay",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-payment-method-schema.json",
+  "type": "string",
+  "enum": [
+    "APPLE_PAY",
+    "CASH",
+    "CREDIT_CARD",
+    "GIFTCARD",
+    "GOOGLE_PAY",
+    "PAYPAL",
+    "UNPAID",
+    "VENMO"
+  ]
+}

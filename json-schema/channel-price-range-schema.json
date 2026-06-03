@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PriceRange",
+  "description": "Default, minimum, and maximum prices.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-price-range-schema.json",
+  "type": "object",
+  "properties": {
+    "default": {
+      "title": "Default",
+      "description": "Default price in cents",
+      "type": "number",
+      "format": "integer",
+      "example": 1.0
+    },
+    "max": {
+      "title": "Max",
+      "description": "Max price in cents",
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 1.0
+    },
+    "min": {
+      "title": "Min",
+      "description": "Min price in cents",
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 1.0
+    }
+  }
+}

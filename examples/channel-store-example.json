@@ -1,0 +1,30 @@
+{
+  "availability": {
+    "isEnabled": [
+      {}
+    ],
+    "isOpen": true
+  },
+  "franchiseGroupName": "Acme Group",
+  "location": {
+    "administrativeArea": "FL",
+    "coordinates": {},
+    "formattedAddress": "5701 BLUE LAGOON DR, MIAMI, FL 33126",
+    "locality": "MIAMI",
+    "phoneNumber": "555-555-5555",
+    "postalCode": "33126",
+    "regionCode": "US",
+    "route": "5701 BLUE LAGOON DR"
+  },
+  "name": "Example test lab",
+  "posVendor": "BRINK",
+  "serviceHour": [
+    {
+      "serviceMode": {},
+      "timeSlots": {},
+      "weekdayHours": {}
+    }
+  ],
+  "storeId": "42",
+  "timezone": "America/New_York"
+}

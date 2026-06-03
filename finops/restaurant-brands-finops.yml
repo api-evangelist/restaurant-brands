@@ -1,0 +1,98 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Restaurant Brands International
+providerId: restaurant-brands
+created: '2026-06-03'
+modified: '2026-06-03'
+reconciled: false
+tags:
+  - FinOps
+  - FOCUS
+  - Partner Integration
+  - Quick Service Restaurants
+description: >-
+  FOCUS-aligned FinOps shape for the Restaurant Brands International Partners
+  platform: a partner-onboarding integration surface with no public
+  metered API price, where consumption is the volume of orders, menu/store
+  syncs, loyalty identifications, and payment captures flowing through the
+  bilateral partner relationship rather than a published per-call invoice.
+sources:
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/overview
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/pages/5287837811/Payments+-+API+Reference
+  - https://bk-partners.rbictg.com/docs/channel/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Restaurant Brands International, Inc.
+serviceCategory: Quick Service Restaurant Platform
+billingModel:
+  pricingCategory: Partner Agreement (Negotiated)
+  billingFrequency: Per-Agreement
+  billingCurrency: USD (settlement varies by market)
+  chargeCategories:
+    - Usage
+    - Purchase
+focusColumns:
+  ServiceName: RBI Partners API
+  ServiceCategory: Quick Service Restaurant Platform
+  ProviderName: Restaurant Brands International
+  PublisherName: Restaurant Brands International, Inc.
+  InvoiceIssuerName: Restaurant Brands International, Inc.
+  BillingCurrency: USD
+meters:
+  - name: orders_processed
+    unit: transaction
+    aggregation: sum
+    dimensions:
+      - brand
+      - region
+      - service_mode
+  - name: menu_syncs
+    unit: request
+    aggregation: count
+    dimensions:
+      - brand
+      - store_id
+  - name: store_status_events
+    unit: request
+    aggregation: count
+    dimensions:
+      - brand
+      - store_id
+  - name: loyalty_identifications
+    unit: request
+    aggregation: count
+    dimensions:
+      - brand
+      - region
+  - name: payment_captures
+    unit: transaction
+    aggregation: sum
+    dimensions:
+      - brand
+      - region
+principles:
+  - name: Visibility
+    description: >-
+      Consumption is visible through the order, payment, and loyalty events
+      exchanged over the Partners API and the order/store webhooks RBI emits
+      back to the partner; there is no public usage/billing API.
+  - name: Allocation
+    description: >-
+      Attribute volume by the brand and region encoded in the issued
+      credential and the x-region header, allowing per-brand
+      (Burger King, Popeyes, Firehouse Subs) and per-market breakdowns.
+  - name: Optimization
+    description: >-
+      Reduce wasted calls by honoring menu and store webhooks instead of
+      polling, and by validating baskets (Transaction Validate) before
+      committing or firing orders.
+  - name: Accountability
+    description: >-
+      Commercial accountability sits with the RBI partner agreement owner;
+      reconcile event volumes against the negotiated terms rather than a
+      public rate card.

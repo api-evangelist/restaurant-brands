@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-nutrition-structure.json",
+  "name": "Nutrition",
+  "description": "Nutrition schema from Burger King's Partners API v2",
+  "type": "object",
+  "properties": {
+    "allergens": {
+      "description": "List of allergens",
+      "$ref": "#/components/schemas/Allergen"
+    },
+    "calories": {
+      "description": "Calories details",
+      "$ref": "#/components/schemas/Calories"
+    },
+    "nutrients": {
+      "description": "List of nutrients",
+      "$ref": "#/components/schemas/Nutrient"
+    }
+  }
+}

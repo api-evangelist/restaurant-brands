@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-menu-selection-priced-structure.json",
+  "name": "MenuSelectionPriced",
+  "description": "Priced menu selection in the cart",
+  "type": "object",
+  "required": [
+    "id",
+    "price",
+    "quantity"
+  ],
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/MenuSelection"
+    }
+  ]
+}

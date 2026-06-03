@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-phone-structure.json",
+  "name": "Phone",
+  "description": "Phone number. Should always begin with the international country code (e.g., \"+1\")\n",
+  "type": "string",
+  "example": "+12223334444"
+}

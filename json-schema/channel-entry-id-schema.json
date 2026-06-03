@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntryId",
+  "description": "Unique identifier for a menu entity",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-entry-id-schema.json",
+  "type": "string",
+  "example": "entry-id"
+}

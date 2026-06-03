@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fees",
+  "description": "All applicable fees for an order",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-fees-schema.json",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/Fee"
+  }
+}

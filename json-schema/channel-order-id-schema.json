@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderId",
+  "description": "Unique identifier for an order",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-order-id-schema.json",
+  "type": "string",
+  "example": "example-unique-id"
+}

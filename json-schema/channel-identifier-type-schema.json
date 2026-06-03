@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IdentifierType",
+  "description": "Determines the type of identifier being sent",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-identifier-type-schema.json",
+  "type": "string",
+  "enum": [
+    "OTP",
+    "OFFER_CODE"
+  ],
+  "example": "OTP"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SystemWideOfferEntry",
+  "description": "These represent System-wide Offers available for this menu.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-system-wide-offer-entry-schema.json",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LoyaltyBaseEntry"
+    },
+    {
+      "properties": {
+        "id": {
+          "example": "foo-offer-entity-id"
+        },
+        "type": {
+          "enum": [
+            "SYSTEM_WIDE_OFFER"
+          ],
+          "example": "SYSTEM_WIDE_OFFER"
+        },
+        "name": {
+          "example": "$5 Double Whopper and Small Fries"
+        },
+        "description": {
+          "example": "1 Double Whopper and 1 Small Fries"
+        }
+      }
+    }
+  ]
+}

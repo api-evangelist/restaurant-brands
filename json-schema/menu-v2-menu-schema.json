@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Menu",
+  "description": "BK Menu (v2)",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-menu-schema.json",
+  "type": "object",
+  "properties": {
+    "configOfferEntries": {
+      "description": "Config offer entries",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ConfigOfferEntry"
+      }
+    },
+    "dayParts": {
+      "description": "Categories of menu availability by day and time",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DayPart"
+      }
+    },
+    "entries": {
+      "description": "All valid menu entries",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MenuEntry"
+      }
+    },
+    "meta": {
+      "description": "Metadata about the menu document",
+      "$ref": "#/components/schemas/Meta"
+    },
+    "rewardEntries": {
+      "description": "Reward entries",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/RewardEntry"
+      }
+    },
+    "rootMenuEntryId": {
+      "type": "string",
+      "description": "Reference to root menu entry",
+      "example": "500123"
+    },
+    "systemWideOfferEntries": {
+      "description": "Systemwide offer entries",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SystemWideOfferEntry"
+      }
+    },
+    "paperCouponEntries": {
+      "description": "Paper coupon entries",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PaperCouponEntry"
+      }
+    }
+  },
+  "required": [
+    "configOfferEntries",
+    "dayParts",
+    "entries",
+    "meta",
+    "rewardEntries",
+    "rootMenuEntryId",
+    "systemWideOfferEntries",
+    "paperCouponEntries"
+  ]
+}

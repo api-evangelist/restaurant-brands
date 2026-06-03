@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-fire-order-in-seconds-structure.json",
+  "name": "FireOrderInSeconds",
+  "description": "Lead time in seconds before an injected order should be fired to the\nkitchen for preparation.\n- `fireOrderInSeconds=0` fire the order immediately to the kitchen.\n- `fireOrderInSeconds=null` hold the order in the POS without firing,\n  requiring an explicit [Fire Order](#operation/fireOrder) call.\n",
+  "type": [
+    "integer",
+    "null"
+  ],
+  "minimum": 0,
+  "maximum": 100000,
+  "example": 600
+}

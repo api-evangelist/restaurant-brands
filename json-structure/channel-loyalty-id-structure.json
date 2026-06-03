@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-loyalty-id-structure.json",
+  "name": "LoyaltyId",
+  "description": "The loyalty user id",
+  "type": "string",
+  "example": "a73ea594-202c-52b4-00a0-1f6b518ef54d"
+}

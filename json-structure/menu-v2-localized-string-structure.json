@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-localized-string-structure.json",
+  "name": "LocalizedString",
+  "description": "Translated text for different locales",
+  "type": "object",
+  "properties": {
+    "en": {
+      "type": "string",
+      "description": "English translation",
+      "example": "example"
+    },
+    "fr": {
+      "type": "string",
+      "description": "French translation, if any",
+      "example": "example"
+    }
+  }
+}

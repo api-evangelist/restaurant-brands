@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-reward-entry-structure.json",
+  "name": "RewardEntry",
+  "description": "These represent Reward Offers available for this menu.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LoyaltyBaseEntry"
+    },
+    {
+      "properties": {
+        "id": {
+          "example": "foo-reward-entity-id"
+        },
+        "type": {
+          "enum": [
+            "REWARD"
+          ],
+          "example": "REWARD"
+        },
+        "name": {
+          "example": "4pc Nuggets"
+        },
+        "description": {
+          "example": "4pc Nuggets"
+        },
+        "loyaltyPoints": {
+          "example": "250"
+        }
+      }
+    }
+  ]
+}

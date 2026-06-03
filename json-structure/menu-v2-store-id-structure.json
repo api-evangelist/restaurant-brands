@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-store-id-structure.json",
+  "name": "StoreId",
+  "description": "Unique Store ID",
+  "type": "string",
+  "pattern": "^\\d+$",
+  "example": "42"
+}

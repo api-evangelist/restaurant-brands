@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nutrient",
+  "description": "Details for an individual nutrient",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-nutrient-schema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "enum": [
+        "SODIUM"
+      ],
+      "example": "SODIUM"
+    },
+    "value": {
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 1.0
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "G",
+        "KJ"
+      ],
+      "example": "G"
+    }
+  }
+}

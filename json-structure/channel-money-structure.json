@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-money-structure.json",
+  "name": "Money",
+  "description": "Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 \"cents\" or 1 USD).\n",
+  "type": "object",
+  "properties": {
+    "currency": {
+      "$ref": "#/components/schemas/Currency"
+    },
+    "amount": {
+      "title": "Amount",
+      "description": "Amount in the specified currency",
+      "type": "double",
+      "example": 100
+    }
+  },
+  "required": [
+    "currency",
+    "amount"
+  ]
+}

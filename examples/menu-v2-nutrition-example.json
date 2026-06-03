@@ -1,0 +1,37 @@
+{
+  "allergens": {
+    "celery": "_0",
+    "eggs": "_0",
+    "fish": "_0",
+    "gluten": "_0",
+    "lupin": "_0",
+    "milk": "_0",
+    "mustard": "_0",
+    "peanuts": "_0",
+    "sesame": "_0",
+    "shellfish": "_0",
+    "soy": "_0",
+    "sulphurDioxide": "_0",
+    "treeNuts": "_0",
+    "wheat": "_0"
+  },
+  "calories": {
+    "def": 1.0,
+    "max": 1.0,
+    "min": 1.0
+  },
+  "nutrients": {
+    "carbohydrates": 1.0,
+    "cholesterol": 1.0,
+    "energyKJ": 1.0,
+    "fat": "2026-06-03T12:00:00Z",
+    "fiber": 1.0,
+    "proteins": 1.0,
+    "salt": 1.0,
+    "saturatedFat": "2026-06-03T12:00:00Z",
+    "sodium": 1.0,
+    "sugar": 1.0,
+    "transFat": "2026-06-03T12:00:00Z",
+    "weight": 1.0
+  }
+}

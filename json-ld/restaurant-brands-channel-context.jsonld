@@ -1,0 +1,562 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "rbi": "https://rbictg.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "IdentifyRequestDetails": "rbi:IdentifyRequestDetails",
+    "IdentifyRequest": "rbi:IdentifyRequest",
+    "Money": "rbi:Money",
+    "MenuSelection": "rbi:MenuSelection",
+    "Cart": "rbi:Cart",
+    "Customer": "rbi:Customer",
+    "Balance": "rbi:Balance",
+    "IdentifyLoyalty": "rbi:IdentifyLoyalty",
+    "IdentifyResponse": "rbi:IdentifyResponse",
+    "DayPart": "rbi:DayPart",
+    "Image": "rbi:Image",
+    "PriceRange": "rbi:PriceRange",
+    "QuantityConstraints": "rbi:QuantityConstraints",
+    "EntryRef": "rbi:EntryRef",
+    "Calories": "rbi:Calories",
+    "Nutrient": "rbi:Nutrient",
+    "Allergen": "rbi:Allergen",
+    "Nutrition": "rbi:Nutrition",
+    "Entry": "rbi:Entry",
+    "LoyaltyBaseEntry": "rbi:LoyaltyBaseEntry",
+    "SystemWideOfferEntry": "rbi:SystemWideOfferEntry",
+    "RewardEntry": "rbi:RewardEntry",
+    "ConfigOfferEntry": "rbi:ConfigOfferEntry",
+    "Menu": "rbi:Menu",
+    "MenuSelectionPriced": "rbi:MenuSelectionPriced",
+    "Feedback": "rbi:Feedback",
+    "CartPriced": "rbi:CartPriced",
+    "MFTaxes": "rbi:MFTaxes",
+    "Fee": "rbi:Fee",
+    "Charges": "rbi:Charges",
+    "Discount": "rbi:Discount",
+    "Payment": "rbi:Payment",
+    "GeoPoint": "rbi:GeoPoint",
+    "Address": "rbi:Address",
+    "POSOrderError": "rbi:POSOrderError",
+    "Order": "rbi:Order",
+    "OrderError": "rbi:OrderError",
+    "Loyalty": "rbi:Loyalty",
+    "PriceOrder": "rbi:PriceOrder",
+    "CommitOrder": "rbi:CommitOrder",
+    "PlaceOrder": "rbi:PlaceOrder",
+    "OrderPlaced": "rbi:OrderPlaced",
+    "Available": "rbi:Available",
+    "Location": "rbi:Location",
+    "TimeSlot": "rbi:TimeSlot",
+    "WeekdayHours": "rbi:WeekdayHours",
+    "ServiceHour": "rbi:ServiceHour",
+    "Store": "rbi:Store",
+    "StoreStatusChanged": "rbi:StoreStatusChanged",
+    "operator": {
+      "@id": "rbi:operator",
+      "@type": "@id"
+    },
+    "terminal": {
+      "@id": "rbi:terminal",
+      "@type": "@id"
+    },
+    "transactionId": {
+      "@id": "rbi:transactionId",
+      "@type": "@id"
+    },
+    "identifier": {
+      "@id": "dcterms:identifier"
+    },
+    "identifierType": {
+      "@id": "rbi:identifierType",
+      "@type": "@id"
+    },
+    "storeId": {
+      "@id": "rbi:storeId",
+      "@type": "@id"
+    },
+    "serviceMode": {
+      "@id": "rbi:serviceMode",
+      "@type": "@id"
+    },
+    "details": {
+      "@id": "rbi:details",
+      "@type": "@id"
+    },
+    "currency": {
+      "@id": "rbi:currency",
+      "@type": "@id"
+    },
+    "amount": {
+      "@id": "rbi:amount",
+      "@type": "xsd:double"
+    },
+    "id": {
+      "@id": "rbi:id",
+      "@type": "xsd:string"
+    },
+    "referenceId": {
+      "@id": "rbi:referenceId",
+      "@type": "xsd:string"
+    },
+    "externalReferenceId": {
+      "@id": "rbi:externalReferenceId",
+      "@type": "@id"
+    },
+    "quantity": {
+      "@id": "rbi:quantity",
+      "@type": "xsd:double"
+    },
+    "price": {
+      "@id": "rbi:price",
+      "@type": "@id"
+    },
+    "menuSelections": {
+      "@id": "rbi:menuSelections",
+      "@container": "@set"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "username": {
+      "@id": "rbi:username",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "rbi:phone",
+      "@type": "@id"
+    },
+    "email": {
+      "@id": "schema:email"
+    },
+    "balances": {
+      "@id": "rbi:balances",
+      "@container": "@set"
+    },
+    "loyaltyId": {
+      "@id": "rbi:loyaltyId",
+      "@type": "@id"
+    },
+    "cart": {
+      "@id": "rbi:cart",
+      "@type": "@id"
+    },
+    "customer": {
+      "@id": "rbi:customer",
+      "@type": "@id"
+    },
+    "loyalty": {
+      "@id": "rbi:loyalty",
+      "@type": "@id"
+    },
+    "daysOfWeek": {
+      "@id": "rbi:daysOfWeek",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "rbi:startTime",
+      "@type": "xsd:string"
+    },
+    "endTime": {
+      "@id": "rbi:endTime",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url"
+    },
+    "altText": {
+      "@id": "rbi:altText",
+      "@type": "@id"
+    },
+    "default": {
+      "@id": "rbi:default",
+      "@type": "xsd:double"
+    },
+    "max": {
+      "@id": "rbi:max",
+      "@type": "xsd:double"
+    },
+    "min": {
+      "@id": "rbi:min",
+      "@type": "xsd:double"
+    },
+    "defaultAmount": {
+      "@id": "rbi:defaultAmount",
+      "@type": "xsd:double"
+    },
+    "minAmount": {
+      "@id": "rbi:minAmount",
+      "@type": "xsd:double"
+    },
+    "maxAmount": {
+      "@id": "rbi:maxAmount",
+      "@type": "xsd:double"
+    },
+    "entryId": {
+      "@id": "rbi:entryId",
+      "@type": "@id"
+    },
+    "displayType": {
+      "@id": "rbi:displayType",
+      "@type": "xsd:string"
+    },
+    "lowerRange": {
+      "@id": "rbi:lowerRange",
+      "@type": "xsd:double"
+    },
+    "upperRange": {
+      "@id": "rbi:upperRange",
+      "@type": "xsd:double"
+    },
+    "value": {
+      "@id": "rbi:value",
+      "@type": "xsd:double"
+    },
+    "unit": {
+      "@id": "rbi:unit",
+      "@type": "xsd:string"
+    },
+    "allergen": {
+      "@id": "rbi:allergen",
+      "@type": "xsd:string"
+    },
+    "contains": {
+      "@id": "rbi:contains",
+      "@type": "xsd:double"
+    },
+    "calories": {
+      "@id": "rbi:calories",
+      "@type": "@id"
+    },
+    "nutrients": {
+      "@id": "rbi:nutrients",
+      "@container": "@set"
+    },
+    "allergens": {
+      "@id": "rbi:allergens",
+      "@container": "@set"
+    },
+    "type": {
+      "@id": "rbi:type",
+      "@type": "xsd:string"
+    },
+    "groupType": {
+      "@id": "rbi:groupType",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "available": {
+      "@id": "rbi:available",
+      "@type": "xsd:boolean"
+    },
+    "image": {
+      "@id": "rbi:image",
+      "@type": "@id"
+    },
+    "options": {
+      "@id": "rbi:options",
+      "@type": "@id"
+    },
+    "quantityConstraints": {
+      "@id": "rbi:quantityConstraints",
+      "@type": "@id"
+    },
+    "defaultSelections": {
+      "@id": "rbi:defaultSelections",
+      "@container": "@set"
+    },
+    "entries": {
+      "@id": "rbi:entries",
+      "@container": "@set"
+    },
+    "dayParts": {
+      "@id": "rbi:dayParts",
+      "@container": "@set"
+    },
+    "nutrition": {
+      "@id": "rbi:nutrition",
+      "@type": "@id"
+    },
+    "translations": {
+      "@id": "rbi:translations",
+      "@container": "@set"
+    },
+    "lang": {
+      "@id": "rbi:lang",
+      "@type": "xsd:string"
+    },
+    "availability": {
+      "@id": "rbi:availability",
+      "@type": "xsd:boolean"
+    },
+    "discountType": {
+      "@id": "rbi:discountType",
+      "@type": "xsd:string"
+    },
+    "discountValue": {
+      "@id": "rbi:discountValue",
+      "@type": "xsd:double"
+    },
+    "loyaltyPoints": {
+      "@id": "rbi:loyaltyPoints",
+      "@type": "xsd:double"
+    },
+    "meta": {
+      "@id": "rbi:meta",
+      "@type": "xsd:string"
+    },
+    "rootMenuEntryId": {
+      "@id": "rbi:rootMenuEntryId",
+      "@type": "@id"
+    },
+    "systemWideOfferEntries": {
+      "@id": "rbi:systemWideOfferEntries",
+      "@container": "@set"
+    },
+    "rewardEntries": {
+      "@id": "rbi:rewardEntries",
+      "@container": "@set"
+    },
+    "configOfferEntries": {
+      "@id": "rbi:configOfferEntries",
+      "@container": "@set"
+    },
+    "isAvailable": {
+      "@id": "rbi:isAvailable",
+      "@type": "xsd:boolean"
+    },
+    "feedback": {
+      "@id": "rbi:feedback",
+      "@type": "@id"
+    },
+    "taxRemittedByMpf": {
+      "@id": "rbi:taxRemittedByMpf",
+      "@type": "@id"
+    },
+    "isTaxRemittedByMpf": {
+      "@id": "rbi:isTaxRemittedByMpf",
+      "@type": "xsd:boolean"
+    },
+    "total": {
+      "@id": "rbi:total",
+      "@type": "@id"
+    },
+    "tax": {
+      "@id": "rbi:tax",
+      "@type": "@id"
+    },
+    "mpfTax": {
+      "@id": "rbi:mpfTax",
+      "@type": "@id"
+    },
+    "subTotal": {
+      "@id": "rbi:subTotal",
+      "@type": "@id"
+    },
+    "fees": {
+      "@id": "rbi:fees",
+      "@type": "@id"
+    },
+    "paymentMethod": {
+      "@id": "rbi:paymentMethod",
+      "@type": "@id"
+    },
+    "latitude": {
+      "@id": "rbi:latitude",
+      "@type": "xsd:double"
+    },
+    "longitude": {
+      "@id": "rbi:longitude",
+      "@type": "xsd:double"
+    },
+    "administrativeArea": {
+      "@id": "rbi:administrativeArea",
+      "@type": "xsd:string"
+    },
+    "coordinates": {
+      "@id": "rbi:coordinates",
+      "@type": "@id"
+    },
+    "formattedAddress": {
+      "@id": "rbi:formattedAddress",
+      "@type": "xsd:string"
+    },
+    "instructions": {
+      "@id": "rbi:instructions",
+      "@type": "xsd:string"
+    },
+    "locality": {
+      "@id": "rbi:locality",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "rbi:postalCode",
+      "@type": "xsd:string"
+    },
+    "regionCode": {
+      "@id": "rbi:regionCode",
+      "@type": "xsd:string"
+    },
+    "route": {
+      "@id": "rbi:route",
+      "@type": "xsd:string"
+    },
+    "streetNumber": {
+      "@id": "rbi:streetNumber",
+      "@type": "xsd:string"
+    },
+    "sublocality": {
+      "@id": "rbi:sublocality",
+      "@type": "xsd:string"
+    },
+    "subpremise": {
+      "@id": "rbi:subpremise",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "rbi:message",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "rbi:code",
+      "@type": "xsd:string"
+    },
+    "charges": {
+      "@id": "rbi:charges",
+      "@type": "@id"
+    },
+    "discounts": {
+      "@id": "rbi:discounts",
+      "@type": "@id"
+    },
+    "payment": {
+      "@id": "rbi:payment",
+      "@type": "@id"
+    },
+    "posVendor": {
+      "@id": "rbi:posVendor",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "rbi:status",
+      "@type": "@id"
+    },
+    "deliveryAddress": {
+      "@id": "rbi:deliveryAddress",
+      "@type": "@id"
+    },
+    "loyaltyPointsEarned": {
+      "@id": "rbi:loyaltyPointsEarned",
+      "@type": "xsd:integer"
+    },
+    "errors": {
+      "@id": "rbi:errors",
+      "@container": "@set"
+    },
+    "createdAt": {
+      "@id": "rbi:createdAt",
+      "@type": "@id"
+    },
+    "updatedAt": {
+      "@id": "rbi:updatedAt",
+      "@type": "@id"
+    },
+    "fireOrderInSeconds": {
+      "@id": "rbi:fireOrderInSeconds",
+      "@type": "@id"
+    },
+    "preparationTimeInSeconds": {
+      "@id": "rbi:preparationTimeInSeconds",
+      "@type": "xsd:integer"
+    },
+    "readyInSeconds": {
+      "@id": "rbi:readyInSeconds",
+      "@type": "@id"
+    },
+    "order": {
+      "@id": "rbi:order",
+      "@type": "@id"
+    },
+    "mpfOrderId": {
+      "@id": "rbi:mpfOrderId",
+      "@type": "@id"
+    },
+    "callbackUrl": {
+      "@id": "rbi:callbackUrl",
+      "@type": "xsd:string"
+    },
+    "isEnabled": {
+      "@id": "rbi:isEnabled",
+      "@container": "@set"
+    },
+    "isOpen": {
+      "@id": "rbi:isOpen",
+      "@type": "xsd:boolean"
+    },
+    "phoneNumber": {
+      "@id": "rbi:phoneNumber",
+      "@type": "xsd:string"
+    },
+    "closes": {
+      "@id": "rbi:closes",
+      "@type": "xsd:string"
+    },
+    "date": {
+      "@id": "rbi:date",
+      "@type": "xsd:string"
+    },
+    "isClosed": {
+      "@id": "rbi:isClosed",
+      "@type": "xsd:boolean"
+    },
+    "opens": {
+      "@id": "rbi:opens",
+      "@type": "xsd:string"
+    },
+    "text": {
+      "@id": "rbi:text",
+      "@type": "xsd:string"
+    },
+    "timeSlots": {
+      "@id": "rbi:timeSlots",
+      "@container": "@set"
+    },
+    "weekdayHours": {
+      "@id": "rbi:weekdayHours",
+      "@container": "@set"
+    },
+    "franchiseGroupName": {
+      "@id": "rbi:franchiseGroupName",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "rbi:location",
+      "@type": "@id"
+    },
+    "serviceHour": {
+      "@id": "rbi:serviceHour",
+      "@container": "@set"
+    },
+    "timezone": {
+      "@id": "rbi:timezone",
+      "@type": "@id"
+    },
+    "reason": {
+      "@id": "rbi:reason",
+      "@type": "@id"
+    },
+    "region": {
+      "@id": "rbi:region",
+      "@type": "@id"
+    },
+    "storeStatus": {
+      "@id": "rbi:storeStatus",
+      "@type": "@id"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cursor",
+  "description": "Pagination cursor",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-cursor-schema.json",
+  "type": "string",
+  "example": "cursor-id"
+}

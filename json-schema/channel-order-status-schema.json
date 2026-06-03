@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderStatus",
+  "description": "Order status, representing current state of order in its lifecycle.\n\nWhen transitioning the order status, the status must always advance further in the lifecycle. All other transitions are invalid.\n\n|Status   |Description                                                                 |\n|---------|----------------------------------------------------------------------------|\n|CREATED  |Order has been created.                                                     |\n|PRICED   |Order has been priced. The POS has provided price information for the order.|\n|COMMITTED|Order has been committed. The POS has accepted the order.                   |\n|PREPARING|Order is being prepared in the restaurant                                   |\n|PREPARED |Order has been prepared and is ready for pickup or delivery.                |\n|DONE     |Order is done. This is the final state for a successful order.              |\n|CANCELED |Order has been cancelled.                                                   |\n|ERROR    |Error with the order. Customer should be notified and refunded.             |\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-order-status-schema.json",
+  "type": "string",
+  "enum": [
+    "CREATED",
+    "PRICED",
+    "COMMITTED",
+    "PREPARING",
+    "PREPARED",
+    "DONE",
+    "CANCELED",
+    "ERROR"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-weekday-hours-structure.json",
+  "name": "WeekdayHours",
+  "description": "Human-readable view of a store's weekly operating hours.\n\n**Note**: This information is intended for display purposes only.\nIf you need to perform calculations based on the service hours, use the `timeSlots` property instead.\n",
+  "type": "object",
+  "properties": {
+    "text": {
+      "description": "Human-readable days of operation.\n\nThe \"Time range\" looks like:\n- For days that the store is open:  \n  `Weekday: hh:mm A - hh:mm A` (`Sunday: 12:00 AM - 11:59 PM`)\n- For days that the store is closed:  \n  `Weekday: closed` (`Sunday: closed`)\n",
+      "type": "string",
+      "format": "Weekday: Time range",
+      "example": "Sunday: 12:00 AM - 11:59 PM"
+    }
+  }
+}

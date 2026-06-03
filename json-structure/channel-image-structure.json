@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-image-structure.json",
+  "name": "Image",
+  "description": "Image schema from Burger King's Partners API",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "example": "https://bk-partners.rbictg.com"
+    },
+    "altText": {
+      "$ref": "#/components/schemas/LocalizedText"
+    }
+  }
+}

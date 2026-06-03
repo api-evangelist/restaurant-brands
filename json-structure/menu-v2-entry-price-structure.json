@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-entry-price-structure.json",
+  "name": "EntryPrice",
+  "description": "Price information for a menu entry",
+  "type": "object",
+  "properties": {
+    "delivery": {
+      "type": "double",
+      "description": "Price, in cents, for delivery",
+      "example": 1.0
+    },
+    "pickup": {
+      "type": "double",
+      "description": "Price, in cents, for pickup",
+      "example": 1.0
+    }
+  }
+}

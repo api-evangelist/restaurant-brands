@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fee",
+  "description": "Fee schema from Burger King's Partners API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-fee-schema.json",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of fee.\n\n|Fee Type|Description                  |\n|--------|-----------------------------|\n|BAG_FEE |A fee for bags, as present in some municipalities for single use plastic bags               |\n|CUP_FEE |A fee for cups, as present in some municipalities for single use cups               |\n|DELIVERY_FEE|A fee for delivery, as often charged by delivery fulfillment providers           |\n|SERVICE_FEE|A generic service fee. An example might be California's \"driver benefits\" fee (Proposition 22)        |\n",
+      "enum": [
+        "BAG_FEE",
+        "CUP_FEE",
+        "DELIVERY_FEE",
+        "SERVICE_FEE"
+      ],
+      "example": "BAG_FEE"
+    },
+    "total": {
+      "$ref": "#/components/schemas/Money",
+      "description": "Total amount to charge for the fee"
+    }
+  }
+}

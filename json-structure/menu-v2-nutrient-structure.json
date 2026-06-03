@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-nutrient-structure.json",
+  "name": "Nutrient",
+  "description": "Nutrient schema from Burger King's Partners API v2",
+  "type": "object",
+  "properties": {
+    "carbohydrates": {
+      "type": "double",
+      "description": "Amount of carbohydrates",
+      "example": 1.0
+    },
+    "cholesterol": {
+      "type": "double",
+      "description": "Amount of cholesterol",
+      "example": 1.0
+    },
+    "energyKJ": {
+      "type": "double",
+      "description": "Energy in kilojoules",
+      "example": 1.0
+    },
+    "fat": {
+      "type": "double",
+      "description": "Amount of fat",
+      "example": "2026-06-03T12:00:00Z"
+    },
+    "fiber": {
+      "type": "double",
+      "description": "Amount of fiber",
+      "example": 1.0
+    },
+    "proteins": {
+      "type": "double",
+      "description": "Amount of proteins",
+      "example": 1.0
+    },
+    "salt": {
+      "type": "double",
+      "description": "Amount of salt",
+      "example": 1.0
+    },
+    "saturatedFat": {
+      "type": "double",
+      "description": "Amount of saturated fat",
+      "example": "2026-06-03T12:00:00Z"
+    },
+    "sodium": {
+      "type": "double",
+      "description": "Amount of sodium",
+      "example": 1.0
+    },
+    "sugar": {
+      "type": "double",
+      "description": "Amount of sugar",
+      "example": 1.0
+    },
+    "transFat": {
+      "type": "double",
+      "description": "Amount of trans fat",
+      "example": "2026-06-03T12:00:00Z"
+    },
+    "weight": {
+      "type": "double",
+      "description": "Total weight of the item",
+      "example": 1.0
+    }
+  }
+}

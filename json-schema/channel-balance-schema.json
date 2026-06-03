@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Balance",
+  "description": "The amount of a given currency the user has",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-balance-schema.json",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number",
+      "example": 599
+    },
+    "currency": {
+      "type": "string",
+      "example": "USD"
+    }
+  }
+}

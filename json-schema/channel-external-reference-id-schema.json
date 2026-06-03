@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExternalReferenceId",
+  "description": "External reference ID. An example might be the external menu selection ID, customer ID or order ID.",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-external-reference-id-schema.json",
+  "type": "string"
+}

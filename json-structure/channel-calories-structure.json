@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-calories-structure.json",
+  "name": "Calories",
+  "description": "Calories range",
+  "type": "object",
+  "properties": {
+    "default": {
+      "type": "double",
+      "minimum": 0,
+      "example": 1.0
+    },
+    "displayType": {
+      "type": "string",
+      "enum": [
+        "Range",
+        "Lower",
+        "Upper"
+      ],
+      "example": "Range"
+    },
+    "lowerRange": {
+      "type": "double",
+      "minimum": 0,
+      "example": 1.0
+    },
+    "upperRange": {
+      "type": "double",
+      "minimum": 0,
+      "example": 1.0
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-location-structure.json",
+  "name": "Location",
+  "description": "Information about a store location.",
+  "type": "object",
+  "properties": {
+    "administrativeArea": {
+      "description": "Location administrative area.",
+      "type": "string",
+      "example": "FL"
+    },
+    "coordinates": {
+      "$ref": "#/components/schemas/GeoPoint"
+    },
+    "formattedAddress": {
+      "description": "Store address.",
+      "type": "string",
+      "example": "5701 BLUE LAGOON DR, MIAMI, FL 33126"
+    },
+    "locality": {
+      "description": "Store locality.",
+      "type": "string",
+      "example": "MIAMI"
+    },
+    "phoneNumber": {
+      "description": "Store phone number.",
+      "type": "string",
+      "example": "555-555-5555"
+    },
+    "postalCode": {
+      "description": "Store postalCode.",
+      "type": "string",
+      "example": "33126"
+    },
+    "regionCode": {
+      "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\nFor example, the code for the United States is `US`.\n\nFor the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+      "type": "string",
+      "example": "US"
+    },
+    "route": {
+      "description": "Store route.",
+      "type": "string",
+      "example": "5701 BLUE LAGOON DR"
+    }
+  }
+}

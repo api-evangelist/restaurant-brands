@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-price-order-structure.json",
+  "name": "PriceOrder",
+  "description": "PriceOrder schema from Burger King's Partners API",
+  "type": "object",
+  "properties": {
+    "externalReferenceId": {
+      "$ref": "#/components/schemas/ExternalReferenceId"
+    },
+    "storeId": {
+      "$ref": "#/components/schemas/StoreId"
+    },
+    "serviceMode": {
+      "$ref": "#/components/schemas/ServiceMode"
+    },
+    "cart": {
+      "$ref": "#/components/schemas/Cart"
+    },
+    "customer": {
+      "$ref": "#/components/schemas/Customer"
+    },
+    "charges": {
+      "$ref": "#/components/schemas/Charges"
+    },
+    "mpfOrderId": {
+      "$ref": "#/components/schemas/MpfOrderId"
+    },
+    "deliveryAddress": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "loyalty": {
+      "$ref": "#/components/schemas/Loyalty"
+    }
+  },
+  "required": [
+    "storeId",
+    "serviceMode",
+    "cart",
+    "customer"
+  ]
+}

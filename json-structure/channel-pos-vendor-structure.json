@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-pos-vendor-structure.json",
+  "name": "PosVendor",
+  "description": "The posVendor that is processing the order",
+  "type": "string",
+  "enum": [
+    "BRINK",
+    "CARROLS",
+    "NCR",
+    "QDI",
+    "SICOM"
+  ]
+}

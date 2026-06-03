@@ -1,0 +1,21 @@
+{
+  "id": "entry-id",
+  "type": "DISCOUNT",
+  "name": "Whopper",
+  "description": "Whopper",
+  "availability": true,
+  "discountType": "PERCENTAGE",
+  "discountValue": 40,
+  "loyaltyPoints": 100,
+  "price": {
+    "default": 1.0,
+    "max": 1.0,
+    "min": 1.0
+  },
+  "quantityConstraints": {
+    "defaultAmount": 599,
+    "minAmount": 599,
+    "maxAmount": 599
+  },
+  "options": {}
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntryOptions",
+  "description": "Options configuration for a menu entry",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-entry-options-schema.json",
+  "type": "object",
+  "properties": {
+    "defaults": {
+      "type": "array",
+      "description": "Options which should be selected by default",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "entries": {
+      "type": "array",
+      "description": "Collection of references to the item's options",
+      "items": {
+        "$ref": "#/components/schemas/EntryOptions"
+      }
+    },
+    "injectDefault": {
+      "type": "boolean",
+      "description": "Whether or not to inject the default options",
+      "example": true
+    },
+    "quantity": {
+      "$ref": "#/components/schemas/Quantity"
+    }
+  }
+}

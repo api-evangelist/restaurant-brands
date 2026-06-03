@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntryRef",
+  "description": "Reference to entry and optional the price of this entry",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-entry-ref-schema.json",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "title": "Amount",
+      "description": "Amount in the specified currency",
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 599
+    },
+    "entryId": {
+      "$ref": "#/components/schemas/EntryId"
+    }
+  }
+}

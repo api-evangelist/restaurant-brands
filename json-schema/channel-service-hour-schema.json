@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceHour",
+  "description": "Store operating hours by serviceMode",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-service-hour-schema.json",
+  "type": "object",
+  "properties": {
+    "serviceMode": {
+      "$ref": "#/components/schemas/ServiceMode"
+    },
+    "timeSlots": {
+      "description": "Contains information about the store service hours for a range of 15 consecutive days,\nstarting from the day before the request is made.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TimeSlot"
+      }
+    },
+    "weekdayHours": {
+      "description": "Human-readable view of a store's weekly operating hours.\n\n**Note**: This information is intended for display purposes only.\nIf you need to perform calculations based on the service hours, use the `timeSlots` property instead.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/WeekdayHours"
+      }
+    }
+  },
+  "required": [
+    "serviceMode",
+    "timeSlots"
+  ]
+}

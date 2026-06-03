@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionId",
+  "description": "The Partner specific order lookup id.",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-transaction-id-schema.json",
+  "type": "string",
+  "example": "ORD-000002"
+}

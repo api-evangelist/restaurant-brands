@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-menu-selection-structure.json",
+  "name": "MenuSelection",
+  "description": "Menu selection in the cart",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Menu item identifier",
+      "example": "item_42"
+    },
+    "referenceId": {
+      "type": "string",
+      "description": "Secondary menu item identifier.\n\n\u26a0\ufe0f This `referenceId` must be included along with the `id` when the value is present in the menu\n",
+      "example": "item_603"
+    },
+    "externalReferenceId": {
+      "$ref": "#/components/schemas/ExternalReferenceId"
+    },
+    "quantity": {
+      "type": "double",
+      "minimum": 0,
+      "example": 1
+    },
+    "price": {
+      "$ref": "#/components/schemas/Money"
+    },
+    "menuSelections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/components/schemas/MenuSelection"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "quantity"
+  ]
+}

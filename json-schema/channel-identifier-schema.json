@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Identifier",
+  "description": "An OTP code (6 digit code) or a static Offer code (4 digit code)",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-identifier-schema.json",
+  "type": "string",
+  "pattern": "^(\\d{6}|\\d{4})$",
+  "example": "1234"
+}

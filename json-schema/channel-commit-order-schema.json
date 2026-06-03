@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CommitOrder",
+  "description": "CommitOrder schema from Burger King's Partners API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-commit-order-schema.json",
+  "type": "object",
+  "properties": {
+    "charges": {
+      "$ref": "#/components/schemas/Charges"
+    },
+    "mpfOrderId": {
+      "$ref": "#/components/schemas/MpfOrderId"
+    },
+    "paymentMethod": {
+      "$ref": "#/components/schemas/PaymentMethod"
+    },
+    "fireOrderInSeconds": {
+      "$ref": "#/components/schemas/FireOrderInSeconds"
+    },
+    "readyInSeconds": {
+      "$ref": "#/components/schemas/ReadyInSeconds"
+    }
+  },
+  "required": [
+    "paymentMethod",
+    "fireOrderInSeconds"
+  ]
+}

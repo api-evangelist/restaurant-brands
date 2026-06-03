@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-loyalty-entry-structure.json",
+  "name": "LoyaltyEntry",
+  "description": "LoyaltyEntry schema from Burger King's Partners API v2",
+  "type": "object",
+  "properties": {
+    "availability": {
+      "$ref": "#/components/schemas/Availability"
+    },
+    "description": {
+      "$ref": "#/components/schemas/LocalizedString"
+    },
+    "discountType": {
+      "type": "string",
+      "description": "Provides if the discount should be calculated as a percentage or an amount",
+      "example": 1
+    },
+    "discountValue": {
+      "type": "double",
+      "description": "Amount that should be discounted",
+      "example": 1
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for a reward entry",
+      "example": "500123"
+    },
+    "image": {
+      "$ref": "#/components/schemas/Image"
+    },
+    "loyaltyEngineId": {
+      "type": "string",
+      "example": "500123"
+    },
+    "loyaltyPoints": {
+      "type": "double",
+      "description": "Amount of Loyalty Points required to redeem this offer",
+      "example": 1.0
+    },
+    "name": {
+      "$ref": "#/components/schemas/LocalizedString"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Option"
+      }
+    },
+    "price": {
+      "$ref": "#/components/schemas/EntryPrice"
+    },
+    "quantity": {
+      "$ref": "#/components/schemas/Quantity"
+    },
+    "type": {
+      "type": "string",
+      "description": "Unique identifier for a reward entry",
+      "enum": [
+        "CONFIG_OFFER",
+        "SYSTEM_WIDE_OFFER",
+        "ENTRY",
+        "REWARD"
+      ],
+      "example": "CONFIG_OFFER"
+    }
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}

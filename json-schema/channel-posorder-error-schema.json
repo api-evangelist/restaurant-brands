@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "POSOrderError",
+  "description": "Generic error object for order processing",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-posorder-error-schema.json",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Human readable error message",
+      "example": "TERMINAL UPDATE IN PROGRESS"
+    },
+    "code": {
+      "type": "string",
+      "description": "Error code",
+      "example": "STORE",
+      "enum": [
+        "MENU",
+        "STORE",
+        "TIMEOUT",
+        "UNKNOWN"
+      ]
+    }
+  },
+  "required": [
+    "message",
+    "code"
+  ]
+}

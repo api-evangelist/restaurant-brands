@@ -1,0 +1,238 @@
+vocabulary: 1.0.0
+info:
+  provider: Restaurant Brands International
+  description: Unified operational and capability vocabulary for the RBI Partners platform (Burger King, Tim Hortons, Popeyes, Firehouse Subs ordering, loyalty, menu, and store surfaces).
+  created: '2026-06-03'
+  modified: '2026-06-03'
+operational:
+  apis:
+  - name: Burger King's Partners API
+    namespace: channel
+    version: 1.0.0
+    baseUrl: https://bk-partners.rbictg.com/api/v1
+    status: active
+  - name: Burger King's Partners API v2
+    namespace: menu-v2
+    version: 2.0.0
+    baseUrl: https://bk-partners.rbictg.com/api/v2
+    status: active
+  resources:
+  - name: loyalty
+    apis:
+    - channel
+    - menu-v2
+  - name: orders
+    apis:
+    - channel
+    - menu-v2
+  - name: stores
+    apis:
+    - channel
+    - menu-v2
+  actions:
+  - verb: identify
+    httpMethods:
+    - POST
+    pattern: write
+  - verb: get
+    httpMethods:
+    - GET
+    pattern: read
+  - verb: price
+    httpMethods:
+    - POST
+    pattern: write
+  - verb: commit
+    httpMethods:
+    - POST
+    pattern: write
+  - verb: fire
+    httpMethods:
+    - POST
+    pattern: write
+  - verb: place
+    httpMethods:
+    - POST
+    pattern: write
+  - verb: store
+    httpMethods:
+    - POST
+    pattern: write
+  schemas:
+    core:
+    - Cart
+    - Loyalty
+    - Menu
+    - Order
+    - Store
+  parameters:
+    identifiers:
+    - storeId
+    - orderId
+    filters:
+    - serviceMode
+    - version
+    context:
+    - region
+  enums:
+    domain:
+    - name: IdentifierType
+      values:
+      - OTP
+      - OFFER_CODE
+    - name: ServiceMode
+      values:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+    - name: Brand
+      values:
+      - BK
+    - name: PaymentMethod
+      values:
+      - APPLE_PAY
+      - CASH
+      - CREDIT_CARD
+      - GIFTCARD
+      - GOOGLE_PAY
+      - PAYPAL
+      - UNPAID
+      - VENMO
+    - name: PosVendor
+      values:
+      - BRINK
+      - CARROLS
+      - NCR
+      - QDI
+      - SICOM
+    - name: OrderStatus
+      values:
+      - CREATED
+      - PRICED
+      - COMMITTED
+      - PREPARING
+      - PREPARED
+      - DONE
+      - CANCELED
+      - ERROR
+    - name: StoreStatus
+      values:
+      - ACTIVE
+      - INACTIVE
+    - name: ServiceMode
+      values:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+  authentication:
+    schemes:
+    - type: bearer
+      format: JWT
+      appliesTo:
+      - channel
+      - menu-v2
+    context:
+    - x-region header
+    - environment/brand-scoped JWT
+capability:
+  workflows:
+  - name: Burger King's Partners API — Loyalty
+    file: capabilities/channel-loyalty.yaml
+    description: Loyalty surface of the Restaurant Brands International (RBI) Partners platform.
+    apis:
+    - channel-loyalty
+    toolCount: 1
+    personas:
+    - Partner Integrator
+    - POS Developer
+    domains:
+    - Quick Service Restaurants
+  - name: Burger King's Partners API — Menus
+    file: capabilities/channel-menus.yaml
+    description: Menus surface of the Restaurant Brands International (RBI) Partners platform.
+    apis:
+    - channel-menus
+    toolCount: 1
+    personas:
+    - Partner Integrator
+    - POS Developer
+    domains:
+    - Quick Service Restaurants
+  - name: Burger King's Partners API — Orders
+    file: capabilities/channel-orders.yaml
+    description: Orders surface of the Restaurant Brands International (RBI) Partners platform.
+    apis:
+    - channel-orders
+    toolCount: 5
+    personas:
+    - Partner Integrator
+    - POS Developer
+    domains:
+    - Quick Service Restaurants
+  - name: Burger King's Partners API — Stores
+    file: capabilities/channel-stores.yaml
+    description: Stores surface of the Restaurant Brands International (RBI) Partners platform.
+    apis:
+    - channel-stores
+    toolCount: 3
+    personas:
+    - Partner Integrator
+    - POS Developer
+    domains:
+    - Quick Service Restaurants
+  - name: Burger King's Partners API v2 — Menus
+    file: capabilities/menu-v2-menus.yaml
+    description: Menus surface of the Restaurant Brands International (RBI) Partners platform.
+    apis:
+    - menu-v2-menus
+    toolCount: 2
+    personas:
+    - Partner Integrator
+    - POS Developer
+    domains:
+    - Quick Service Restaurants
+  personas:
+  - id: partner-integrator
+    name: Partner Integrator
+    description: Third-party food-ordering marketplace integrating into the RBI fulfillment platform.
+  - id: pos-developer
+    name: POS Developer
+    description: POS/kiosk developer integrating loyalty identification and order lifecycle.
+  domains:
+  - name: Quick Service Restaurants
+    description: Ordering, menu, store, and loyalty surfaces across RBI brands.
+  namespaces:
+  - consumed: channel-loyalty
+    rest: channel-loyalty-rest
+    mcp: channel-loyalty-mcp
+  - consumed: channel-menus
+    rest: channel-menus-rest
+    mcp: channel-menus-mcp
+  - consumed: channel-orders
+    rest: channel-orders-rest
+    mcp: channel-orders-mcp
+  - consumed: channel-stores
+    rest: channel-stores-rest
+    mcp: channel-stores-mcp
+  - consumed: menu-v2-menus
+    rest: menu-v2-menus-rest
+    mcp: menu-v2-menus-mcp
+  binds:
+  - key: RBI_PARTNERS_JWT
+    description: Environment/brand-scoped bearer JWT issued by RBI for the Partners API.
+crossReference:
+- resource: loyalty
+  workflows:
+  - Burger King's Partners API — Loyalty
+- resource: orders
+  workflows:
+  - Burger King's Partners API — Loyalty
+- resource: stores
+  workflows:
+  - Burger King's Partners API — Loyalty

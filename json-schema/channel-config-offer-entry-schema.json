@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConfigOfferEntry",
+  "description": "ConfigOfferEntry schema from Burger King's Partners API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-config-offer-entry-schema.json",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LoyaltyBaseEntry"
+    },
+    {
+      "properties": {
+        "type": {
+          "enum": [
+            "CONFIG_OFFER"
+          ],
+          "example": "CONFIG_OFFER"
+        },
+        "loyaltyPoints": {
+          "example": "250"
+        }
+      }
+    }
+  ]
+}

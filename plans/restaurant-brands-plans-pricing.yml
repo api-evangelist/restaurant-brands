@@ -1,0 +1,67 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Restaurant Brands International
+providerId: restaurant-brands
+created: '2026-06-03'
+modified: '2026-06-03'
+reconciled: false
+tags:
+  - Partner Integration
+  - Quick Service Restaurants
+  - Ordering
+  - Loyalty
+description: >-
+  Restaurant Brands International exposes its Partners API (Burger King's
+  Partners API v1 and v2, served from rbictg.com) only through bilateral
+  partner onboarding, not a public self-service pricing surface. Access is
+  granted on request: an integrating partner asks RBI for a Staging
+  environment and is issued environment-, country-, and brand-scoped
+  credentials (a bearer JWT for the Partners API, or an x-api-key for the
+  Loyalty middleware). There is no published per-call price, subscription
+  tier, or free tier. Commercial terms (revenue share, integration fees,
+  marketplace economics) are negotiated directly with RBI and are not
+  disclosed publicly. Prices below are therefore recorded as "contact sales"
+  and reconciled is false.
+sources:
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/overview
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+  - https://bk-partners.rbictg.com/docs/channel/
+plans:
+  - id: restaurant-brands-partner-onboarding
+    name: Partner Onboarding
+    type: enterprise
+    description: >-
+      Bilateral partner access to the RBI Partners platform (ordering, menu,
+      store, and loyalty surfaces). Granted on request; commercial terms
+      negotiated directly with RBI.
+    entries:
+      - label: Partner API Access
+        name: partner_api_access
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: '1'
+        price: contact sales
+        userMultiplied: false
+      - label: Loyalty Middleware Access
+        name: loyalty_middleware_access
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: '1'
+        price: contact sales
+        userMultiplied: false
+    elements:
+      - name: Channel Partners API (ordering, menu, store)
+      - name: Partners Menu API v2
+      - name: Loyalty identification and transaction validation
+      - name: Payments (capture / refund) endpoints
+      - name: Delivery API
+      - name: Staging and Production environments
+      - name: Brand scoping (Burger King, Popeyes, Firehouse Subs)

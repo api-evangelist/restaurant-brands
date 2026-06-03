@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Feedback",
+  "description": "Line item feedback for a cart entry.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-feedback-schema.json",
+  "type": "object",
+  "properties": {
+    "entryId": {
+      "$ref": "#/components/schemas/EntryId"
+    },
+    "isAvailable": {
+      "type": "boolean",
+      "description": "Up to date availability for the entry.\n\nIf omitted, entry will be assumed to be available.\n",
+      "example": true
+    },
+    "price": {
+      "$ref": "#/components/schemas/Money",
+      "description": "Up to date price for the entry.\n\nIf omitted, entry will be assumed to have correct price.\n"
+    }
+  },
+  "required": [
+    "entryId"
+  ]
+}

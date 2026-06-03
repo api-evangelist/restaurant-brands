@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-discounts-structure.json",
+  "name": "Discounts",
+  "description": "Any discounts which ought to be applied to the order",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/Discount"
+  }
+}

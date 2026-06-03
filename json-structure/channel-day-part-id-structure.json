@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-day-part-id-structure.json",
+  "name": "DayPartId",
+  "description": "Unique identifier for a day part",
+  "type": "string",
+  "example": "breakfast"
+}

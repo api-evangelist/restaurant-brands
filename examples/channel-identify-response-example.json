@@ -1,0 +1,24 @@
+{
+  "cart": {
+    "menuSelections": [
+      {}
+    ]
+  },
+  "customer": {
+    "id": "500123",
+    "externalReferenceId": {},
+    "name": "Whopper",
+    "username": "example",
+    "phone": {},
+    "email": "guest@example.com"
+  },
+  "loyalty": {
+    "balances": [
+      {}
+    ],
+    "loyaltyId": {},
+    "transactionId": {}
+  },
+  "storeId": "42",
+  "serviceMode": "TAKEOUT"
+}

@@ -1,0 +1,16 @@
+{
+  "administrativeArea": "FL",
+  "coordinates": {
+    "latitude": 25.782379,
+    "longitude": -80.289207
+  },
+  "formattedAddress": "5707 Blue Lagoon Drive",
+  "instructions": "example",
+  "locality": "Miami-Dade County",
+  "postalCode": "33126",
+  "regionCode": "US",
+  "route": "Blue Lagoon Drive",
+  "streetNumber": "5707",
+  "sublocality": "example",
+  "subpremise": "Suite 101"
+}

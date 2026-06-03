@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Operator",
+  "description": "The cashier id submitting the transaction.",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-operator-schema.json",
+  "type": "string",
+  "example": "ninja123"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QuantityConstraints",
+  "description": "Quantity constraints on selection. Can apply either to items or selections\nwith an options group.\n\nNote\\: We use a `minAmount` of 1 with a `maxAmount` of 1 to indicate\nselection is required\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-quantity-constraints-schema.json",
+  "type": "object",
+  "properties": {
+    "defaultAmount": {
+      "description": "(Optional) Default amount that can be select",
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 599
+    },
+    "minAmount": {
+      "description": "(Optional) Minimum amount that must be select",
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 599
+    },
+    "maxAmount": {
+      "description": "(Optional) Maximum amount that can be select",
+      "type": "number",
+      "format": "integer",
+      "minimum": 0,
+      "example": 599
+    }
+  }
+}

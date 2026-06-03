@@ -1,0 +1,42 @@
+{
+  "configOfferEntries": [
+    {}
+  ],
+  "dayParts": [
+    {
+      "id": {},
+      "schedule": {}
+    }
+  ],
+  "entries": [
+    {
+      "availability": {},
+      "dayParts": {},
+      "description": {},
+      "displayGroup": {},
+      "id": {},
+      "image": {},
+      "name": {},
+      "nutrition": {},
+      "options": {},
+      "price": {},
+      "productType": {},
+      "quantity": {},
+      "type": {}
+    }
+  ],
+  "meta": {
+    "currency": "USD",
+    "imageBaseUrl": "https://bk-partners.rbictg.com"
+  },
+  "rewardEntries": [
+    {}
+  ],
+  "rootMenuEntryId": "500123",
+  "systemWideOfferEntries": [
+    {}
+  ],
+  "paperCouponEntries": [
+    {}
+  ]
+}

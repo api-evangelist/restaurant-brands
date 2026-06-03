@@ -1,0 +1,40 @@
+{
+  "availability": {
+    "delivery": true,
+    "pickup": true
+  },
+  "description": {
+    "en": "example",
+    "fr": "example"
+  },
+  "discountType": 1,
+  "discountValue": 1,
+  "id": "500123",
+  "image": {
+    "altText": {},
+    "resource": "example"
+  },
+  "loyaltyEngineId": "500123",
+  "loyaltyPoints": 1.0,
+  "name": {
+    "en": "example",
+    "fr": "example"
+  },
+  "options": [
+    {
+      "entryId": {},
+      "isMainItem": {},
+      "type": {}
+    }
+  ],
+  "price": {
+    "delivery": 1.0,
+    "pickup": 1.0
+  },
+  "quantity": {
+    "def": 1,
+    "max": 1,
+    "min": 1
+  },
+  "type": "CONFIG_OFFER"
+}

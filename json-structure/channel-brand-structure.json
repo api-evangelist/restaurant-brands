@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-brand-structure.json",
+  "name": "Brand",
+  "description": "Brand schema from Burger King's Partners API",
+  "type": "string",
+  "enum": [
+    "BK"
+  ],
+  "example": "BK"
+}

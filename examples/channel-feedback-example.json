@@ -1,0 +1,8 @@
+{
+  "entryId": "entry-id",
+  "isAvailable": true,
+  "price": {
+    "currency": {},
+    "amount": 100
+  }
+}

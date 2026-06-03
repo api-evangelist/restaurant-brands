@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderPlaced",
+  "description": "Representation of an order placed by a customer",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-order-placed-schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/OrderId",
+      "description": "Internal order ID"
+    },
+    "externalReferenceId": {
+      "$ref": "#/components/schemas/ExternalReferenceId",
+      "description": "Partner's order ID"
+    },
+    "callbackUrl": {
+      "type": "string",
+      "description": "URL to order details.",
+      "example": "https://bk-partners.rbictg.com"
+    }
+  },
+  "required": [
+    "id",
+    "callbackUrl"
+  ]
+}

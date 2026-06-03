@@ -1,0 +1,21 @@
+{
+  "tax": {
+    "currency": {},
+    "amount": 100
+  },
+  "mpfTax": {
+    "taxRemittedByMpf": {},
+    "isTaxRemittedByMpf": true
+  },
+  "subTotal": {
+    "currency": {},
+    "amount": 100
+  },
+  "total": {
+    "currency": {},
+    "amount": 100
+  },
+  "fees": [
+    {}
+  ]
+}

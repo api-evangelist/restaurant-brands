@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-cart-priced-structure.json",
+  "name": "CartPriced",
+  "description": "Cart containing a customer's selections from the menu with prices",
+  "type": "object",
+  "properties": {
+    "menuSelections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MenuSelectionPriced"
+      }
+    },
+    "feedback": {
+      "$ref": "#/components/schemas/Feedbacks"
+    }
+  },
+  "required": [
+    "menuSelections"
+  ]
+}

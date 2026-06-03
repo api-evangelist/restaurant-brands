@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-calories-structure.json",
+  "name": "Calories",
+  "description": "Calories schema from Burger King's Partners API v2",
+  "type": "object",
+  "properties": {
+    "def": {
+      "type": "double",
+      "description": "Default calorie value",
+      "example": 1.0
+    },
+    "max": {
+      "type": "double",
+      "description": "Maximum calorie value",
+      "example": 1.0
+    },
+    "min": {
+      "type": "double",
+      "description": "Minimum calorie value",
+      "example": 1.0
+    }
+  }
+}

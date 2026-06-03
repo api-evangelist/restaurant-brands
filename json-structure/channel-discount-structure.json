@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-discount-structure.json",
+  "name": "Discount",
+  "description": "A discount which ought to be applied to an order",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of discount.\n\n|Discount Type|Description                  |\n|--------|-----------------------------|\n|DISCOUNT | Generic type for any discount |\n",
+      "enum": [
+        "DISCOUNT"
+      ],
+      "example": "DISCOUNT"
+    },
+    "total": {
+      "$ref": "#/components/schemas/Money",
+      "description": "Amount to be discounted"
+    }
+  }
+}

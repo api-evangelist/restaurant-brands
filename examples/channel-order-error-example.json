@@ -1,0 +1,40 @@
+{
+  "status": 400,
+  "code": "ValidationError",
+  "message": "isAvailable must be a boolean value",
+  "errors": [
+    {
+      "code": "ValidationError",
+      "message": "Whopper",
+      "details": "Whopper",
+      "domain": "Whopper",
+      "location": "isAvailable",
+      "locationType": "requestBody",
+      "sendReport": "Whopper",
+      "extendedHelp": "Whopper"
+    }
+  ],
+  "order": {
+    "id": {},
+    "externalReferenceId": {},
+    "storeId": {},
+    "cart": {},
+    "serviceMode": {},
+    "customer": {},
+    "charges": {},
+    "discounts": {},
+    "payment": {},
+    "posVendor": {},
+    "status": {},
+    "deliveryAddress": {},
+    "loyaltyPointsEarned": 15,
+    "errors": [
+      {}
+    ],
+    "createdAt": {},
+    "updatedAt": {},
+    "fireOrderInSeconds": {},
+    "preparationTimeInSeconds": 300,
+    "readyInSeconds": {}
+  }
+}

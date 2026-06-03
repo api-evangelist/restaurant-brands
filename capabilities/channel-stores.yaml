@@ -1,0 +1,190 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Burger King's Partners API — Stores
+  description: 'Stores surface of the Restaurant Brands International (RBI) Partners platform. 3 operation(s). Lead operation: Store. Self-contained Naftiko capability covering one Restaurant Brands International business surface.'
+  tags:
+  - Restaurant Brands International
+  - Partners API
+  - Stores
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    RBI_PARTNERS_JWT: RBI_PARTNERS_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: channel-stores
+    baseUri: https://bk-partners.rbictg.com/api/v1
+    description: Burger King's Partners API — Stores business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.RBI_PARTNERS_JWT}}'
+    resources:
+    - name: stores-store-id
+      path: /stores/{storeId}
+      operations:
+      - name: getStore
+        method: GET
+        description: Store
+        inputParameters:
+        - name: x-ui-region
+          in: header
+          type: string
+          required: false
+          description: "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+        - name: storeId
+          in: path
+          type: string
+          required: true
+          description: Unique ID representing a store
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: stores-store-id-store-status-changed
+      path: /stores/{storeId}/store-status-changed
+      operations:
+      - name: storeStatusChanged
+        method: POST
+        description: Store Status Changed
+        inputParameters:
+        - name: storeId
+          in: path
+          type: string
+          required: true
+          description: Unique ID representing a store
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload for Store Status Changed.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: stores
+      path: /stores
+      operations:
+      - name: getStores
+        method: GET
+        description: List Stores
+        inputParameters:
+        - name: limit
+          in: query
+          type: string
+          required: false
+          description: Number of results to fetch
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: x-ui-region
+          in: header
+          type: string
+          required: false
+          description: "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: channel-stores-rest
+    port: 8080
+    description: REST adapter for Burger King's Partners API — Stores. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/stores-store-id
+      name: stores-store-id
+      description: REST surface for Store.
+      operations:
+      - method: GET
+        name: getStore
+        description: Store
+        call: channel-stores.getStore
+        with:
+          x-ui-region: rest.x-ui-region
+          storeId: rest.storeId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/stores-store-id-store-status-changed
+      name: stores-store-id-store-status-changed
+      description: REST surface for Store Status Changed.
+      operations:
+      - method: POST
+        name: storeStatusChanged
+        description: Store Status Changed
+        call: channel-stores.storeStatusChanged
+        with:
+          storeId: rest.storeId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/stores
+      name: stores
+      description: REST surface for List Stores.
+      operations:
+      - method: GET
+        name: getStores
+        description: List Stores
+        call: channel-stores.getStores
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+          x-ui-region: rest.x-ui-region
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: channel-stores-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Burger King's Partners API — Stores. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: store
+      description: Store
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: channel-stores.getStore
+      with:
+        x-ui-region: tools.x-ui-region
+        storeId: tools.storeId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: store-status-changed
+      description: Store Status Changed
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: channel-stores.storeStatusChanged
+      with:
+        storeId: tools.storeId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-stores
+      description: List Stores
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: channel-stores.getStores
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+        x-ui-region: tools.x-ui-region
+      outputParameters:
+      - type: object
+        mapping: $.

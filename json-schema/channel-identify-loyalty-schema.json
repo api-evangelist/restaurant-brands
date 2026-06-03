@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IdentifyLoyalty",
+  "description": "User information on the Loyalty user identified",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-identify-loyalty-schema.json",
+  "type": "object",
+  "properties": {
+    "balances": {
+      "description": "The loyalty user's balances\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Balance"
+      }
+    },
+    "loyaltyId": {
+      "$ref": "#/components/schemas/LoyaltyId"
+    },
+    "transactionId": {
+      "$ref": "#/components/schemas/LoyaltyTransactionId"
+    }
+  },
+  "required": [
+    "balances",
+    "loyaltyId",
+    "transactionId"
+  ]
+}

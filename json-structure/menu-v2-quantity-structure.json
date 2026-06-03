@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-quantity-structure.json",
+  "name": "Quantity",
+  "description": "Quantity constraints for a menu entry",
+  "type": "object",
+  "properties": {
+    "def": {
+      "type": "int32",
+      "description": "Default quantity",
+      "minimum": 1,
+      "example": 1
+    },
+    "max": {
+      "type": "int32",
+      "description": "Maximum allowed quantity",
+      "minimum": 1,
+      "example": 1
+    },
+    "min": {
+      "type": "int32",
+      "description": "Minimum required quantity",
+      "minimum": 1,
+      "example": 1
+    }
+  }
+}

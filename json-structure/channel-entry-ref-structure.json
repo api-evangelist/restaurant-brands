@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-entry-ref-structure.json",
+  "name": "EntryRef",
+  "description": "Reference to entry and optional the price of this entry",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "title": "Amount",
+      "description": "Amount in the specified currency",
+      "type": "double",
+      "minimum": 0,
+      "example": 599
+    },
+    "entryId": {
+      "$ref": "#/components/schemas/EntryId"
+    }
+  }
+}

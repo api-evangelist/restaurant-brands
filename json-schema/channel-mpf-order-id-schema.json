@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MpfOrderId",
+  "description": "External References for the order.\n\nYou can use this field to provide additional identifiers or any other string data to the order to be injected. \nA common use for this is to hold additional external order numbers, like receipt number or third party short order ID.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-mpf-order-id-schema.json",
+  "type": "string",
+  "example": "123456789"
+}

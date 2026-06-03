@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LocalizedText",
+  "description": "Text that has been translated to the correct locale for the current context",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-localized-text-schema.json",
+  "type": "string"
+}

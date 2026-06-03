@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-store-status-changed-structure.json",
+  "name": "StoreStatusChanged",
+  "description": "StoreStatusChanged schema from Burger King's Partners API",
+  "type": "object",
+  "properties": {
+    "reason": {
+      "$ref": "#/components/schemas/Reason"
+    },
+    "region": {
+      "$ref": "#/components/schemas/Region"
+    },
+    "storeStatus": {
+      "$ref": "#/components/schemas/StoreStatus"
+    },
+    "updatedAt": {
+      "$ref": "#/components/schemas/DateTime"
+    }
+  },
+  "required": [
+    "storeStatus",
+    "region",
+    "updatedAt"
+  ]
+}

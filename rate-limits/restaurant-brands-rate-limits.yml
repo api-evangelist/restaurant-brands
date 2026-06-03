@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Restaurant Brands International
+providerId: restaurant-brands
+created: '2026-06-03'
+modified: '2026-06-03'
+reconciled: false
+tags:
+  - Rate Limiting
+  - Partner Integration
+  - Quick Service Restaurants
+description: >-
+  Restaurant Brands International's Partners API (Burger King's Partners API,
+  served from rbictg.com) and Loyalty middleware are partner-scoped surfaces
+  reached with credentials issued per environment, country, and brand. RBI's
+  public developer documentation describes the request contract (bearer JWT
+  for the Partners API; x-region, x-api-key, and x-user-datetime headers for
+  the Loyalty middleware) but does not publish numeric request-rate,
+  concurrency, or quota thresholds. Any throttling limits are governed by the
+  bilateral partner agreement and the issued credential's scope, not a public
+  per-key tier. Numbers below are recorded as descriptive strings and
+  reconciled is false because RBI does not publish concrete figures.
+sources:
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+  - https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+  - https://bk-partners.rbictg.com/docs/channel/
+responseCodes:
+  throttled: 429
+limits:
+  - name: Partners API requests (per partner credential)
+    scope: key
+    metric: varies
+    limit: not publicly documented; governed by partner agreement and JWT scope
+    notes: >-
+      Access is via an environment-, country-, and brand-scoped bearer JWT.
+      RBI does not publish per-second or per-minute request ceilings.
+  - name: Loyalty middleware requests (per API key)
+    scope: key
+    metric: varies
+    limit: not publicly documented; governed by partner agreement and x-api-key scope
+    notes: >-
+      Requests require x-region, x-api-key, and x-user-datetime headers. No
+      public numeric rate ceiling is published.
+policies:
+  - name: Credential scoping
+    description: >-
+      Limits are bound to the issued credential, which is specific to an
+      environment (Staging/Production), country/region, vendor, and brand.
+  - name: Bilateral governance
+    description: >-
+      Concrete throttling thresholds are defined in the partner onboarding
+      agreement with RBI rather than in public documentation.
+  - name: Retry guidance
+    description: >-
+      Treat 429 responses as throttling signals and apply exponential backoff;
+      RBI does not publish a Retry-After contract publicly.

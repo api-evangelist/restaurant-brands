@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-terminal-structure.json",
+  "name": "Terminal",
+  "description": "The terminal name.",
+  "type": "string",
+  "example": "window-2"
+}

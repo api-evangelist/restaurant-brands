@@ -1,0 +1,38 @@
+{
+  "meta": "example",
+  "dayParts": [
+    {
+      "id": {},
+      "daysOfWeek": {},
+      "startTime": {},
+      "endTime": {}
+    }
+  ],
+  "rootMenuEntryId": "entry-id",
+  "entries": [
+    {
+      "id": {},
+      "referenceId": {},
+      "type": {},
+      "groupType": {},
+      "name": {},
+      "description": {},
+      "available": {},
+      "image": {},
+      "price": {},
+      "options": {},
+      "dayParts": {},
+      "nutrition": {},
+      "translations": {}
+    }
+  ],
+  "systemWideOfferEntries": [
+    {}
+  ],
+  "rewardEntries": [
+    {}
+  ],
+  "configOfferEntries": [
+    {}
+  ]
+}

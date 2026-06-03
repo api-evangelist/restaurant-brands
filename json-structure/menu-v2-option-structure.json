@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-option-structure.json",
+  "name": "Option",
+  "description": "Option schema from Burger King's Partners API v2",
+  "type": "object",
+  "properties": {
+    "entryId": {
+      "type": "string",
+      "description": "Unique identifier for the option entry",
+      "example": "500123"
+    },
+    "isMainItem": {
+      "type": "boolean",
+      "description": "Indicates if this is the main item (optional)",
+      "example": true
+    },
+    "type": {
+      "type": "string",
+      "description": "Enum identifying the offer entry type.\nDepending on this value, the referenced resource will be located on that specific Menu's array:\n| Value | Menu Path |\n|-------|------------|\n|CONFIG_OFFER|Menu.configOfferEntries|\n|ENTRY|Menu.entries|\n|SYSTEM_WIDE_OFFER|Menu.systemWideOfferEntries|\n|REWARD|Menu.rewardEntries|\n",
+      "enum": [
+        "CONFIG_OFFER",
+        "ENTRY",
+        "SYSTEM_WIDE_OFFER",
+        "REWARD"
+      ],
+      "example": "CONFIG_OFFER"
+    }
+  },
+  "required": [
+    "entryId",
+    "type"
+  ]
+}

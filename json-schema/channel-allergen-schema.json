@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Allergen",
+  "description": "Allergen (such as \"Peanuts\")",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-allergen-schema.json",
+  "type": "object",
+  "properties": {
+    "allergen": {
+      "type": "string",
+      "enum": [
+        "PEANUTS"
+      ],
+      "example": "PEANUTS"
+    },
+    "contains": {
+      "type": "number",
+      "description": "3 = Contains; 2 = May Contain; 1 = Cooked in same equipment; 0 = Free From",
+      "format": "integer",
+      "example": 1.0
+    }
+  }
+}

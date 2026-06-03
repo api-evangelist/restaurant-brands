@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-availability-structure.json",
+  "name": "Availability",
+  "description": "Availability options for delivery and pickup.\nA node is considered not available if the value for that service mode `false`.\nThat means, a node is available if the value is `true` or `undefined`\n",
+  "type": "object",
+  "properties": {
+    "delivery": {
+      "type": "boolean",
+      "description": "Whether the entry is available for delivery",
+      "example": true
+    },
+    "pickup": {
+      "type": "boolean",
+      "description": "Whether the entry is available for pickup",
+      "example": true
+    }
+  }
+}

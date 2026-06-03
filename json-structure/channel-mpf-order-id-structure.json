@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-mpf-order-id-structure.json",
+  "name": "MpfOrderId",
+  "description": "External References for the order.\n\nYou can use this field to provide additional identifiers or any other string data to the order to be injected. \nA common use for this is to hold additional external order numbers, like receipt number or third party short order ID.\n",
+  "type": "string",
+  "example": "123456789"
+}

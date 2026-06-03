@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-charges-structure.json",
+  "name": "Charges",
+  "description": "Order pricing details",
+  "type": "object",
+  "properties": {
+    "tax": {
+      "$ref": "#/components/schemas/Money",
+      "description": "Taxes the customer must pay"
+    },
+    "mpfTax": {
+      "$ref": "#/components/schemas/MFTaxes",
+      "description": "Taxes calculated from the partners side"
+    },
+    "subTotal": {
+      "$ref": "#/components/schemas/Money",
+      "description": "The subtotal the customer must pay"
+    },
+    "total": {
+      "$ref": "#/components/schemas/Money",
+      "description": "The total amount the customer must pay"
+    },
+    "fees": {
+      "$ref": "#/components/schemas/Fees"
+    }
+  }
+}

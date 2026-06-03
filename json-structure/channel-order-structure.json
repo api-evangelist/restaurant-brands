@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-order-structure.json",
+  "name": "Order",
+  "description": "Representation of an order placed by a customer",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/OrderId",
+      "description": "Internal order ID"
+    },
+    "externalReferenceId": {
+      "$ref": "#/components/schemas/ExternalReferenceId"
+    },
+    "storeId": {
+      "$ref": "#/components/schemas/StoreId",
+      "description": "Internal store ID"
+    },
+    "cart": {
+      "$ref": "#/components/schemas/CartPriced"
+    },
+    "serviceMode": {
+      "$ref": "#/components/schemas/ServiceMode"
+    },
+    "customer": {
+      "$ref": "#/components/schemas/Customer"
+    },
+    "charges": {
+      "$ref": "#/components/schemas/Charges"
+    },
+    "discounts": {
+      "$ref": "#/components/schemas/Discounts"
+    },
+    "payment": {
+      "$ref": "#/components/schemas/Payment"
+    },
+    "posVendor": {
+      "$ref": "#/components/schemas/PosVendor"
+    },
+    "status": {
+      "$ref": "#/components/schemas/OrderStatus"
+    },
+    "deliveryAddress": {
+      "$ref": "#/components/schemas/Address",
+      "description": "Where the order will be delivered (only delivery orders)"
+    },
+    "loyaltyPointsEarned": {
+      "type": "int32",
+      "description": "Amount of Loyalty Points earned on this order",
+      "minimum": 0,
+      "example": 15
+    },
+    "errors": {
+      "description": "Any errors which occurred during order processing",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/POSOrderError"
+      }
+    },
+    "createdAt": {
+      "$ref": "#/components/schemas/DateTime",
+      "description": "When the order was first created"
+    },
+    "updatedAt": {
+      "$ref": "#/components/schemas/DateTime",
+      "description": "When the order was last updated"
+    },
+    "fireOrderInSeconds": {
+      "$ref": "#/components/schemas/FireOrderInSeconds"
+    },
+    "preparationTimeInSeconds": {
+      "type": "int32",
+      "description": "Estimated time it takes to prepare an order",
+      "minimum": 0,
+      "example": 300
+    },
+    "readyInSeconds": {
+      "$ref": "#/components/schemas/ReadyInSeconds"
+    }
+  },
+  "required": [
+    "id",
+    "cart",
+    "customer",
+    "storeId",
+    "charges",
+    "status",
+    "channel",
+    "serviceMode",
+    "createdAt",
+    "updatedAt",
+    "posVendor",
+    "fireOrderInSeconds",
+    "preparationTimeInSeconds",
+    "readyInSeconds"
+  ]
+}

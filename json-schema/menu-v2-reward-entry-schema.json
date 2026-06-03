@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RewardEntry",
+  "description": "RewardEntry schema from Burger King's Partners API v2",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-reward-entry-schema.json",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LoyaltyEntry"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Option"
+          }
+        },
+        "type": {
+          "description": "Unique identifier for a reward entry",
+          "enum": [
+            "REWARD"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ]
+}

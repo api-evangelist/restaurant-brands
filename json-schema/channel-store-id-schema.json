@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StoreId",
+  "description": "Unique Store ID",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-store-id-schema.json",
+  "type": "string",
+  "pattern": "^\\d+$",
+  "example": "42"
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-address-structure.json",
+  "name": "Address",
+  "description": "Standardized representation of a physical address",
+  "type": "object",
+  "properties": {
+    "administrativeArea": {
+      "description": "The highest administrative subdivision of a country or region. This can\nbe a state, a province, an oblast, or a prefecture. For places that do\nnot have an administrative area, this field must be omitted.\n",
+      "type": "string",
+      "example": "FL"
+    },
+    "coordinates": {
+      "$ref": "#/components/schemas/GeoPoint"
+    },
+    "formattedAddress": {
+      "description": "A locale-formatted version of the address appropriate for display.\n",
+      "type": "string",
+      "example": "5707 Blue Lagoon Drive"
+    },
+    "instructions": {
+      "description": "Free-form instructions for accessing the location",
+      "type": "string",
+      "example": "example"
+    },
+    "locality": {
+      "type": "string",
+      "description": "Generally refers to the city or town portion of the address.\n\nExamples include a city in the United States, a comune in Italy, and a\npost town in the United Kingdom.\n",
+      "example": "Miami-Dade County"
+    },
+    "postalCode": {
+      "description": "The postal code of the address. This field is optional because not all\ncountries use or require postal codes.\n",
+      "type": "string",
+      "example": "33126"
+    },
+    "regionCode": {
+      "description": "The Unicode\n[Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address. For example, the\ncode for the United States of America is `US`.\n\nFor the full list of codes, refer to the\n[CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+      "type": "string",
+      "example": "US"
+    },
+    "route": {
+      "description": "Indicates the named route. This is often the name of the street, like\n`Blue Lagoon Drive`.\n",
+      "type": "string",
+      "example": "Blue Lagoon Drive"
+    },
+    "streetNumber": {
+      "description": "Indicates the precise street number. An example is `5707`.\n",
+      "type": "string",
+      "example": "5707"
+    },
+    "sublocality": {
+      "description": "A smaller area within the locality. Examples include neighborhoods,\nboroughs, and districts.\n",
+      "type": "string",
+      "example": "example"
+    },
+    "subpremise": {
+      "description": "Finer-grained information about the location like unit or suite number.\n",
+      "type": "string",
+      "example": "Suite 101"
+    }
+  },
+  "required": [
+    "formattedAddress",
+    "regionCode",
+    "route",
+    "streetNumber"
+  ]
+}

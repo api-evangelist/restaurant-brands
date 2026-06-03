@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TimeSlot",
+  "description": "Contains information about the store service hours for a range of 15 consecutive days,\nstarting from the day before the request is made.\n",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-time-slot-schema.json",
+  "type": "object",
+  "properties": {
+    "closes": {
+      "description": "Store close time.",
+      "example": "1991-02-11 23:59:00",
+      "format": "ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)",
+      "type": "string"
+    },
+    "date": {
+      "description": "Calendar day that this time slot reflects",
+      "example": "1991-02-11",
+      "format": "ISO 8601 Date (YYYY-MM-DD)",
+      "type": "string"
+    },
+    "isClosed": {
+      "description": "Flag that determines if the store is closed.\n\nIf the store is open, this property won't be returned.\n",
+      "type": "boolean",
+      "example": true
+    },
+    "opens": {
+      "description": "Store open time.",
+      "example": "1991-02-11 00:00:00",
+      "format": "ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "opens",
+    "date",
+    "closes"
+  ]
+}

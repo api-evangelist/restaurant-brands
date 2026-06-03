@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-currency-structure.json",
+  "name": "Currency",
+  "description": "Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format",
+  "type": "string",
+  "format": "ISO-4217 alpha",
+  "example": "USD"
+}

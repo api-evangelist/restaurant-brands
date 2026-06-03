@@ -14,12 +14,12 @@ tags:
   - Quick Service Restaurants
   - Restaurants
 created: '2026-05-23'
-modified: '2026-05-23'
+modified: '2026-06-03'
 specificationVersion: '0.19'
 kind: company
 x-type: company
-x-tier: 3
-x-tier-reason: no-apis
+x-tier: 2
+x-tier-reason: partner-api
 description: >-
   Restaurant Brands International (RBI, NYSE: QSR) is one of the world's
   largest quick service restaurant companies, with nearly $45 billion in
@@ -27,16 +27,88 @@ description: >-
   countries and territories. RBI operates four iconic brands — Tim Hortons,
   Burger King, Popeyes Louisiana Kitchen, and Firehouse Subs — and in May
   2024 closed its $1B acquisition of Carrols Restaurant Group, Burger King's
-  largest U.S. franchisee. RBI publishes no public developer program; its
-  consumer ordering, loyalty (Royal Perks, Tims Rewards, Popeyes Rewards,
-  Firehouse Rewards), and franchisee/POS surfaces run on a private GraphQL
-  backend operated by RBI Tech Group (rbictg.com) and integrate with
-  NCR Voyix BSP POS APIs via HMAC. The public-facing GitHub presence
-  (github.com/rbilabs) is limited to internal tooling forks (GraphQL schema
-  utilities, Apollo Server DynamoDB cache, AWS API Gateway Developer Portal,
-  Cypress autorecord, Jira PR link action) and an archived hackathon repo.
-apis: []
+  largest U.S. franchisee. RBI Tech Group (rbictg.com) publishes a partner
+  developer portal (the RBI Developer Portal on Confluence) documenting the
+  Partners API — a set of partner-onboarding REST APIs for third-party food
+  ordering marketplaces and POS/kiosk vendors integrating into RBI's
+  fulfillment platform. The documented surface includes ordering
+  (price / commit / fire / place), menu and store retrieval, store-status
+  and order/menu webhooks (Burger King's Partners API v1 "Channel" and
+  v2 "Menu"), loyalty identification and transaction validation, and
+  payment capture / refund endpoints. Access is bilateral: partners request
+  a Staging environment and are issued environment-, country-, and
+  brand-scoped credentials (a bearer JWT for the Partners API; x-region /
+  x-api-key / x-user-datetime headers for the Loyalty middleware). There is
+  no public self-service signup, pricing, or rate card. The public GitHub
+  presence (github.com/rbilabs) is limited to internal tooling forks and an
+  archived hackathon repo.
+apis:
+  - name: Channel Partners API
+    description: >-
+      Burger King's Partners API v1 — the Channel Partners API for third-party
+      food ordering marketplaces integrating into the Restaurant Brands
+      International (RBI) fulfillment platform. Covers loyalty identification,
+      store and menu retrieval, the order lifecycle (price, commit, fire,
+      place), and order/menu/store webhooks. OpenAPI 3.1.0, bearer JWT auth.
+    baseURL: https://bk-partners.rbictg.com/api/v1
+    humanURL: https://bk-partners.rbictg.com/docs/channel/
+    tags:
+      - Ordering
+      - Loyalty
+      - Menus
+      - Stores
+      - Partner Integration
+    properties:
+      - type: OpenAPI
+        url: openapi/channel-openapi.yml
+      - type: APIReference
+        url: https://bk-partners.rbictg.com/docs/channel/
+      - type: Documentation
+        url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+      - type: Authentication
+        url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+      - type: JSON-LD
+        url: json-ld/restaurant-brands-channel-context.jsonld
+      - type: NaftikoCapability
+        url: capabilities/channel-loyalty.yaml
+      - type: NaftikoCapability
+        url: capabilities/channel-menus.yaml
+      - type: NaftikoCapability
+        url: capabilities/channel-orders.yaml
+      - type: NaftikoCapability
+        url: capabilities/channel-stores.yaml
+  - name: Partners Menu API v2
+    description: >-
+      Burger King's Partners API v2 — the Partners Menu API for third-party
+      food ordering marketplaces retrieving store menus from Burger King's
+      end-to-end fulfillment platform. OpenAPI 3.1.0, bearer JWT auth.
+    baseURL: https://bk-partners.rbictg.com/api/v2
+    humanURL: https://bk-partners.rbictg.com/docs/v2/
+    tags:
+      - Menus
+      - Partner Integration
+    properties:
+      - type: OpenAPI
+        url: openapi/menu-v2-openapi.yml
+      - type: APIReference
+        url: https://bk-partners.rbictg.com/docs/v2/
+      - type: JSON-LD
+        url: json-ld/restaurant-brands-menu-v2-context.jsonld
+      - type: NaftikoCapability
+        url: capabilities/menu-v2-menus.yaml
 common:
+  - type: DeveloperPortal
+    url: https://rbictg.atlassian.net/wiki/spaces/RDP/overview
+  - type: SpectralRules
+    url: rules/restaurant-brands-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/restaurant-brands-vocabulary.yml
+  - type: Plans
+    url: plans/restaurant-brands-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/restaurant-brands-rate-limits.yml
+  - type: FinOps
+    url: finops/restaurant-brands-finops.yml
   - type: Website
     url: https://www.rbi.com
   - type: About

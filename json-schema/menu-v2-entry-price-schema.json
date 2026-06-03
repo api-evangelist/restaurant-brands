@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EntryPrice",
+  "description": "Price information for a menu entry",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-entry-price-schema.json",
+  "type": "object",
+  "properties": {
+    "delivery": {
+      "type": "number",
+      "description": "Price, in cents, for delivery",
+      "example": 1.0
+    },
+    "pickup": {
+      "type": "number",
+      "description": "Price, in cents, for pickup",
+      "example": 1.0
+    }
+  }
+}

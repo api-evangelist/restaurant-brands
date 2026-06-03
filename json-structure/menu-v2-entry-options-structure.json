@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-entry-options-structure.json",
+  "name": "EntryOptions",
+  "description": "Options configuration for a menu entry",
+  "type": "object",
+  "properties": {
+    "defaults": {
+      "type": "array",
+      "description": "Options which should be selected by default",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "entries": {
+      "type": "array",
+      "description": "Collection of references to the item's options",
+      "items": {
+        "$ref": "#/components/schemas/EntryOptions"
+      }
+    },
+    "injectDefault": {
+      "type": "boolean",
+      "description": "Whether or not to inject the default options",
+      "example": true
+    },
+    "quantity": {
+      "$ref": "#/components/schemas/Quantity"
+    }
+  }
+}

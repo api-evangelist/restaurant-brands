@@ -1,0 +1,16 @@
+{
+  "serviceMode": "TAKEOUT",
+  "timeSlots": [
+    {
+      "closes": {},
+      "date": {},
+      "isClosed": {},
+      "opens": {}
+    }
+  ],
+  "weekdayHours": [
+    {
+      "text": {}
+    }
+  ]
+}

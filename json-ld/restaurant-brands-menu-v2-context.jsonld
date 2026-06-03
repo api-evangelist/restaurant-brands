@@ -1,0 +1,363 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "rbi": "https://rbictg.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Availability": "rbi:Availability",
+    "LocalizedString": "rbi:LocalizedString",
+    "Image": "rbi:Image",
+    "Option": "rbi:Option",
+    "EntryPrice": "rbi:EntryPrice",
+    "Quantity": "rbi:Quantity",
+    "LoyaltyEntry": "rbi:LoyaltyEntry",
+    "ConfigOfferEntry": "rbi:ConfigOfferEntry",
+    "DayPartSchedule": "rbi:DayPartSchedule",
+    "DayPart": "rbi:DayPart",
+    "Allergen": "rbi:Allergen",
+    "Calories": "rbi:Calories",
+    "Nutrient": "rbi:Nutrient",
+    "Nutrition": "rbi:Nutrition",
+    "EntryOptions": "rbi:EntryOptions",
+    "MenuEntry": "rbi:MenuEntry",
+    "Meta": "rbi:Meta",
+    "RewardEntry": "rbi:RewardEntry",
+    "SystemWideOfferEntry": "rbi:SystemWideOfferEntry",
+    "PaperCouponEntry": "rbi:PaperCouponEntry",
+    "Menu": "rbi:Menu",
+    "delivery": {
+      "@id": "rbi:delivery",
+      "@type": "xsd:boolean"
+    },
+    "pickup": {
+      "@id": "rbi:pickup",
+      "@type": "xsd:boolean"
+    },
+    "en": {
+      "@id": "rbi:en",
+      "@type": "xsd:string"
+    },
+    "fr": {
+      "@id": "rbi:fr",
+      "@type": "xsd:string"
+    },
+    "altText": {
+      "@id": "rbi:altText",
+      "@type": "@id"
+    },
+    "resource": {
+      "@id": "rbi:resource",
+      "@type": "xsd:string"
+    },
+    "entryId": {
+      "@id": "rbi:entryId",
+      "@type": "xsd:string"
+    },
+    "isMainItem": {
+      "@id": "rbi:isMainItem",
+      "@type": "xsd:boolean"
+    },
+    "type": {
+      "@id": "rbi:type",
+      "@type": "xsd:string"
+    },
+    "def": {
+      "@id": "rbi:def",
+      "@type": "xsd:integer"
+    },
+    "max": {
+      "@id": "rbi:max",
+      "@type": "xsd:integer"
+    },
+    "min": {
+      "@id": "rbi:min",
+      "@type": "xsd:integer"
+    },
+    "availability": {
+      "@id": "rbi:availability",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "discountType": {
+      "@id": "rbi:discountType",
+      "@type": "xsd:string"
+    },
+    "discountValue": {
+      "@id": "rbi:discountValue",
+      "@type": "xsd:double"
+    },
+    "id": {
+      "@id": "rbi:id",
+      "@type": "xsd:string"
+    },
+    "image": {
+      "@id": "rbi:image",
+      "@type": "@id"
+    },
+    "loyaltyEngineId": {
+      "@id": "rbi:loyaltyEngineId",
+      "@type": "xsd:string"
+    },
+    "loyaltyPoints": {
+      "@id": "rbi:loyaltyPoints",
+      "@type": "xsd:double"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "options": {
+      "@id": "rbi:options",
+      "@container": "@set"
+    },
+    "price": {
+      "@id": "rbi:price",
+      "@type": "@id"
+    },
+    "quantity": {
+      "@id": "rbi:quantity",
+      "@type": "@id"
+    },
+    "friClose": {
+      "@id": "rbi:friClose",
+      "@type": "xsd:string"
+    },
+    "friOpen": {
+      "@id": "rbi:friOpen",
+      "@type": "xsd:string"
+    },
+    "monClose": {
+      "@id": "rbi:monClose",
+      "@type": "xsd:string"
+    },
+    "monOpen": {
+      "@id": "rbi:monOpen",
+      "@type": "xsd:string"
+    },
+    "satClose": {
+      "@id": "rbi:satClose",
+      "@type": "xsd:string"
+    },
+    "satOpen": {
+      "@id": "rbi:satOpen",
+      "@type": "xsd:string"
+    },
+    "sunClose": {
+      "@id": "rbi:sunClose",
+      "@type": "xsd:string"
+    },
+    "sunOpen": {
+      "@id": "rbi:sunOpen",
+      "@type": "xsd:string"
+    },
+    "thrClose": {
+      "@id": "rbi:thrClose",
+      "@type": "xsd:string"
+    },
+    "thrOpen": {
+      "@id": "rbi:thrOpen",
+      "@type": "xsd:string"
+    },
+    "tueClose": {
+      "@id": "rbi:tueClose",
+      "@type": "xsd:string"
+    },
+    "tueOpen": {
+      "@id": "rbi:tueOpen",
+      "@type": "xsd:string"
+    },
+    "wedClose": {
+      "@id": "rbi:wedClose",
+      "@type": "xsd:string"
+    },
+    "wedOpen": {
+      "@id": "rbi:wedOpen",
+      "@type": "xsd:string"
+    },
+    "schedule": {
+      "@id": "rbi:schedule",
+      "@type": "@id"
+    },
+    "celery": {
+      "@id": "rbi:celery",
+      "@type": "xsd:string"
+    },
+    "eggs": {
+      "@id": "rbi:eggs",
+      "@type": "xsd:string"
+    },
+    "fish": {
+      "@id": "rbi:fish",
+      "@type": "xsd:string"
+    },
+    "gluten": {
+      "@id": "rbi:gluten",
+      "@type": "xsd:string"
+    },
+    "lupin": {
+      "@id": "rbi:lupin",
+      "@type": "xsd:string"
+    },
+    "milk": {
+      "@id": "rbi:milk",
+      "@type": "xsd:string"
+    },
+    "mustard": {
+      "@id": "rbi:mustard",
+      "@type": "xsd:string"
+    },
+    "peanuts": {
+      "@id": "rbi:peanuts",
+      "@type": "xsd:string"
+    },
+    "sesame": {
+      "@id": "rbi:sesame",
+      "@type": "xsd:string"
+    },
+    "shellfish": {
+      "@id": "rbi:shellfish",
+      "@type": "xsd:string"
+    },
+    "soy": {
+      "@id": "rbi:soy",
+      "@type": "xsd:string"
+    },
+    "sulphurDioxide": {
+      "@id": "rbi:sulphurDioxide",
+      "@type": "xsd:string"
+    },
+    "treeNuts": {
+      "@id": "rbi:treeNuts",
+      "@type": "xsd:string"
+    },
+    "wheat": {
+      "@id": "rbi:wheat",
+      "@type": "xsd:string"
+    },
+    "carbohydrates": {
+      "@id": "rbi:carbohydrates",
+      "@type": "xsd:double"
+    },
+    "cholesterol": {
+      "@id": "rbi:cholesterol",
+      "@type": "xsd:double"
+    },
+    "energyKJ": {
+      "@id": "rbi:energyKJ",
+      "@type": "xsd:double"
+    },
+    "fat": {
+      "@id": "rbi:fat",
+      "@type": "xsd:double"
+    },
+    "fiber": {
+      "@id": "rbi:fiber",
+      "@type": "xsd:double"
+    },
+    "proteins": {
+      "@id": "rbi:proteins",
+      "@type": "xsd:double"
+    },
+    "salt": {
+      "@id": "rbi:salt",
+      "@type": "xsd:double"
+    },
+    "saturatedFat": {
+      "@id": "rbi:saturatedFat",
+      "@type": "xsd:double"
+    },
+    "sodium": {
+      "@id": "rbi:sodium",
+      "@type": "xsd:double"
+    },
+    "sugar": {
+      "@id": "rbi:sugar",
+      "@type": "xsd:double"
+    },
+    "transFat": {
+      "@id": "rbi:transFat",
+      "@type": "xsd:double"
+    },
+    "weight": {
+      "@id": "rbi:weight",
+      "@type": "xsd:double"
+    },
+    "allergens": {
+      "@id": "rbi:allergens",
+      "@type": "@id"
+    },
+    "calories": {
+      "@id": "rbi:calories",
+      "@type": "@id"
+    },
+    "nutrients": {
+      "@id": "rbi:nutrients",
+      "@type": "@id"
+    },
+    "defaults": {
+      "@id": "rbi:defaults",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "entries": {
+      "@id": "rbi:entries",
+      "@container": "@set"
+    },
+    "injectDefault": {
+      "@id": "rbi:injectDefault",
+      "@type": "xsd:boolean"
+    },
+    "dayParts": {
+      "@id": "rbi:dayParts",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "displayGroup": {
+      "@id": "rbi:displayGroup",
+      "@type": "xsd:string"
+    },
+    "nutrition": {
+      "@id": "rbi:nutrition",
+      "@type": "@id"
+    },
+    "productType": {
+      "@id": "rbi:productType",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "currency": {
+      "@id": "rbi:currency",
+      "@type": "xsd:string"
+    },
+    "imageBaseUrl": {
+      "@id": "rbi:imageBaseUrl",
+      "@type": "xsd:string"
+    },
+    "configOfferEntries": {
+      "@id": "rbi:configOfferEntries",
+      "@container": "@set"
+    },
+    "meta": {
+      "@id": "rbi:meta",
+      "@type": "@id"
+    },
+    "rewardEntries": {
+      "@id": "rbi:rewardEntries",
+      "@container": "@set"
+    },
+    "rootMenuEntryId": {
+      "@id": "rbi:rootMenuEntryId",
+      "@type": "xsd:string"
+    },
+    "systemWideOfferEntries": {
+      "@id": "rbi:systemWideOfferEntries",
+      "@container": "@set"
+    },
+    "paperCouponEntries": {
+      "@id": "rbi:paperCouponEntries",
+      "@container": "@set"
+    }
+  }
+}

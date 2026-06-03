@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-mftaxes-structure.json",
+  "name": "MFTaxes",
+  "description": "Representation of taxes calculated by the partner.\n",
+  "type": "object",
+  "properties": {
+    "taxRemittedByMpf": {
+      "title": "Tax Amount Remitted By Marketplace Facilitator",
+      "description": "The subtotal taxes from the market place facilitator",
+      "$ref": "#/components/schemas/Money"
+    },
+    "isTaxRemittedByMpf": {
+      "title": "The taxes calculation is handled by the Marketplace Facilitator",
+      "description": "Boolean which represents if the taxes are calculated from the Partner",
+      "type": "boolean",
+      "example": true
+    }
+  },
+  "required": [
+    "taxRemittedByMpf",
+    "isTaxRemittedByMpf"
+  ]
+}

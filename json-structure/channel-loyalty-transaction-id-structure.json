@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-loyalty-transaction-id-structure.json",
+  "name": "LoyaltyTransactionId",
+  "description": "The loyalty transaction id created for the identify request",
+  "type": "string",
+  "example": "a73ea594-202c-52b4-80af-1f6b518ef54d"
+}

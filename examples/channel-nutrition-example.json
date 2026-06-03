@@ -1,0 +1,21 @@
+{
+  "calories": {
+    "default": 1.0,
+    "displayType": "Range",
+    "lowerRange": 1.0,
+    "upperRange": 1.0
+  },
+  "nutrients": [
+    {
+      "name": {},
+      "value": {},
+      "unit": {}
+    }
+  ],
+  "allergens": [
+    {
+      "allergen": {},
+      "contains": {}
+    }
+  ]
+}

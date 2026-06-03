@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/channel-nutrient-structure.json",
+  "name": "Nutrient",
+  "description": "Details for an individual nutrient",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "enum": [
+        "SODIUM"
+      ],
+      "example": "SODIUM"
+    },
+    "value": {
+      "type": "double",
+      "minimum": 0,
+      "example": 1.0
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "G",
+        "KJ"
+      ],
+      "example": "G"
+    }
+  }
+}

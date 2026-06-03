@@ -1,0 +1,60 @@
+{
+  "id": "example-unique-id",
+  "externalReferenceId": "500123",
+  "storeId": "42",
+  "cart": {
+    "menuSelections": [
+      {}
+    ],
+    "feedback": {}
+  },
+  "serviceMode": "TAKEOUT",
+  "customer": {
+    "id": "500123",
+    "externalReferenceId": {},
+    "name": "Whopper",
+    "username": "example",
+    "phone": {},
+    "email": "guest@example.com"
+  },
+  "charges": {
+    "tax": {},
+    "mpfTax": {},
+    "subTotal": {},
+    "total": {},
+    "fees": {}
+  },
+  "discounts": [
+    {}
+  ],
+  "payment": {
+    "paymentMethod": {}
+  },
+  "posVendor": "BRINK",
+  "status": "CREATED",
+  "deliveryAddress": {
+    "administrativeArea": "FL",
+    "coordinates": {},
+    "formattedAddress": "5707 Blue Lagoon Drive",
+    "instructions": "example",
+    "locality": "Miami-Dade County",
+    "postalCode": "33126",
+    "regionCode": "US",
+    "route": "Blue Lagoon Drive",
+    "streetNumber": "5707",
+    "sublocality": "example",
+    "subpremise": "Suite 101"
+  },
+  "loyaltyPointsEarned": 15,
+  "errors": [
+    {
+      "message": {},
+      "code": {}
+    }
+  ],
+  "createdAt": "1991-02-11T20:30:19Z",
+  "updatedAt": "1991-02-11T20:30:19Z",
+  "fireOrderInSeconds": 600,
+  "preparationTimeInSeconds": 300,
+  "readyInSeconds": 600
+}

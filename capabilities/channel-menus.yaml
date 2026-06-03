@@ -1,0 +1,99 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Burger King's Partners API — Menus
+  description: 'Menus surface of the Restaurant Brands International (RBI) Partners platform. 1 operation(s). Lead operation: Menu. Self-contained Naftiko capability covering one Restaurant Brands International business surface.'
+  tags:
+  - Restaurant Brands International
+  - Partners API
+  - Menus
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    RBI_PARTNERS_JWT: RBI_PARTNERS_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: channel-menus
+    baseUri: https://bk-partners.rbictg.com/api/v1
+    description: Burger King's Partners API — Menus business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.RBI_PARTNERS_JWT}}'
+    resources:
+    - name: stores-store-id-menus-service-mode
+      path: /stores/{storeId}/menus/{serviceMode}
+      operations:
+      - name: getStoreMenu
+        method: GET
+        description: Menu
+        inputParameters:
+        - name: x-ui-region
+          in: header
+          type: string
+          required: false
+          description: "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+        - name: storeId
+          in: path
+          type: string
+          required: true
+          description: Unique Store ID
+        - name: serviceMode
+          in: path
+          type: string
+          required: true
+          description: Service mode
+        - name: version
+          in: query
+          type: string
+          required: false
+          description: Menu version ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: channel-menus-rest
+    port: 8080
+    description: REST adapter for Burger King's Partners API — Menus. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/stores-store-id-menus-service-mode
+      name: stores-store-id-menus-service-mode
+      description: REST surface for Menu.
+      operations:
+      - method: GET
+        name: getStoreMenu
+        description: Menu
+        call: channel-menus.getStoreMenu
+        with:
+          x-ui-region: rest.x-ui-region
+          storeId: rest.storeId
+          serviceMode: rest.serviceMode
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: channel-menus-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Burger King's Partners API — Menus. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: menu
+      description: Menu
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: channel-menus.getStoreMenu
+      with:
+        x-ui-region: tools.x-ui-region
+        storeId: tools.storeId
+        serviceMode: tools.serviceMode
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.

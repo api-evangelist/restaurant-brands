@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-structure/menu-v2-menu-entry-structure.json",
+  "name": "MenuEntry",
+  "description": "Represents a single menu entry",
+  "type": "object",
+  "properties": {
+    "availability": {
+      "$ref": "#/components/schemas/Availability",
+      "description": "Whether or not the entry is available."
+    },
+    "dayParts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Collection of references to the item's day parts. The item should only be available during the associated day parts.\n",
+      "example": []
+    },
+    "description": {
+      "$ref": "#/components/schemas/LocalizedString",
+      "description": "Text that has been translated to the correct locale for the current context"
+    },
+    "displayGroup": {
+      "type": "string",
+      "description": "Display group id",
+      "example": "example"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for a menu entry",
+      "example": "500123"
+    },
+    "image": {
+      "$ref": "#/components/schemas/Image"
+    },
+    "name": {
+      "$ref": "#/components/schemas/LocalizedString",
+      "description": "Text that has been translated to the correct locale for the current context"
+    },
+    "nutrition": {
+      "$ref": "#/components/schemas/Nutrition",
+      "description": "Nutrition Details"
+    },
+    "options": {
+      "$ref": "#/components/schemas/EntryOptions"
+    },
+    "price": {
+      "$ref": "#/components/schemas/EntryPrice",
+      "description": "Base prices for this entry"
+    },
+    "productType": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "DRINKS",
+          "DESSERTS",
+          "FROZEN_DRINKS",
+          "JUICES",
+          "SHAKES",
+          "SIDES",
+          "SIDES_OR_DRINKS",
+          "SOFT_DRINKS",
+          "CONDIMENTS"
+        ]
+      },
+      "description": "Product type enum values",
+      "example": []
+    },
+    "quantity": {
+      "$ref": "#/components/schemas/Quantity",
+      "description": "Quantity constraints (min, max, default) for ordering this entry. The max value represents the maximum amount of this specific entry that can be included in a single order."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "ITEM",
+        "ASPECT_OPTION",
+        "COMBO",
+        "COMBO_SLOT",
+        "MENU",
+        "MODIFIER_GROUP",
+        "PICKER",
+        "PICKER_ASPECT",
+        "SECTION",
+        "MODIFIER"
+      ],
+      "description": "Entry type enum values",
+      "example": "ITEM"
+    }
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}

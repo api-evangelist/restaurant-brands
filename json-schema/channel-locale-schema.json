@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Locale",
+  "description": "Locale details to help render localized text. Locales are composed of the [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code, separated by an underscore (\"_\").",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/channel-locale-schema.json",
+  "type": "string",
+  "format": "ISO-639-1_ISO 3166-1 alpha-2",
+  "example": "en_us"
+}

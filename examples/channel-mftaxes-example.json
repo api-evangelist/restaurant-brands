@@ -1,0 +1,7 @@
+{
+  "taxRemittedByMpf": {
+    "currency": {},
+    "amount": 100
+  },
+  "isTaxRemittedByMpf": true
+}

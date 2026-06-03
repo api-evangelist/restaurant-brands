@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LocalizedString",
+  "description": "Translated text for different locales",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/json-schema/menu-v2-localized-string-schema.json",
+  "type": "object",
+  "properties": {
+    "en": {
+      "type": "string",
+      "description": "English translation",
+      "example": "example"
+    },
+    "fr": {
+      "type": "string",
+      "description": "French translation, if any",
+      "example": "example"
+    }
+  }
+}
