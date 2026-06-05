@@ -1,7 +1,6 @@
 aid: restaurant-brands
 name: Restaurant Brands International
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/apis.yml
 type: Index
 position: Consuming
 access: 3rd-Party
@@ -21,35 +20,26 @@ x-type: company
 x-tier: 2
 x-tier-reason: partner-api
 description: >-
-  Restaurant Brands International (RBI, NYSE: QSR) is one of the world's
-  largest quick service restaurant companies, with nearly $45 billion in
-  annual system-wide sales and over 32,000 restaurants in more than 120
-  countries and territories. RBI operates four iconic brands — Tim Hortons,
-  Burger King, Popeyes Louisiana Kitchen, and Firehouse Subs — and in May
-  2024 closed its $1B acquisition of Carrols Restaurant Group, Burger King's
-  largest U.S. franchisee. RBI Tech Group (rbictg.com) publishes a partner
-  developer portal (the RBI Developer Portal on Confluence) documenting the
-  Partners API — a set of partner-onboarding REST APIs for third-party food
-  ordering marketplaces and POS/kiosk vendors integrating into RBI's
-  fulfillment platform. The documented surface includes ordering
-  (price / commit / fire / place), menu and store retrieval, store-status
-  and order/menu webhooks (Burger King's Partners API v1 "Channel" and
-  v2 "Menu"), loyalty identification and transaction validation, and
-  payment capture / refund endpoints. Access is bilateral: partners request
-  a Staging environment and are issued environment-, country-, and
-  brand-scoped credentials (a bearer JWT for the Partners API; x-region /
-  x-api-key / x-user-datetime headers for the Loyalty middleware). There is
-  no public self-service signup, pricing, or rate card. The public GitHub
-  presence (github.com/rbilabs) is limited to internal tooling forks and an
-  archived hackathon repo.
+  Restaurant Brands International (RBI, NYSE: QSR) is one of the world's largest quick service restaurant companies,
+  with nearly $45 billion in annual system-wide sales and over 32,000 restaurants in more than 120 countries and
+  territories. RBI operates four iconic brands — Tim Hortons, Burger King, Popeyes Louisiana Kitchen, and Firehouse Subs
+  — and in May 2024 closed its $1B acquisition of Carrols Restaurant Group, Burger King's largest U.S. franchisee. RBI
+  Tech Group (rbictg.com) publishes a partner developer portal (the RBI Developer Portal on Confluence) documenting the
+  Partners API — a set of partner-onboarding REST APIs for third-party food ordering marketplaces and POS/kiosk vendors
+  integrating into RBI's fulfillment platform. The documented surface includes ordering (price / commit / fire / place),
+  menu and store retrieval, store-status and order/menu webhooks (Burger King's Partners API v1 "Channel" and v2
+  "Menu"), loyalty identification and transaction validation, and payment capture / refund endpoints. Access is
+  bilateral: partners request a Staging environment and are issued environment-, country-, and brand-scoped credentials
+  (a bearer JWT for the Partners API; x-region / x-api-key / x-user-datetime headers for the Loyalty middleware). There
+  is no public self-service signup, pricing, or rate card. The public GitHub presence (github.com/rbilabs) is limited to
+  internal tooling forks and an archived hackathon repo.
 apis:
   - name: Channel Partners API
     description: >-
-      Burger King's Partners API v1 — the Channel Partners API for third-party
-      food ordering marketplaces integrating into the Restaurant Brands
-      International (RBI) fulfillment platform. Covers loyalty identification,
-      store and menu retrieval, the order lifecycle (price, commit, fire,
-      place), and order/menu/store webhooks. OpenAPI 3.1.0, bearer JWT auth.
+      Burger King's Partners API v1 — the Channel Partners API for third-party food ordering marketplaces integrating
+      into the Restaurant Brands International (RBI) fulfillment platform. Covers loyalty identification, store and menu
+      retrieval, the order lifecycle (price, commit, fire, place), and order/menu/store webhooks. OpenAPI 3.1.0, bearer
+      JWT auth.
     baseURL: https://bk-partners.rbictg.com/api/v1
     humanURL: https://bk-partners.rbictg.com/docs/channel/
     tags:
@@ -69,19 +59,10 @@ apis:
         url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
       - type: JSON-LD
         url: json-ld/restaurant-brands-channel-context.jsonld
-      - type: NaftikoCapability
-        url: capabilities/channel-loyalty.yaml
-      - type: NaftikoCapability
-        url: capabilities/channel-menus.yaml
-      - type: NaftikoCapability
-        url: capabilities/channel-orders.yaml
-      - type: NaftikoCapability
-        url: capabilities/channel-stores.yaml
   - name: Partners Menu API v2
     description: >-
-      Burger King's Partners API v2 — the Partners Menu API for third-party
-      food ordering marketplaces retrieving store menus from Burger King's
-      end-to-end fulfillment platform. OpenAPI 3.1.0, bearer JWT auth.
+      Burger King's Partners API v2 — the Partners Menu API for third-party food ordering marketplaces retrieving store
+      menus from Burger King's end-to-end fulfillment platform. OpenAPI 3.1.0, bearer JWT auth.
     baseURL: https://bk-partners.rbictg.com/api/v2
     humanURL: https://bk-partners.rbictg.com/docs/v2/
     tags:
@@ -94,8 +75,6 @@ apis:
         url: https://bk-partners.rbictg.com/docs/v2/
       - type: JSON-LD
         url: json-ld/restaurant-brands-menu-v2-context.jsonld
-      - type: NaftikoCapability
-        url: capabilities/menu-v2-menus.yaml
 common:
   - type: DeveloperPortal
     url: https://rbictg.atlassian.net/wiki/spaces/RDP/overview
@@ -136,7 +115,8 @@ common:
   - type: Firehouse Subs
     url: https://www.firehousesubs.com
   - type: Carrols Acquisition
-    url: https://www.rbi.com/English/news/news-details/2024/Restaurant-Brands-International-Inc.-Completes-Acquisition-of-Carrols-Restaurant-Group/default.aspx
+    url: >-
+      https://www.rbi.com/English/news/news-details/2024/Restaurant-Brands-International-Inc.-Completes-Acquisition-of-Carrols-Restaurant-Group/default.aspx
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
