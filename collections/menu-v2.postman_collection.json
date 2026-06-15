@@ -1,0 +1,580 @@
+{
+  "item": [
+    {
+      "id": "2f25a4d2-084b-4e1e-9828-5e99bbb31aec",
+      "name": "MenusAPI",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "fbfc0a2b-f43a-40a6-a5d3-6d8bb0f2b8af",
+      "name": "MenuModel",
+      "description": {
+        "content": "<SchemaDefinition schemaRef=\"#/components/schemas/Menu\" />\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "cd101776-bf8f-4c3f-81ef-1effe9dad73f",
+      "name": "ErrorModel",
+      "description": {
+        "content": "<SchemaDefinition schemaRef=\"#/components/schemas/Error\" />\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "06bf98aa-9794-47a8-b554-76c0be84fa92",
+      "name": "Menus",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb26ad1b-85c6-4858-ae47-e44bdb71ec30",
+          "name": "Individual Store Menu",
+          "request": {
+            "name": "Individual Store Menu",
+            "description": {
+              "content": "Get full menu for an individual store\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Tenders example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Menu | menu_1 | Menu |\n| Section | Section | 4763b543-2d04-40a6-8b95-d55750ec554a | Tenders |\n| Picker | Picker | xdgrygmaqSf78Pjdh6UrTF | 3Pc Tenders Meal |\n| picker_pickerAspect | PickerAspect | xdgrygmaqSf78Pjdh6UrTF-76b9c2d3-536e-46bb-a060-f805a63b0063 | Choose a Size |\n| picker_pickerAspectOption | PickerAspectOption | xdgrygmaqSf78Pjdh6UrTF-medium | Large Combo |\n| combo | Combo | 00cc6fc6-5ce7-4361-aa95-9d6d726b5bbd | 3Pc Tenders Medium Combo - Spicy |\n| comboSlot | ComboSlot | group_item_40961 | Main Item |\n| comboSlotOption | ComboSlotOption | option_group_item_40961 | N/A |\n| item | Item | item_40961 | 3Pc Tenders - Spicy |\n| modifierGroup | ModifierGroup | ModifierGroup_60 | Sauces - 1 Included |\n| modifier | Modifier | modifierMultiplier_1-00-163758 | Tartar Sauce |\n\nDefault entry: For each Picker & Modifier Group, each group will have a property, “defaultSelection”.\nDefaultSelection will have an ID for an entry that is default for that group\n\n| Group display type | Description |\n|--------------------|-------------|\n| List | Group of Sections & Pickers(subsections) |\n| Single-Entry | \tOne option that maps to options to select from (Size, Choice of Prep) |\n| Select | \tGroup with Single Selection Option |\n| Multi-Select | Group with Multiple Selection Options |\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId",
+                "menus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Menu version ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "Unique Store ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceMode",
+                  "description": "Service mode"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d93425aa-99cd-40b8-8a2e-5e20d25ce26a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "menus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "Unique Store ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceMode",
+                      "description": "Service mode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configOfferEntries\": [\n      {}\n    ],\n    \"dayParts\": [\n      {}\n    ],\n    \"entries\": [\n      {}\n    ],\n    \"meta\": {\n      \"currency\": {},\n      \"imageBaseUrl\": {}\n    },\n    \"rewardEntries\": [\n      {}\n    ],\n    \"rootMenuEntryId\": \"500123\",\n    \"systemWideOfferEntries\": [\n      {}\n    ],\n    \"paperCouponEntries\": [\n      {}\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "814fcfb2-9085-48df-b520-f4b2d6273e75",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "menus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "Unique Store ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceMode",
+                      "description": "Service mode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "405a2846-fa05-4d85-893a-85d0f4a58e90",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "menus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "Unique Store ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceMode",
+                      "description": "Service mode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34eb2308-0127-4b6e-9ee7-11e1d2aeb58e",
+          "name": "Menu",
+          "request": {
+            "name": "Menu",
+            "description": {
+              "content": "Get full menu\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Flame Grilled Burgers Example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Menu | menu_1 | Menu |\n| Section | Section | section_5596 | Flame Grilled Burgers |\n| Picker | Picker | picker_5520 | Whopper |\n| picker_pickerAspect | PickerAspect | picker_5520-pickerAspect_Size | Select Your Combo Size |\n| picker_pickerAspectOption | AspectOption | picker_5520-pickeraspectvaluesizemedium | Medium - Side and Drink Included |\n| picker_pickerAspect_pickerAspectOption_pickerAspect | PickerAspect | picker_5520-pickerAspect_Size-pickeraspectvaluesizemedium-f172655b-5882-429c-a181-682ef137f044 | Bacon & Cheese |\n| picker_pickerAspectOption_pickerAspectOption2 | AspectOption | picker_5520-pickeraspectvaluesizemedium-baconandcheese | With Bacon & Cheese |\n| combo | Combo | combo_5063 | Whopper with Bacon & Cheese Meal Medium |\n| comboSlot | ComboSlot | combo_5063$main | Main Item |\n| item | Item | item_140 | Whopper with Bacon & Cheese |\n| modifierGroup | ModifierGroup | item_140$Modifier_845 | American Cheese |\n| modifier | Modifier | modifierMultiplier_1-00-200123 | Regular Cheese |\n\nDefault entry: For each Picker & Modifier Group, each group will have a property, “defaultSelection”.\nDefaultSelection will have an ID for an entry that is default for that group\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                "menus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "Unique Store ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7422ce2c-b1f2-4ed9-81b9-62a6224694ec",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    "menus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "Unique Store ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"configOfferEntries\": [\n      {}\n    ],\n    \"dayParts\": [\n      {}\n    ],\n    \"entries\": [\n      {}\n    ],\n    \"meta\": {\n      \"currency\": {},\n      \"imageBaseUrl\": {}\n    },\n    \"rewardEntries\": [\n      {}\n    ],\n    \"rootMenuEntryId\": \"500123\",\n    \"systemWideOfferEntries\": [\n      {}\n    ],\n    \"paperCouponEntries\": [\n      {}\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffb6cb5a-f5dd-488f-8f56-17ed4dc081a5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    "menus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "Unique Store ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68580d7d-c97b-4278-b999-60f4c030ab58",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    "menus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "Unique Store ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sandbox-bk-partners.rbictg.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a6d0d430-699d-4238-9df2-bb800044f9a5",
+    "name": "Burger King's Partners API v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Overview\n\nThe Partners Menu API is provided for third party food ordering marketplaces integrating into Burger King's end to end fulfillment platform.",
+      "type": "text/plain"
+    }
+  }
+}

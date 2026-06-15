@@ -1,0 +1,3110 @@
+{
+  "item": [
+    {
+      "id": "b6c839d3-1fd9-4e80-8b07-f20a79046608",
+      "name": "LoyaltyAPI",
+      "description": {
+        "content": "Loyalty\n\n#### Identify\n\nThis step allows for the identification of loyalty users or offers\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "725c2546-559c-4487-a0ca-2f6159e6c642",
+      "name": "OrdersAPI",
+      "description": {
+        "content": "Order fulfillment is implemented as 2-step workflow: **Price** and **Commit**.\n\n#### Price Order\n\nThe mandatory [Price Order](#operation/priceOrder) API validates the order request and returns the\nsubtotal, total, and tax amounts for the order from the restaurant POS. The request also returns a\nunique order `id`, which must be provided to the subsequent Commit (and/or Fire) API calls.\n\n#### Commit Order\n\nAny successfully priced order may be injected by passing its `orderId` to the [Commit\nOrder](#operation/commitOrder) API.\n\n#### (Optional) Fire Order\n\nFires (dispatches) any committed order to the kitchen for preparation.\n\nOrders may be committed to the restaurant POS, but held indefinitely rather than being \"fired\" to\nthe kitchen for preparation. This preparation time is managed with the `fireOrderInSeconds` attribute\nprovided with the [Commit Order](#operation/commitOrder) API call.\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "b5712365-0bd1-4d71-8f1a-f369cc1747e1",
+      "name": "MenusAPI",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "d35146b6-5d8e-4937-be8f-27cace560c1d",
+      "name": "StoresAPI",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "77ade4ff-3ecd-4b50-b95b-dabb31abaa99",
+      "name": "OrderModel",
+      "description": {
+        "content": "<SchemaDefinition schemaRef=\"#/components/schemas/Order\" />\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "cf29d127-1bba-4060-a07f-fb1f4024abb5",
+      "name": "MenuModel",
+      "description": {
+        "content": "<SchemaDefinition schemaRef=\"#/components/schemas/Menu\" />\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "c50cea7e-1653-43bf-aaa2-f8a23969abdb",
+      "name": "StoreModel",
+      "description": {
+        "content": "<SchemaDefinition schemaRef=\"#/components/schemas/Store\" />\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "a365304d-6277-49c4-9413-5ba337e0fe20",
+      "name": "ErrorModel",
+      "description": {
+        "content": "<SchemaDefinition schemaRef=\"#/components/schemas/Error\" />\n",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "db4993c2-e57c-4ec7-a352-341d3c09606f",
+      "name": "Loyalty",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d136e412-cc17-40db-8173-fd41aab8ee44",
+          "name": "Identify",
+          "request": {
+            "name": "Identify",
+            "description": {},
+            "url": {
+              "path": [
+                "loyalty",
+                "identify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifierType\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"serviceMode\": \"<string>\",\n  \"details\": {\n    \"operator\": \"<string>\",\n    \"terminal\": \"<string>\",\n    \"transactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1d35826f-f6fc-4c78-861b-52c6bc33a9d8",
+              "name": "Loyalty identified",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"cart\": {\n      \"menuSelections\": {}\n    },\n    \"customer\": {\n      \"id\": {},\n      \"externalReferenceId\": {},\n      \"name\": {},\n      \"username\": {},\n      \"phone\": {},\n      \"email\": {}\n    },\n    \"loyalty\": {\n      \"balances\": {},\n      \"loyaltyId\": {},\n      \"transactionId\": {}\n    },\n    \"storeId\": \"42\",\n    \"serviceMode\": \"TAKEOUT\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72377fc2-a541-460e-8a9e-4fd1bb79e7b9",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f615a20-fd99-4ff0-ad38-31deb27efc1b",
+              "name": "Authentication failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d7fcecd-2379-48ec-97a5-d82d92adbed8",
+              "name": "Identifier Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9c779ec-3aef-4ddf-b2bf-60b55cdb486c",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "79ee4f21-a339-430b-a31a-57fbd6baba9b",
+      "name": "Menus",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14f5c0a5-ff82-43fb-b94c-cef51d4d9ef1",
+          "name": "Menu",
+          "request": {
+            "name": "Menu",
+            "description": {
+              "content": "Get full menu for an individual store\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Tenders example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Group | menu_1 | Menu |\n| Section | Group | 4763b543-2d04-40a6-8b95-d55750ec554a | Tenders |\n| Picker | Group | xdgrygmaqSf78Pjdh6UrTF | 3Pc Tenders Meal |\n| picker_pickerAspect | Group | xdgrygmaqSf78Pjdh6UrTF-76b9c2d3-536e-46bb-a060-f805a63b0063 | Choose a Size |\n| picker_pickerAspectOption | Group | xdgrygmaqSf78Pjdh6UrTF-medium | Large Combo |\n| picker_pickerAspect_pickerAspectOption_pickerAspect | Group | xdgrygmaqSf78Pjdh6UrTF-76b9c2d3-536e-46bb-a060-f805a63b0063-medium-b376ee07-5ba9-464d-a3b0-e79ad3643e2a | Choice of Tenders Preparation |\n| picker_pickerAspectOption_pickerAspectOption2 | Group | xdgrygmaqSf78Pjdh6UrTF-medium-spicy | Spicy |\n| combo | Combo | 00cc6fc6-5ce7-4361-aa95-9d6d726b5bbd | 3Pc Tenders Medium Combo - Spicy |\n| comboSlot | Group | group_item_40961 | Main Item |\n| comboSlotOption | Group | option_group_item_40961 | N/A |\n| item | Item | item_40961 | 3Pc Tenders - Spicy |\n| modifierGroup | Group | ModifierGroup_60 | Sauces - 1 Included |\n| modifier | Modifier | modifierMultiplier_1-00-163758 | Tartar Sauce |\n\nDefault entry: For each Picker & Modifier Group, each group will have a property, “defaultSelection”.\nDefaultSelection will have an ID for an entry that is default for that group\n\n\nGROUPS:\nThe menu has four types: Combo, Item, Group and Modifier.\nThe group type exists to wrap relevant references to walk through the menu. Only Combo, Item and\nModifier will be passed to and committed to POS in Cart.\n\n| Types of Groups | Description | Display type |\n|-----------------|-------------|--------------|\n| Menu | Group of Sections | List |\n| Section | Section is a broad container. It can contain pickers, items , combos as well as other sections | List |\n| Picker | Pickers allows an step by step selection process that ultimate resolve in Combos or Item. Pickers have only one immediate child, a reference to the first aspect. | Single entry |\n| Picker Aspect | Group of Picker Aspect Options | Select |\n| Picker Aspect Option | Group of picker Options - References the next aspect for the picker. The picker options of the last aspect reference the final selection result (combo/item) | Single entry |\n| Combo Slot | Group of Combo Slot Options | Select |\n| Combo Slot Option | References Combo Slot Option | Single entry |\n| Modifier Group | Group of Modifiers | Multi-select |\n\n| Group display type | Description |\n|--------------------|-------------|\n| List | Group of Sections & Pickers(subsections) |\n| Single-Entry | \tOne option that maps to options to select from (Size, Choice of Prep) |\n| Select | \tGroup with Single Selection Option |\n| Multi-Select | Group with Multiple Selection Options |\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId",
+                "menus",
+                ":serviceMode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Menu version ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) Unique Store ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceMode",
+                  "description": "(Required) Service mode"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b3cef508-3816-4822-a43c-2cb40e8ea42a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "menus",
+                    ":serviceMode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique Store ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceMode",
+                      "description": "(Required) Service mode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"meta\": \"example\",\n    \"dayParts\": [\n      {}\n    ],\n    \"rootMenuEntryId\": \"entry-id\",\n    \"entries\": [\n      {}\n    ],\n    \"systemWideOfferEntries\": [\n      {}\n    ],\n    \"rewardEntries\": [\n      {}\n    ],\n    \"configOfferEntries\": [\n      {}\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed4bf9fa-968b-4ba7-bece-965eaae18b3c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "menus",
+                    ":serviceMode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique Store ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceMode",
+                      "description": "(Required) Service mode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09931f91-7631-4ada-bc64-2767e186376d",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "menus",
+                    ":serviceMode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique Store ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceMode",
+                      "description": "(Required) Service mode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f00027e9-d8db-468b-bf44-f916570ab2f9",
+      "name": "Orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f91283c0-a55a-4b57-82e2-9a3bf610bf2e",
+          "name": "Order",
+          "request": {
+            "name": "Order",
+            "description": {
+              "content": "Retrieve an order by ID\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "channel",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Unique Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "079cfceb-f30c-4815-83ae-ce877eefcaae",
+              "name": "Order retrieve success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "channel",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"example-unique-id\",\n    \"externalReferenceId\": \"example\",\n    \"storeId\": \"42\",\n    \"cart\": {\n      \"menuSelections\": {},\n      \"feedback\": {}\n    },\n    \"serviceMode\": \"TAKEOUT\",\n    \"customer\": {\n      \"id\": {},\n      \"externalReferenceId\": {},\n      \"name\": {},\n      \"username\": {},\n      \"phone\": {},\n      \"email\": {}\n    },\n    \"charges\": {\n      \"tax\": {},\n      \"mpfTax\": {},\n      \"subTotal\": {},\n      \"total\": {},\n      \"fees\": {}\n    },\n    \"discounts\": [\n      {}\n    ],\n    \"payment\": {\n      \"paymentMethod\": {}\n    },\n    \"posVendor\": \"BRINK\",\n    \"status\": \"CREATED\",\n    \"deliveryAddress\": {\n      \"administrativeArea\": {},\n      \"coordinates\": {},\n      \"formattedAddress\": {},\n      \"instructions\": {},\n      \"locality\": {},\n      \"postalCode\": {},\n      \"regionCode\": {},\n      \"route\": {},\n      \"streetNumber\": {},\n      \"sublocality\": {},\n      \"subpremise\": {}\n    },\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": \"1991-02-11T20:30:19Z\",\n    \"updatedAt\": \"1991-02-11T20:30:19Z\",\n    \"fireOrderInSeconds\": 600,\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": 600\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcd722b5-bdac-490b-9e30-18bb267493d8",
+              "name": "Authentication failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "channel",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6c21e28-a3eb-448b-b393-71a76503cc68",
+              "name": "Order not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "channel",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e57bca2f-b7b8-4261-9b71-250e56114df7",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "channel",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"message\": \"example\",\n      \"details\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ],\n  \"order\": {\n    \"id\": {},\n    \"externalReferenceId\": {},\n    \"storeId\": {},\n    \"cart\": {},\n    \"serviceMode\": {},\n    \"customer\": {},\n    \"charges\": {},\n    \"discounts\": {},\n    \"payment\": {},\n    \"posVendor\": {},\n    \"status\": {},\n    \"deliveryAddress\": {},\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": {},\n    \"updatedAt\": {},\n    \"fireOrderInSeconds\": {},\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9747ef8a-0700-46bf-8171-64bcd509a219",
+          "name": "Price Order",
+          "request": {
+            "name": "Price Order",
+            "description": {
+              "content": "Price a new order.\n\nThe price order API must be called to create a new order and to validate the\ncart prices and item availability with the POS.  When the Price Order\nrequest returns a success reponse, a subsequent [Commit Order](#operation/\ncommitOrder) request should (but is not guarenteed to) succeed.\n\nPrice requests can fail for a variety of reasons. For example\\:\n- Restaurant - The restaurant is unavailable.\n- Menu - An item in the cart is unavailable or violates permitted constraints.\n- Loyalty - Invalid user details were provided or a discount redemption failed.\n- POS - The order failed to price or inject.\n\nLoyalty\n- Rewards:\n  the cart must contain a menu selection with the id of the reward and children menu selections with one of possible options.\n  If a reward points to a combo, then the combo must also contain menu selections for its options.\n  A reward can be reedemed muliple times by modifying the quantity of the root menuSelection. The quantity of the children menuSelection must always be 1.\n- Offers:\n  Offers are presented in the menu in a nested structure. The first level offer will always point to a second level offer by its options.\n  The second level offer defines the entries required in the cart by its options. If the options is of type ENTRY then the item is present in the menu as a regular item.\n  If an option has type 'SYSTEM_WIDE_OFFER' then an entity in the offer section will be present with that id and that entity should point to regular menu items by its options. In this scenario the client is given the capability to chose which option to include in the cart.\n  - Constraints\n    - An order can only contain one offer. This means it isn't possible to provide two menu selections with an offer or specifiying quantity different than 1.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "price"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"storeId\": \"<string>\",\n  \"serviceMode\": \"<string>\",\n  \"cart\": {\n    \"menuSelections\": [\n      {\n        \"id\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"referenceId\": \"<string>\",\n        \"externalReferenceId\": \"<string>\",\n        \"price\": {\n          \"currency\": \"<ISO-4217 alpha>\",\n          \"amount\": \"<integer>\"\n        },\n        \"menuSelections\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/MenuSelection detected>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"id\": \"<string>\",\n    \"externalReferenceId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"phone\": \"<string>\"\n  },\n  \"externalReferenceId\": \"<string>\",\n  \"charges\": {\n    \"tax\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"mpfTax\": {\n      \"taxRemittedByMpf\": {\n        \"currency\": \"<ISO-4217 alpha>\",\n        \"amount\": \"<integer>\"\n      },\n      \"isTaxRemittedByMpf\": \"<boolean>\"\n    },\n    \"subTotal\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"total\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"fees\": [\n      {\n        \"type\": \"<string>\",\n        \"total\": {\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": \"<integer>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"total\": {\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": \"<integer>\"\n        }\n      }\n    ]\n  },\n  \"mpfOrderId\": \"<string>\",\n  \"deliveryAddress\": {\n    \"formattedAddress\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"route\": \"<string>\",\n    \"streetNumber\": \"<string>\",\n    \"administrativeArea\": \"<string>\",\n    \"coordinates\": {\n      \"latitude\": \"<number>\",\n      \"longitude\": \"<number>\"\n    },\n    \"instructions\": \"<string>\",\n    \"locality\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"sublocality\": \"<string>\",\n    \"subpremise\": \"<string>\"\n  },\n  \"loyalty\": {\n    \"loyaltyId\": \"<string>\",\n    \"transactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cfbef37-a5d7-4567-a85c-dbaf1fba3e47",
+              "name": "Order price request success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"loyalty\": {\n    \"loyaltyId\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"example-unique-id\",\n    \"externalReferenceId\": \"example\",\n    \"storeId\": \"42\",\n    \"cart\": {\n      \"menuSelections\": {},\n      \"feedback\": {}\n    },\n    \"serviceMode\": \"TAKEOUT\",\n    \"customer\": {\n      \"id\": {},\n      \"externalReferenceId\": {},\n      \"name\": {},\n      \"username\": {},\n      \"phone\": {},\n      \"email\": {}\n    },\n    \"charges\": {\n      \"tax\": {},\n      \"mpfTax\": {},\n      \"subTotal\": {},\n      \"total\": {},\n      \"fees\": {}\n    },\n    \"discounts\": [\n      {}\n    ],\n    \"payment\": {\n      \"paymentMethod\": {}\n    },\n    \"posVendor\": \"BRINK\",\n    \"status\": \"CREATED\",\n    \"deliveryAddress\": {\n      \"administrativeArea\": {},\n      \"coordinates\": {},\n      \"formattedAddress\": {},\n      \"instructions\": {},\n      \"locality\": {},\n      \"postalCode\": {},\n      \"regionCode\": {},\n      \"route\": {},\n      \"streetNumber\": {},\n      \"sublocality\": {},\n      \"subpremise\": {}\n    },\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": \"1991-02-11T20:30:19Z\",\n    \"updatedAt\": \"1991-02-11T20:30:19Z\",\n    \"fireOrderInSeconds\": 600,\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": 600\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d54826d1-d918-4418-ba9e-55b5187f10dd",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"loyalty\": {\n    \"loyaltyId\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "279ef403-c299-4829-9536-605f26d800a6",
+              "name": "Authentication failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"loyalty\": {\n    \"loyaltyId\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e41793c-6bb4-40f5-bd38-26ba1fdcd5cc",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"loyalty\": {\n    \"loyaltyId\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"message\": \"example\",\n      \"details\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ],\n  \"order\": {\n    \"id\": {},\n    \"externalReferenceId\": {},\n    \"storeId\": {},\n    \"cart\": {},\n    \"serviceMode\": {},\n    \"customer\": {},\n    \"charges\": {},\n    \"discounts\": {},\n    \"payment\": {},\n    \"posVendor\": {},\n    \"status\": {},\n    \"deliveryAddress\": {},\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": {},\n    \"updatedAt\": {},\n    \"fireOrderInSeconds\": {},\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7489fa19-1999-4f32-ab70-ea2667ab3f59",
+          "name": "Commit Order",
+          "request": {
+            "name": "Commit Order",
+            "description": {
+              "content": "Commit an order.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderId",
+                "commit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Unique Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentMethod\": \"<string>\",\n  \"fireOrderInSeconds\": \"<integer,null>\",\n  \"charges\": {\n    \"tax\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"mpfTax\": {\n      \"taxRemittedByMpf\": {\n        \"currency\": \"<ISO-4217 alpha>\",\n        \"amount\": \"<integer>\"\n      },\n      \"isTaxRemittedByMpf\": \"<boolean>\"\n    },\n    \"subTotal\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"total\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"fees\": [\n      {\n        \"type\": \"<string>\",\n        \"total\": {\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": \"<integer>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"total\": {\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": \"<integer>\"\n        }\n      }\n    ]\n  },\n  \"mpfOrderId\": \"<string>\",\n  \"readyInSeconds\": \"<integer,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "70734915-bc04-49c9-aed7-8a0c5dbdac65",
+              "name": "Order commit success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"example-unique-id\",\n    \"externalReferenceId\": \"example\",\n    \"storeId\": \"42\",\n    \"cart\": {\n      \"menuSelections\": {},\n      \"feedback\": {}\n    },\n    \"serviceMode\": \"TAKEOUT\",\n    \"customer\": {\n      \"id\": {},\n      \"externalReferenceId\": {},\n      \"name\": {},\n      \"username\": {},\n      \"phone\": {},\n      \"email\": {}\n    },\n    \"charges\": {\n      \"tax\": {},\n      \"mpfTax\": {},\n      \"subTotal\": {},\n      \"total\": {},\n      \"fees\": {}\n    },\n    \"discounts\": [\n      {}\n    ],\n    \"payment\": {\n      \"paymentMethod\": {}\n    },\n    \"posVendor\": \"BRINK\",\n    \"status\": \"CREATED\",\n    \"deliveryAddress\": {\n      \"administrativeArea\": {},\n      \"coordinates\": {},\n      \"formattedAddress\": {},\n      \"instructions\": {},\n      \"locality\": {},\n      \"postalCode\": {},\n      \"regionCode\": {},\n      \"route\": {},\n      \"streetNumber\": {},\n      \"sublocality\": {},\n      \"subpremise\": {}\n    },\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": \"1991-02-11T20:30:19Z\",\n    \"updatedAt\": \"1991-02-11T20:30:19Z\",\n    \"fireOrderInSeconds\": 600,\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": 600\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3238dbf1-00b7-49dd-a0e0-709583a6c161",
+              "name": "Order commit failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2bf396d-97a8-4b6a-8652-63a1eb1687d0",
+              "name": "Authentication failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fdd6947-c89d-4f84-a602-fb152470bd5c",
+              "name": "Order not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9db91724-d298-4a88-87f3-4e9f6aaa7039",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"mpfOrderId\": \"123456789\",\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"message\": \"example\",\n      \"details\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ],\n  \"order\": {\n    \"id\": {},\n    \"externalReferenceId\": {},\n    \"storeId\": {},\n    \"cart\": {},\n    \"serviceMode\": {},\n    \"customer\": {},\n    \"charges\": {},\n    \"discounts\": {},\n    \"payment\": {},\n    \"posVendor\": {},\n    \"status\": {},\n    \"deliveryAddress\": {},\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": {},\n    \"updatedAt\": {},\n    \"fireOrderInSeconds\": {},\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0afb51ac-12c1-40ea-bc2c-7152ce293aba",
+          "name": "Fire Order",
+          "request": {
+            "name": "Fire Order",
+            "description": {
+              "content": "Fire a committed order to the kitchen for preparation.\n\nIn cases when an order is committed with some pre-determined lead time\n(e.g., 30 minutes from now), it may be necessary to \"fire\" or \"release\" the\norder to the kitchen immediately before the original lead time has elapsed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderId",
+                "fire"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Unique Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d6d7ffc2-9999-4cb0-b07d-e16d7ed5953f",
+              "name": "Order fire success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "fire"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"example-unique-id\",\n    \"externalReferenceId\": \"example\",\n    \"storeId\": \"42\",\n    \"cart\": {\n      \"menuSelections\": {},\n      \"feedback\": {}\n    },\n    \"serviceMode\": \"TAKEOUT\",\n    \"customer\": {\n      \"id\": {},\n      \"externalReferenceId\": {},\n      \"name\": {},\n      \"username\": {},\n      \"phone\": {},\n      \"email\": {}\n    },\n    \"charges\": {\n      \"tax\": {},\n      \"mpfTax\": {},\n      \"subTotal\": {},\n      \"total\": {},\n      \"fees\": {}\n    },\n    \"discounts\": [\n      {}\n    ],\n    \"payment\": {\n      \"paymentMethod\": {}\n    },\n    \"posVendor\": \"BRINK\",\n    \"status\": \"CREATED\",\n    \"deliveryAddress\": {\n      \"administrativeArea\": {},\n      \"coordinates\": {},\n      \"formattedAddress\": {},\n      \"instructions\": {},\n      \"locality\": {},\n      \"postalCode\": {},\n      \"regionCode\": {},\n      \"route\": {},\n      \"streetNumber\": {},\n      \"sublocality\": {},\n      \"subpremise\": {}\n    },\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": \"1991-02-11T20:30:19Z\",\n    \"updatedAt\": \"1991-02-11T20:30:19Z\",\n    \"fireOrderInSeconds\": 600,\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": 600\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef65a724-fdea-4e2b-b952-f3c698ea3d57",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "fire"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b297fb40-1970-49bd-8b42-7e86801d372a",
+              "name": "Order not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "fire"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "226350ad-7b41-4f22-aafc-86e993d0b725",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "fire"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Unique Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"message\": \"example\",\n      \"details\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ],\n  \"order\": {\n    \"id\": {},\n    \"externalReferenceId\": {},\n    \"storeId\": {},\n    \"cart\": {},\n    \"serviceMode\": {},\n    \"customer\": {},\n    \"charges\": {},\n    \"discounts\": {},\n    \"payment\": {},\n    \"posVendor\": {},\n    \"status\": {},\n    \"deliveryAddress\": {},\n    \"loyaltyPointsEarned\": 15,\n    \"errors\": [\n      {}\n    ],\n    \"createdAt\": {},\n    \"updatedAt\": {},\n    \"fireOrderInSeconds\": {},\n    \"preparationTimeInSeconds\": 300,\n    \"readyInSeconds\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6407e855-d138-4577-a6a5-41532fdd9672",
+          "name": "Place Order",
+          "request": {
+            "name": "Place Order",
+            "description": {
+              "content": "Price and commit a new order.\n\nThe place order API [prices](#operation/priceOrder) and [commits](#operation/commitOrder) an order\nasynchronously. Partners receive order changes via the [Order Updated webhook](#operation/orderUpdateEvent).\n\nPlace order can fail for the same reasons a Price and Commit calls can fail, but also:\n- Price mismatches between partner and POS.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "place"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"storeId\": \"<string>\",\n  \"serviceMode\": \"<string>\",\n  \"cart\": {\n    \"menuSelections\": [\n      {\n        \"id\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"referenceId\": \"<string>\",\n        \"externalReferenceId\": \"<string>\",\n        \"price\": {\n          \"currency\": \"<ISO-4217 alpha>\",\n          \"amount\": \"<integer>\"\n        },\n        \"menuSelections\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/MenuSelection detected>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"id\": \"<string>\",\n    \"externalReferenceId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"phone\": \"<string>\"\n  },\n  \"paymentMethod\": \"<string>\",\n  \"fireOrderInSeconds\": \"<integer,null>\",\n  \"externalReferenceId\": \"<string>\",\n  \"charges\": {\n    \"tax\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"mpfTax\": {\n      \"taxRemittedByMpf\": {\n        \"currency\": \"<ISO-4217 alpha>\",\n        \"amount\": \"<integer>\"\n      },\n      \"isTaxRemittedByMpf\": \"<boolean>\"\n    },\n    \"subTotal\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"total\": {\n      \"currency\": \"<ISO-4217 alpha>\",\n      \"amount\": \"<integer>\"\n    },\n    \"fees\": [\n      {\n        \"type\": \"<string>\",\n        \"total\": {\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": \"<integer>\"\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"total\": {\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": \"<integer>\"\n        }\n      }\n    ]\n  },\n  \"deliveryAddress\": {\n    \"formattedAddress\": \"<string>\",\n    \"regionCode\": \"<string>\",\n    \"route\": \"<string>\",\n    \"streetNumber\": \"<string>\",\n    \"administrativeArea\": \"<string>\",\n    \"coordinates\": {\n      \"latitude\": \"<number>\",\n      \"longitude\": \"<number>\"\n    },\n    \"instructions\": \"<string>\",\n    \"locality\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"sublocality\": \"<string>\",\n    \"subpremise\": \"<string>\"\n  },\n  \"readyInSeconds\": \"<integer,null>\",\n  \"mpfOrderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dba5fba1-e047-4b1d-b022-222cf767b013",
+              "name": "Order place request success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "place"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600,\n  \"mpfOrderId\": \"123456789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"example-unique-id\",\n    \"externalReferenceId\": \"example\",\n    \"callbackUrl\": \"https://bk-partners.rbictg.com\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e93b390-4c33-4741-b11e-8dee1a2eb0e6",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "place"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600,\n  \"mpfOrderId\": \"123456789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c65a970-dff2-4c21-8ee1-50509c69c2c2",
+              "name": "Authentication failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "place"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600,\n  \"mpfOrderId\": \"123456789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4825b2fa-34a5-4f47-acf6-ae214fa43ad3",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "place"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalReferenceId\": \"example\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"cart\": {\n    \"menuSelections\": [\n      {}\n    ]\n  },\n  \"customer\": {\n    \"id\": \"500123\",\n    \"externalReferenceId\": {},\n    \"name\": \"Whopper\",\n    \"username\": \"example\",\n    \"phone\": {},\n    \"email\": \"guest@example.com\"\n  },\n  \"charges\": {\n    \"tax\": {},\n    \"mpfTax\": {},\n    \"subTotal\": {},\n    \"total\": {},\n    \"fees\": {}\n  },\n  \"deliveryAddress\": {\n    \"administrativeArea\": \"FL\",\n    \"coordinates\": {},\n    \"formattedAddress\": \"5707 Blue Lagoon Drive\",\n    \"instructions\": \"example\",\n    \"locality\": \"Miami-Dade County\",\n    \"postalCode\": \"33126\",\n    \"regionCode\": \"US\",\n    \"route\": \"Blue Lagoon Drive\",\n    \"streetNumber\": \"5707\",\n    \"sublocality\": \"example\",\n    \"subpremise\": \"Suite 101\"\n  },\n  \"paymentMethod\": \"APPLE_PAY\",\n  \"fireOrderInSeconds\": 600,\n  \"readyInSeconds\": 600,\n  \"mpfOrderId\": \"123456789\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b91784af-2394-4419-9c0c-3259f1026353",
+      "name": "Stores",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "448cb4e8-a302-481f-8489-9230a860ea63",
+          "name": "Store",
+          "request": {
+            "name": "Store",
+            "description": {
+              "content": "Store (restaurant) details.\n\nUse this endpoint get the full details of a specific store, including the Detailed Availability by service mode\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) Unique ID representing a store"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bca168ba-4b06-4fdc-9d51-a7ad419b7f3f",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"availability\": {\n      \"isEnabled\": {},\n      \"isOpen\": {}\n    },\n    \"franchiseGroupName\": \"Acme Group\",\n    \"location\": {\n      \"administrativeArea\": {},\n      \"coordinates\": {},\n      \"formattedAddress\": {},\n      \"locality\": {},\n      \"phoneNumber\": {},\n      \"postalCode\": {},\n      \"regionCode\": {},\n      \"route\": {}\n    },\n    \"name\": \"Example test lab\",\n    \"posVendor\": \"BRINK\",\n    \"serviceHour\": [\n      {}\n    ],\n    \"storeId\": \"42\",\n    \"timezone\": \"America/New_York\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c641d9f-ce64-43d9-a557-e6087c4696ab",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34b175d2-5831-4cfa-b768-687b925306d2",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f4fba82-3597-4320-a053-cc9f2245b522",
+          "name": "Store Status Changed",
+          "request": {
+            "name": "Store Status Changed",
+            "description": {
+              "content": "This endpoint is used to update the status of a store.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId",
+                "store-status-changed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) Unique ID representing a store"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"storeStatus\": \"<string>\",\n  \"region\": \"<string>\",\n  \"updatedAt\": \"<ISO 8601 Date Time>\",\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cfe851d8-98cd-4cd5-9182-0587a881cc75",
+              "name": "Successfully updated the store status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c247d9e1-0656-417c-b2e2-91876c5b68e9",
+              "name": "Bad request due to missing field or content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "436f0a99-1d03-42fb-a5fb-a79778677a8a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d228a62-726f-4021-8202-5d3de52d4dbd",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b1a6f6ed-54e8-4543-91f5-a0acd2b47f9e",
+          "name": "List Stores",
+          "request": {
+            "name": "List Stores",
+            "description": {
+              "content": "Store List.\n\nUse this endpoint get a list of stores and their info.\n\n**Pagination**\n\nPagination is provided in a cursor-basis. For each set of results, a `cursor` will be returned as part of the\nresponse's `meta`. Providing this `cursor` to the next call will fetch the next page of the result set.\n\nThe max amount of restaurants to be returned is controlled by `limit`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to fetch"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "469393ab-3298-4e87-92d5-1caa1917fe7b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "example"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"cursor\": \"cursor-id\"\n  },\n  \"data\": [\n    {\n      \"availability\": {},\n      \"franchiseGroupName\": \"Acme Group\",\n      \"location\": {},\n      \"name\": \"Example test lab\",\n      \"posVendor\": {},\n      \"serviceHour\": [\n        {}\n      ],\n      \"storeId\": {},\n      \"timezone\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e00d807-bf23-43fa-9c89-22bd25af1631",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "example"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1f6f6f5-fd03-4985-8e8c-d156aee492de",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "example"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sandbox-bk-partners.rbictg.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "689ee0a8-f4fe-47a5-a415-b31ec90078e1",
+    "name": "Burger King's Partners API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Overview\n\nThe Channel Partners API are provided for third party food ordering marketplaces\nintegrating into the Restaurant Brand International (RBI) fulfillment platform.\n\n## Authentication\n### Webhooks\n\nWebhook requests are signed using `hex` encoded HMAC signatures.\n\nAn HMAC signature is derived for validation using three components:\n\n- the secret shared between the service and the consumer\n- the body of the request\n- the hash function or algorithm (SHA-256)\n\nUsing these three pieces of information, compute an HMAC signature using the secret as the key and\nthe body of the request as the message and encode the signature to a hexadecimal string for comparison.\n\nCompare the signature generated using the above information to the signature received in the `x-signature` header,\nif the two signatures match, the request is valid.\n",
+      "type": "text/plain"
+    }
+  }
+}

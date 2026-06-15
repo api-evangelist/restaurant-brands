@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Burger King's Partners API v2",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Menus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Individual Store Menu",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v2/stores/:storeId/menus",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Store ID"
+              },
+              {
+                "name": "serviceMode",
+                "value": "DELIVERY",
+                "type": "path",
+                "description": "Service mode"
+              },
+              {
+                "name": "version",
+                "value": "1",
+                "type": "query",
+                "description": "Menu version ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full menu for an individual store\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Tenders example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Menu | menu_1 | Menu |\n| Section | Section | 4763b543-2d04-40a6-8b95-d55750ec554a | Tenders |\n| Picker | Picker | xdgrygmaqSf78Pjdh6UrTF | 3Pc Tenders Meal |\n| picke"
+        },
+        {
+          "info": {
+            "name": "Menu",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v2/stores/menus",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Store ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full menu\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Flame Grilled Burgers Example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Menu | menu_1 | Menu |\n| Section | Section | section_5596 | Flame Grilled Burgers |\n| Picker | Picker | picker_5520 | Whopper |\n| picker_pickerAspect | PickerAspect | picker_5"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

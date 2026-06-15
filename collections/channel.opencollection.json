@@ -1,0 +1,334 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Burger King's Partners API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Loyalty",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Identify",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/loyalty/identify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Identify"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Menus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Menu",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores/:storeId/menus/:serviceMode",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Store ID"
+              },
+              {
+                "name": "serviceMode",
+                "value": "DELIVERY",
+                "type": "path",
+                "description": "Service mode"
+              },
+              {
+                "name": "version",
+                "value": "1",
+                "type": "query",
+                "description": "Menu version ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full menu for an individual store\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Tenders example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Group | menu_1 | Menu |\n| Section | Group | 4763b543-2d04-40a6-8b95-d55750ec554a | Tenders |\n| Picker | Group | xdgrygmaqSf78Pjdh6UrTF | 3Pc Tenders Meal |\n| picker_"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/channel/:orderId",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Order ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve an order by ID\n"
+        },
+        {
+          "info": {
+            "name": "Price Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/price",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Price a new order.\n\nThe price order API must be called to create a new order and to validate the\ncart prices and item availability with the POS.  When the Price Order\nrequest returns a success reponse, a subsequent [Commit Order](#operation/\ncommitOrder) request should (but is not guarenteed to) succeed.\n\nPrice requests can fail for a variety of reasons. For example\\:\n- Restaurant - The restaurant is unavailable.\n- Menu - An item in the cart is unavailable or violates permitted constraints.\n- Lo"
+        },
+        {
+          "info": {
+            "name": "Commit Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/:orderId/commit",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Order ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Commit an order.\n"
+        },
+        {
+          "info": {
+            "name": "Fire Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/:orderId/fire",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Order ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fire a committed order to the kitchen for preparation.\n\nIn cases when an order is committed with some pre-determined lead time\n(e.g., 30 minutes from now), it may be necessary to \"fire\" or \"release\" the\norder to the kitchen immediately before the original lead time has elapsed.\n"
+        },
+        {
+          "info": {
+            "name": "Place Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/place",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Price and commit a new order.\n\nThe place order API [prices](#operation/priceOrder) and [commits](#operation/commitOrder) an order\nasynchronously. Partners receive order changes via the [Order Updated webhook](#operation/orderUpdateEvent).\n\nPlace order can fail for the same reasons a Price and Commit calls can fail, but also:\n- Price mismatches between partner and POS."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores/:storeId",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique ID representing a store"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Store (restaurant) details.\n\nUse this endpoint get the full details of a specific store, including the Detailed Availability by service mode\n"
+        },
+        {
+          "info": {
+            "name": "Store Status Changed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores/:storeId/store-status-changed",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique ID representing a store"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to update the status of a store.\n"
+        },
+        {
+          "info": {
+            "name": "List Stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "example",
+                "type": "query",
+                "description": "Number of results to fetch"
+              },
+              {
+                "name": "cursor",
+                "value": "example",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Store List.\n\nUse this endpoint get a list of stores and their info.\n\n**Pagination**\n\nPagination is provided in a cursor-basis. For each set of results, a `cursor` will be returned as part of the\nresponse's `meta`. Providing this `cursor` to the next call will fetch the next page of the result set.\n\nThe max amount of restaurants to be returned is controlled by `limit`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
