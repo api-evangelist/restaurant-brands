@@ -57,7 +57,7 @@ apis:
         url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
       - type: Authentication
         url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/restaurant-brands-channel-context.jsonld
   - name: Partners Menu API v2
     description: >-
@@ -73,7 +73,7 @@ apis:
         url: openapi/menu-v2-openapi.yml
       - type: APIReference
         url: https://bk-partners.rbictg.com/docs/v2/
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/restaurant-brands-menu-v2-context.jsonld
 common:
   - type: DeveloperPortal
