@@ -76,6 +76,10 @@ apis:
       - type: JSONLD
         url: json-ld/restaurant-brands-menu-v2-context.jsonld
 common:
+  - type: DomainSecurity
+    url: security/restaurant-brands-domain-security.yml
+  - type: Authentication
+    url: authentication/restaurant-brands-authentication.yml
   - type: DeveloperPortal
     url: https://rbictg.atlassian.net/wiki/spaces/RDP/overview
   - type: SpectralRules
