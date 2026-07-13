@@ -1,19 +1,26 @@
-# Spectral ruleset for Restaurant Brands International (RBI) — Partners API
+# restaurant-brands — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
 #
-# Derived from the published RBI Developer Portal OpenAPI specifications
-# (Burger King's Partners API v1 "channel" and v2 "menu"). These rules encode
-# the conventions observed across RBI's own specs so that future RBI / brand
-# (Burger King, Tim Hortons, Popeyes, Firehouse Subs) API definitions stay
-# consistent with the platform contract.
-#
-# Usage: spectral lint openapi/*.yml --ruleset rules/restaurant-brands-spectral-rules.yml
-
+# Provenance:
+#   - servers-https-only: 100% of servers already https (error)
+#   - servers-expected-domain: 4/4 servers on rbictg.com
+#   - path-params-casing: camel @ 100% (n=8)
+#   - query-params-casing: snake @ 100% (n=4)
+#   - operationid-casing: camel @ 92% (n=12)
+#   - schema-names-casing: pascal @ 98% (n=108)
+#   - schema-properties-casing: snake @ 57% (n=316)
+#   - operation-security-required: 12/12 ops declare per-op security
+#   - error-schema-defined: Error
+#   - operation-documents-403: 100% adherence
+#   - operation-documents-404: 83% adherence
+#   - pagination params observed: ['cursor', 'limit']
+#   - merge: kept 25 existing, added 8 measured, upgraded 0
+#   - added: path-params-casing, query-params-casing, schema-names-casing, schema-properties-casing, operation-security-required, error-schema-defined, operation-documents-403, operation-documents-404
 extends:
-  - "spectral:oas"
-
+  - spectral:oas
 rules:
-
-  # ── INFO / METADATA ─────────────────────────────────────────────
   info-title-required:
     description: API must declare a title.
     severity: error
@@ -44,9 +51,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
-
-  # ── OPENAPI VERSION ─────────────────────────────────────────────
+        match: ^[0-9]+\.[0-9]+\.[0-9]+$
   openapi-version-31:
     description: RBI Partners specs are authored against OpenAPI 3.1.0.
     severity: warn
@@ -55,9 +60,7 @@ rules:
       field: openapi
       function: pattern
       functionOptions:
-        match: "^3\\.1\\."
-
-  # ── SERVERS ─────────────────────────────────────────────────────
+        match: ^3\.1\.
   servers-defined:
     description: At least one server must be defined.
     severity: error
@@ -72,7 +75,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^https://"
+        match: ^https://
   servers-rbictg-host:
     description: Production/sandbox servers should resolve to an rbictg.com host.
     severity: info
@@ -80,9 +83,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "rbictg\\.com"
-
-  # ── PATHS — NAMING ──────────────────────────────────────────────
+        match: rbictg\.com
   paths-no-trailing-slash:
     description: Paths must not end with a trailing slash.
     severity: warn
@@ -90,7 +91,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        notMatch: ".+/$"
+        notMatch: .+/$
   paths-version-prefix:
     description: RBI Partners resources are served under an /api/v{n} server prefix; path keys stay version-relative.
     severity: info
@@ -98,9 +99,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        notMatch: "^/api/v[0-9]"
-
-  # ── OPERATIONS ──────────────────────────────────────────────────
+        notMatch: ^/api/v[0-9]
   operation-operationId-required:
     description: Every operation must declare an operationId.
     severity: error
@@ -115,7 +114,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
+        match: ^[a-z][a-zA-Z0-9]*$
   operation-summary-required:
     description: Every operation must have a summary.
     severity: warn
@@ -130,7 +129,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[A-Z]"
+        match: ^[A-Z]
   operation-tags-required:
     description: Every operation must be tagged for grouping.
     severity: warn
@@ -138,8 +137,6 @@ rules:
     then:
       field: tags
       function: truthy
-
-  # ── TAGS ────────────────────────────────────────────────────────
   tag-name-defined:
     description: Tags used on operations should be declared in the global tags array.
     severity: info
@@ -147,8 +144,6 @@ rules:
     then:
       field: name
       function: truthy
-
-  # ── PARAMETERS ──────────────────────────────────────────────────
   parameter-description-required:
     description: Parameters should be described.
     severity: warn
@@ -163,9 +158,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-z0-9-]*$"
-
-  # ── REQUEST BODIES ──────────────────────────────────────────────
+        match: ^[a-z][a-z0-9-]*$
   request-body-json:
     description: Request bodies should offer application/json content.
     severity: warn
@@ -173,8 +166,6 @@ rules:
     then:
       field: application/json
       function: truthy
-
-  # ── RESPONSES ───────────────────────────────────────────────────
   response-2xx-required:
     description: Every operation must define at least one success (2xx) response.
     severity: warn
@@ -194,8 +185,6 @@ rules:
       functionOptions:
         schema:
           type: object
-
-  # ── SECURITY ────────────────────────────────────────────────────
   security-scheme-defined:
     description: A security scheme must be defined; RBI Partners uses bearer JWT.
     severity: error
@@ -209,8 +198,6 @@ rules:
     then:
       field: bearerFormat
       function: truthy
-
-  # ── SCHEMAS ─────────────────────────────────────────────────────
   schema-type-defined:
     description: Component schemas should declare a type.
     severity: info
@@ -220,11 +207,72 @@ rules:
       functionOptions:
         schema:
           type: object
-
-  # ── GENERAL QUALITY ─────────────────────────────────────────────
   no-empty-descriptions:
     description: Descriptions, when present, must not be empty.
     severity: warn
     given: $..description
     then:
+      function: truthy
+  path-params-casing:
+    description: Path parameters should be camelCase (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*].parameters[?(@.in=='path')].name
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+  query-params-casing:
+    description: Query parameters should be snake_case (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].parameters[?(@.in=='query')]
+    then:
+      field: name
+      function: casing
+      functionOptions:
+        type: snake
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: ^[A-Z][A-Za-z0-9]*$
+  schema-properties-casing:
+    description: Schema properties should be snake_case (the dominant convention in this API).
+    severity: info
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
+  operation-security-required:
+    description: Every operation should declare its security requirements.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: security
+      function: truthy
+  error-schema-defined:
+    description: A shared error schema (Error) should be defined for error payloads.
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: Error
+      function: truthy
+  operation-documents-403:
+    description: Operations should document a 403 response (documented on 100% of this API's operations).
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      field: '403'
+      function: truthy
+  operation-documents-404:
+    description: Operations should document a 404 response (documented on 83% of this API's operations).
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      field: '404'
       function: truthy
