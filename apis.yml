@@ -76,6 +76,8 @@ apis:
       - type: JSONLD
         url: json-ld/restaurant-brands-menu-v2-context.jsonld
 common:
+  - type: AgenticAccess
+    url: agentic-access/restaurant-brands-agentic-access.yml
   - type: DomainSecurity
     url: security/restaurant-brands-domain-security.yml
   - type: Authentication
