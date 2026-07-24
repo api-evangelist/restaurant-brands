@@ -1,0 +1,798 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Burger King's Partners Loyalty Stores API
+  description: '## Overview
+
+
+    The Channel Partners API are provided for third party food ordering marketplaces
+
+    integrating into the Restaurant Brand International (RBI) fulfillment platform.
+
+
+    ## Authentication
+
+    ### Webhooks
+
+
+    Webhook requests are signed using `hex` encoded HMAC signatures.
+
+
+    An HMAC signature is derived for validation using three components:
+
+
+    - the secret shared between the service and the consumer
+
+    - the body of the request
+
+    - the hash function or algorithm (SHA-256)
+
+
+    Using these three pieces of information, compute an HMAC signature using the secret as the key and
+
+    the body of the request as the message and encode the signature to a hexadecimal string for comparison.
+
+
+    Compare the signature generated using the above information to the signature received in the `x-signature` header,
+
+    if the two signatures match, the request is valid.
+
+    '
+  x-logo:
+    altText: RBI logo
+    url: data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzkiIGhlaWdodD0iODEiIHZpZXdCb3g9IjAgMCA3OSA4MSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzcwOV8yMzczNykiPgo8cGF0aCBkPSJNNzMuMzgzMiA3NS4xMzQ4QzczLjM4MzIgNzMuNjA2MyA3NC41NjgzIDcyLjMyNjQgNzYuMTkxNiA3Mi4zMjY0Qzc3LjgxNDkgNzIuMzI2NCA3OSA3My42MDYzIDc5IDc1LjEzNDhDNzkgNzYuNzc4MSA3Ny44MTYyIDc3Ljk2MTkgNzYuMTkxNiA3Ny45NjE5Qzc0LjU2NjkgNzcuOTYxOSA3My4zODMyIDc2Ljc1ODEgNzMuMzgzMiA3NS4xMzQ4Wk03OC4zODgxIDc1LjEzNDhDNzguMzg4MSA3My43MjEyIDc3LjI4MDUgNzIuODk5NiA3Ni4xOTE2IDcyLjg5OTZDNzUuMTAyNyA3Mi44OTk2IDczLjk5NTEgNzMuNzIxMiA3My45OTUxIDc1LjEzNDhDNzMuOTk1MSA3Ni41NDgzIDc1LjEwMjcgNzcuMzg4NyA3Ni4xOTE2IDc3LjM4ODdDNzcuMjgwNSA3Ny4zODg3IDc4LjM4ODEgNzYuNjA1OCA3OC4zODgxIDc1LjEzNDhaTTc1LjIxNjMgNzYuMzM4NlY3My45NTFDNzUuMjE2MyA3My43OTg3IDc1LjM0OTkgNzMuNjQ1MSA3NS41MDM1IDczLjY0NTFINzYuMzA1MUM3Ni45MzU4IDczLjY0NTEgNzcuMzc1MyA3NC4wMjcyIDc3LjM3NTMgNzQuNTQyOUM3Ny4zNzUzIDc0Ljk4MjUgNzcuMTI2OCA3NS4zNjQ2IDc2LjU1MzcgNzUuNDU5NEw3Ny4xODQzIDc2LjE2NjJDNzcuMjQxNyA3Ni4yMjM3IDc3LjI4MDUgNzYuMjk5OCA3Ny4yODA1IDc2LjM1NzNDNzcuMjgwNSA3Ni41Mjk2IDc3LjE2NTYgNzYuNjQ0NSA3Ni45OTQ2IDc2LjY0NDVDNzYuODc5NyA3Ni42NDQ1IDc2LjgwMzUgNzYuNTg3MSA3Ni43NDYgNzYuNTEwOUw3NS45MDU3IDc1LjUxNjlINzUuODA5NVY3Ni4zMzg2Qzc1LjgwOTUgNzYuNDkwOSA3NS42NzU5IDc2LjYyNDUgNzUuNTAzNSA3Ni42MjQ1Qzc1LjM1MTIgNzYuNjI0NSA3NS4yMTYzIDc2LjQ5MDkgNzUuMjE2MyA3Ni4zMzg2Wk03Ni4yMjkgNzQuOTgyNUM3Ni41NzI0IDc0Ljk4MjUgNzYuNzYzNCA3NC44MTAxIDc2Ljc2MzQgNzQuNTgxN0M3Ni43NjM0IDc0LjMzMzEgNzYuNTkxMSA3NC4xOTk1IDc2LjI4NjQgNzQuMTk5NUg3NS44MDk1Vjc0Ljk4MjVINzYuMjMwM0g3Ni4yMjlaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDY3LjExNDRDNzIuMDU3OCA2Ny4xMTQ0IDcyLjY2NDQgNjcuNzY3NyA3Mi42NjQ0IDY4LjkxMDFDNzIuNjY0NCA3MC45MTU1IDcwLjgyMiA3My43MTQ2IDY3LjE4MzkgNzUuNzY2OEM2MS4xMjA4IDc5LjE5NTEgNTAuNzE5NiA4MC4xNzQ0IDM2LjMzMTUgODAuMTc0NEMyMS45NDM1IDgwLjE3NDQgMTEuNTQyMiA3OS4xOTUxIDUuNDc5MTggNzUuNzY2OEMxLjg0MTA5IDczLjcxNDYgLTAuMDAxMzQyNzcgNzAuOTE2OCAtMC4wMDEzNDI3NyA2OC45MTAxQy0wLjAwMTM0Mjc3IDY3Ljc2NzcgMC42MDUyMjkgNjcuMTE0NCAxLjk1NzMyIDY3LjExNDRINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPHBhdGggZD0iTTcuNjQ4OTUgNjAuNjMxOFY1Ni45MjQzQzcuNjQ4OTUgNTYuNTk4MyA3Ljc4OTIzIDU2LjM2NDQgOC4xMTUyMyA1Ni4zNjQ0QzguNTM0NzUgNTYuMzY0NCA4LjY1MDk5IDU2LjgwOCA4Ljc2ODU3IDU3LjAxNzhDOS40OTEzNyA1OC40NjM0IDEwLjcwNDUgNjEuNDI1NCAxMi4xNTAxIDYzLjAxMTRDMTMuMTI5NSA2NC4wODQyIDE0LjM0MjYgNjQuNzYwMyAxNS42MjUyIDY0Ljc2MDNDMTcuNzkzNyA2NC43NjAzIDE5LjYxMzQgNjIuODcxMSAxOS42MTM0IDYwLjg0MjlDMTkuNjEzNCA1OS41ODMgMTkuMDc3NiA1OC42NTA0IDE4LjA1MTUgNTcuNTMyMkMxNi43NDYyIDU2LjEwOTMgMTUuMjA3IDU0LjI0NDEgMTQuNjQ3MiA1My4zODFDMTQuNDM3NSA1My4wNTUgMTQuNDEzNCA1Mi44NDUzIDE0LjQxMzQgNTIuNzUxN0MxNC40MTM0IDUyLjQ5NTIgMTQuNTUzNyA1Mi4zMDgyIDE0LjgzMyA1Mi4wNTE2QzE1LjQ4NjMgNTEuNDQ1MSAxNy4wOTQ5IDQ5LjkzIDE3Ljk4MDcgNDguNTUzOEMxOC42NTY4IDQ3LjUwNSAxOC45MzczIDQ2LjU0ODQgMTguOTM3MyA0NS43NTQ4QzE4LjkzNzMgNDMuNzI1MyAxNy4wOTQ5IDQyLjE0MDcgMTUuMDg5NSA0Mi4xNDA3QzEzLjgwNjkgNDIuMTQwNyAxMi41OTM3IDQyLjg2MzUgMTEuNzc4NyA0NC4xOTI5QzEwLjY4MzEgNDUuOTY1OSA5LjU2MzUyIDQ4LjQ2MDMgOC42MzA5NSA0OS4zOTI5QzguMzk3MTQgNDkuNjI2NyA4LjI4MDkgNDkuNjcyMSA4LjA5NTE5IDQ5LjY3MjFDNy43OTE5IDQ5LjY3MjEgNy42NTE2MiA0OS40NjIzIDcuNjUxNjIgNDkuMTM2M1Y0Ni4yNjc4QzcuNjUxNjIgNDMuOTgxOCA2LjI5OTUyIDQyLjE0MDcgMy44NTA1MiA0Mi4xNDA3QzEuNDAxNTIgNDIuMTQwNyAwLjA0Njc1MjkgNDMuOTgxOCAwLjA0Njc1MjkgNDYuMjY2NVY2MC42MzE4QzAuMDQ2NzUyOSA2Mi45MTc4IDEuMzc2MTMgNjQuNzU4OSAzLjg0Nzg1IDY0Ljc1ODlDNi4zMTk1NiA2NC43NTg5IDcuNjQ4OTUgNjIuOTE2NSA3LjY0ODk1IDYwLjYzMThaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC40OTYgNDMuOTU3OEM2OS4wNzMxIDQyLjkwOSA2Ni45Mjg3IDQyLjEzOTQgNjMuODk1OCA0Mi4xMzk0QzU4LjQ2MjEgNDIuMTM5NCA1My4xNjg2IDQ1LjU2NzcgNTMuMTY4NiA1My41NDI3QzUzLjE2ODYgNjEuNTE3NiA1OC40NjIxIDY0LjczNjIgNjMuNjg2MSA2NC43MzYyQzY5LjE2NjYgNjQuNzM2MiA3Mi42NDAzIDYxLjM1NDYgNzIuNjQwMyA1Ni40MTEyQzcyLjY0MDMgNTMuMjg2MiA3MC42ODE3IDUxLjExNzcgNjYuNzQwMyA1MS4xMTc3SDY1LjU5OEM2My41NDU4IDUxLjExNzcgNjEuOTU5OSA1Mi4wNzQzIDYxLjk1OTkgNTQuMTczM0M2MS45NTk5IDU2LjA4NTIgNjMuNjg2MSA1Ni45OTUxIDY0Ljk2ODcgNTYuOTk1MUM2Ni4wNjQyIDU2Ljk5NTEgNjYuNTA3OCA1Ny4xODIxIDY2LjUwNzggNTcuNjcxMUM2Ni41MDc4IDU4LjI3NzcgNjUuOTI1MyA1OC42NzQ1IDY0LjUwMjQgNTguNjc0NUM2MS44Njc3IDU4LjY3NDUgNjAuMDcyIDU2Ljg3ODggNjAuMDcyIDUzLjU0NEM2MC4wNzIgNDkuODM2NCA2Mi41MjEgNDguNDgzIDY0LjQwODkgNDguNDgzQzY2LjcxNzYgNDguNDgzIDY3LjA5MDMgNDkuNjQ5NCA2OC43MDAzIDQ5LjY0OTRDNzAuNTY1NCA0OS42NDk0IDcxLjgyNTMgNDguMTMzIDcxLjgyNTMgNDYuNTkzOEM3MS44MjUzIDQ1LjQ1MTUgNzEuMzEyMyA0NC41NjQzIDcwLjQ5NiA0My45NTkxVjQzLjk1NzhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik01MS4zNTAyIDQ2LjA4MDhWNjAuNjA5MUM1MS4zNTAyIDYyLjkxNzggNDkuOTk4MSA2NC43NjAzIDQ3LjU0OTEgNjQuNzYwM0M0Ni4xMjYyIDY0Ljc2MDMgNDQuNzk2OCA2NC4yMDA0IDQzLjU2MSA2MS43OTgyTDQwLjMxOTcgNTUuNTI1NEM0MC4wODU5IDU1LjA4MTggMzkuOTIyOSA1NC45NjU2IDM5LjY5MDQgNTQuOTY1NkMzOS4zNjQ0IDU0Ljk2NTYgMzkuMjAwMSA1NS4xOTk0IDM5LjIwMDEgNTUuNzM1MkwzOS4yMjI4IDYwLjgxODlDMzkuMjIyOCA2My4wMTEzIDM3Ljk2MjkgNjQuNzYwMyAzNS42MDg3IDY0Ljc2MDNDMzMuMjU0NiA2NC43NjAzIDMyLjAxNzQgNjMuMDExMyAzMi4wMTc0IDYwLjgxODlWNDYuMjkwNUMzMi4wMTc0IDQzLjk4MTggMzMuMzY5NSA0Mi4xMzk0IDM1LjgxODUgNDIuMTM5NEMzNy4yODgyIDQyLjEzOTQgMzguNTcwOCA0Mi42OTkyIDM5LjgwNjYgNDUuMTAxNEw0My4wNDc5IDUxLjM3NDJDNDMuMjgxNyA1MS44MTc4IDQzLjQ0NDcgNTEuOTM0MSA0My42NzcyIDUxLjkzNDFDNDQuMDAzMiA1MS45MzQxIDQ0LjE2NzUgNTEuNzAwMyA0NC4xNjc1IDUxLjE2NDVMNDQuMTQ0OCA0Ni4wODA4QzQ0LjE0NDggNDMuODg4MyA0NS40MDQ3IDQyLjEzOTQgNDcuNzU4OSA0Mi4xMzk0QzUwLjExMyA0Mi4xMzk0IDUxLjM1MDIgNDMuODg4MyA1MS4zNTAyIDQ2LjA4MDhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik0yOS4zMTMyIDQ2LjU0NzFDMjkuMzEzMiA0NC4wOTgxIDI3Ljg5MDMgNDIuMTM5NCAyNS4yNzgzIDQyLjEzOTRDMjIuNjY2MyA0Mi4xMzk0IDIxLjI0MzQgNDQuMDk4MSAyMS4yNDM0IDQ2LjU0NzFWNjAuMzUyNkMyMS4yNDM0IDYyLjgwMTYgMjIuNjY2MyA2NC43NjAzIDI1LjI3ODMgNjQuNzYwM0MyNy44OTAzIDY0Ljc2MDMgMjkuMzEzMiA2Mi44MDE2IDI5LjMxMzIgNjAuMzUyNlY0Ni41NDcxWiIgZmlsbD0iI0Q2MjMwMCIvPgo8cGF0aCBkPSJNMzUuNzQ5IDM2LjcyODNDMzUuMzUyMiAzNi4yMzggMzQuMzcyOSAzNC45Nzk0IDM0LjE4NzIgMzQuMzI2MUMzNC4xMTc3IDM0LjA5MjMgMzQuMTQwNCAzMy45MjkzIDM0LjM1MDIgMzMuNzQzNkMzNS4wNzMgMzMuMDY3NSAzNS45MTIgMzIuMDE3NCAzNS45MTIgMzAuMTUyMkMzNS45MTIgMjYuOTU3NyAzMy40NjMgMjUuMzQ3OCAzMC41MDIzIDI1LjM0NzhIMjcuODY3NkMyNi4wMjUyIDI1LjM0NzggMjUuMTM5MyAyNi40MjA2IDI1LjEzOTMgMjcuODY2MlYzOC4yNjc1QzI1LjEzOTMgMzkuNjY2MyAyNS45NTU3IDQwLjc4NiAyNy40NDgxIDQwLjc4NkMyOC45NDA0IDQwLjc4NiAyOS43NTY4IDM5LjY2NjMgMjkuNzU2OCAzOC4yNjc1VjM1Ljk1ODhDMjkuNzU2OCAzNS42MDg3IDI5Ljg5NzEgMzUuMzUyMiAzMC4yNjk4IDM1LjM1MjJDMzAuNTk1OCAzNS4zNTIyIDMwLjczNjEgMzUuNjMxNCAzMC44MDU2IDM1Ljk1ODhDMzEuMDE1MyAzNi45ODQ5IDMxLjMxODYgMzguNTkzNSAzMS45NDc5IDM5LjQwOThDMzIuNzQwMiA0MC40NTg2IDMzLjQ4NzEgNDAuNzg2IDM0LjIzMzkgNDAuNzg2QzM1LjQ0NzEgNDAuNzg2IDM2LjQ5NTkgMzkuODI5MyAzNi40OTU5IDM4LjY0MDJDMzYuNDk1OSAzNy44NDggMzYuMTY5OSAzNy4yNjQxIDM1Ljc0OSAzNi43MjgzWk00LjY4NjkxIDM0LjIzMjZINS4zNDAyNEM2LjM4OTA1IDM0LjIzMjYgNi42OTIzMyAzNS4wMDIyIDYuNjkyMzMgMzUuNzAyMkM2LjY5MjMzIDM2LjQwMjMgNi4zODkwNSAzNy4xNzE5IDUuMzQwMjQgMzcuMTcxOUg0LjY4NjkxQzQuMjkwMSAzNy4xNzE5IDQuMTA0MzggMzYuOTM4MSA0LjEwNDM4IDM2LjYzNjJWMzQuNzcxQzQuMTA0MzggMzQuNDY3NyA0LjI5MTQzIDM0LjIzNTMgNC42ODY5MSAzNC4yMzUzVjM0LjIzMjZaTTQuNjg2OTEgMzEuNDgwM0M0LjI5MDEgMzEuNDgwMyA0LjEwNDM4IDMxLjI0NjUgNC4xMDQzOCAzMC45NDQ1VjI5LjM1ODZDNC4xMDQzOCAyOS4wNTUzIDQuMjkxNDMgMjguODIyOSA0LjY4NjkxIDI4LjgyMjlINS4yMjI2N0M2LjE1NTI0IDI4LjgyMjkgNi40MzU4MSAyOS40OTg5IDYuNDM1ODEgMzAuMTUyMkM2LjQzNTgxIDMwLjgwNTYgNi4xNTY1NyAzMS40ODE2IDUuMjIyNjcgMzEuNDgxNkg0LjY4NjkxVjMxLjQ4MDNaTTIuNzI4MjQgNDAuNjY4NEg2LjAxNjI5QzkuMTE3MjkgNDAuNjY4NCAxMS4wMDY1IDM4LjU5MzUgMTEuMDA2NSAzNi4wMDQyQzExLjAwNjUgMzMuOTk4OCA5Ljc3MDYyIDMzLjA4ODkgOS40OTAwNSAzMi44NTY0QzkuMzczODEgMzIuNzYyOSA5LjI1NjI0IDMyLjY2OTQgOS4yNTYyNCAzMi41NzcyQzkuMjU2MjQgMzIuNDYxIDkuMzAzIDMyLjQxNDIgOS40NDMyOSAzMi4yNzM5QzkuOTU2MzMgMzEuNzYwOSAxMC40NDY3IDMwLjg3NTEgMTAuNDQ2NyAyOS42MzkyQzEwLjQ0NjcgMjYuODQwMSA4LjQ0MTI0IDI1LjM0NzggNS41MDMyNCAyNS4zNDc4SDIuNzI4MjRDMC44ODU4MDkgMjUuMzQ3OCAwIDI2LjQyMDYgMCAyNy44NjYyVjM4LjE0OTlDMCAzOS41OTU1IDAuODg1ODA5IDQwLjY2ODQgMi43MjgyNCA0MC42Njg0Wk0zMC40MDg4IDMyLjI0OTlIMjkuODQ5QzI5LjQ1MjIgMzIuMjQ5OSAyOS4yNjY0IDMyLjAxNjEgMjkuMjY2NCAzMS43MTQxVjI5LjcwODdDMjkuMjY2NCAyOS40MDU0IDI5LjQ1MzUgMjkuMjE4MyAyOS44NDkgMjkuMjE4M0gzMC40MDg4QzMxLjU1MTEgMjkuMjE4MyAzMS45MDEyIDI5Ljk4NzkgMzEuOTAxMiAzMC43MTA3QzMxLjkwMTIgMzEuMzg2OCAzMS41NTExIDMyLjI0OTkgMzAuNDA4OCAzMi4yNDk5Wk01NS4yNDQ4IDM2LjEyMDRDNTUuMjQ0OCAzNi40MjM3IDU1LjQzMTkgMzYuNjU2MiA1NS44Mjc0IDM2LjY1NjJINTguMDg5M0M1OS4zMDI0IDM2LjY1NjIgNjAuMjU3NyAzNy4zNzkgNjAuMjU3NyAzOC42NjE2QzYwLjI1NzcgMzkuOTQ0MiA1OS4zMDExIDQwLjY2NzEgNTguMDg5MyA0MC42NjcxSDUzLjYzNDlDNTEuNzkyNCA0MC42NjcxIDUwLjkwNjYgMzkuNTk0MiA1MC45MDY2IDM4LjE0ODZWMjcuODY0OUM1MC45MDY2IDI2LjQxOTMgNTEuNzkyNCAyNS4zNDY0IDUzLjYzNDkgMjUuMzQ2NEg1OC4wODkzQzU5LjMwMjQgMjUuMzQ2NCA2MC4yNTc3IDI2LjA2OTIgNjAuMjU3NyAyNy4zNTE5QzYwLjI1NzcgMjguNjM0NSA1OS4zMDExIDI5LjM1NzMgNTguMDg5MyAyOS4zNTczSDU1LjgyNzRDNTUuNDMwNSAyOS4zNTczIDU1LjI0NDggMjkuNTkxMSA1NS4yNDQ4IDI5Ljg5MzFWMzAuNTY5MUM1NS4yNDQ4IDMwLjg3MjQgNTUuNDMxOSAzMS4xMDQ5IDU1LjgyNzQgMzEuMTA0OUg1Ny40MzZDNTguNTU1NiAzMS4xMDQ5IDU5LjQ0MTQgMzEuNzgwOSA1OS40NDE0IDMyLjk3QzU5LjQ0MTQgMzQuMTU5MSA1OC41NTU2IDM0LjgzNTEgNTcuNDM2IDM0LjgzNTFINTUuODI3NEM1NS40MzA1IDM0LjgzNTEgNTUuMjQ0OCAzNS4wNjkgNTUuMjQ0OCAzNS4zNzA5VjM2LjExNzhWMzYuMTIwNFpNNjYuNTc4NiAzMi4yNDk5SDY2LjAxODhDNjUuNjIyIDMyLjI0OTkgNjUuNDM2MyAzMi4wMTYxIDY1LjQzNjMgMzEuNzE0MVYyOS43MDg3QzY1LjQzNjMgMjkuNDA1NCA2NS42MjM0IDI5LjIxODMgNjYuMDE4OCAyOS4yMTgzSDY2LjU3ODZDNjcuNzIxIDI5LjIxODMgNjguMDcxIDI5Ljk4NzkgNjguMDcxIDMwLjcxMDdDNjguMDcxIDMxLjM4NjggNjcuNzIxIDMyLjI0OTkgNjYuNTc4NiAzMi4yNDk5Wk00OC4yNzE5IDI2LjM0OThDNDcuNzEyMSAyNS45MDYyIDQ2LjE3MyAyNS4yMDc1IDQzLjg2NDMgMjUuMjA3NUM0MC4yNTAyIDI1LjIwNzUgMzYuNzI4MyAyNy41ODU3IDM2LjcyODMgMzMuMDkwMkMzNi43MjgzIDM4LjU5NDggNDAuMjUwMiA0MC44MDg3IDQzLjcyNCA0MC44MDg3QzQ3LjM4NDggNDAuODA4NyA0OS42OTM1IDM4LjQ3NzIgNDkuNjkzNSAzNC45NzgxQzQ5LjY5MzUgMzIuODA5NyA0OC4zODgyIDMxLjMxNzMgNDUuNzc2MiAzMS4zMTczSDQ1LjAyOTNDNDMuNjUzMiAzMS4zMTczIDQyLjU4MDMgMzEuOTcwNiA0Mi41ODAzIDMzLjQzOUM0Mi41ODAzIDM0Ljc0NDMgNDMuNzIyNiAzNS4zNzQ5IDQ0LjY3OTIgMzUuMzc0OUM0NS4yODU4IDM1LjM3NDkgNDUuNjM1OSAzNS42NTQyIDQ1LjYzNTkgMzYuMDc1QzQ1LjYzNTkgMzYuNjM0OCA0NS4xNDU1IDM3LjAwNzYgNDQuMjU5NyAzNy4wMDc2QzQyLjQ0MTMgMzcuMDA3NiA0MS4zMjE3IDM1LjYwODcgNDEuMzIxNyAzMy4wOTAyQzQxLjMyMTcgMzAuNTcxOCA0Mi45NTQ0IDI5LjU5MjQgNDQuMjEzIDI5LjU5MjRDNDUuNzUyMSAyOS41OTI0IDQ2LjAwODYgMzAuMTc1IDQ3LjA4MTUgMzAuMTc1QzQ4LjMxNzMgMzAuMTc1IDQ5LjE1NjQgMjkuMTQ4OSA0OS4xNTY0IDI4LjA3NkM0OS4xNTY0IDI3LjI4MzcgNDguODA2MyAyNi43NzA3IDQ4LjI3MDYgMjYuMzQ5OEg0OC4yNzE5Wk02MS4zMDc5IDM4LjI2NjJDNjEuMzA3OSAzOS42NjUgNjIuMTI0MiA0MC43ODQ2IDYzLjYxNjYgNDAuNzg0NkM2NS4xMDkgNDAuNzg0NiA2NS45MjUzIDM5LjY2NSA2NS45MjUzIDM4LjI2NjJWMzUuOTU3NEM2NS45MjUzIDM1LjYwNzQgNjYuMDY1NiAzNS4zNTA5IDY2LjQzODQgMzUuMzUwOUM2Ni43NjQ0IDM1LjM1MDkgNjYuOTA0NiAzNS42MzAxIDY2Ljk3NDEgMzUuOTU3NEM2Ny4xNjEyIDM2Ljk4MzUgNjcuNDg3MiAzOC41OTIxIDY4LjExNjQgMzkuNDA4NUM2OC45MDg3IDQwLjQ1NzMgNjkuNjU1NiA0MC43ODQ2IDcwLjQwMjUgNDAuNzg0NkM3MS42MTU2IDQwLjc4NDYgNzIuNjY0NCAzOS44MjggNzIuNjY0NCAzOC42Mzg5QzcyLjY2NDQgMzcuODQ2NiA3Mi4zMzg0IDM3LjI2MjggNzEuOTE3NSAzNi43MjdDNzEuNTIwNyAzNi4yMzY3IDcwLjU0MTQgMzQuOTc4MSA3MC4zNTU3IDM0LjMyNDhDNzAuMjg2MiAzNC4wOTEgNzAuMzA4OSAzMy45MjggNzAuNTE4NyAzMy43NDIyQzcxLjI0MTUgMzMuMDY2MiA3Mi4wODA1IDMyLjAxNjEgNzIuMDgwNSAzMC4xNTA5QzcyLjA4MDUgMjYuOTU2NCA2OS42MzE1IDI1LjM0NjQgNjYuNjcwOCAyNS4zNDY0SDY0LjAzNjFDNjIuMTkzNyAyNS4zNDY0IDYxLjMwNzkgMjYuNDE5MyA2MS4zMDc5IDI3Ljg2NDlWMzguMjY2MlpNMTcuODYzMSA0MC43ODQ2QzE0LjA4NDggNDAuNzg0NiAxMi4xMDM0IDM4LjUyMjcgMTIuMTAzNCAzNS42NzgyVjI3LjgxOTVDMTIuMTAzNCAyNi40MjA2IDEyLjkxOTcgMjUuMzAxIDE0LjQxMjEgMjUuMzAxQzE1LjkwNDUgMjUuMzAxIDE2Ljc0MzUgMjYuNDIwNiAxNi43NDM1IDI3LjgxOTVWMzUuNDIxN0MxNi43NDM1IDM1Ljk4MTUgMTcuMDIyOCAzNi42MzQ4IDE3Ljg2MzEgMzYuNjM0OEMxOC43MDM1IDM2LjYzNDggMTkuMDI5NSAzNS45ODE1IDE5LjAyOTUgMzUuNDIxN1YyNy44MTk1QzE5LjAyOTUgMjYuNDIwNiAxOS44NDU5IDI1LjMwMSAyMS4zMzgyIDI1LjMwMUMyMi44MzA2IDI1LjMwMSAyMy42NDcgMjYuNDIwNiAyMy42NDcgMjcuODE5NVYzNS42NzgyQzIzLjY0NyAzOC41MjI3IDIxLjY0MTUgNDAuNzg0NiAxNy44NjMxIDQwLjc4NDZaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDIyLjU5NjhIMS45NTg2N0MwLjYwNjU3MiAyMi41OTY4IDAgMjEuODk2NyAwIDIwLjYzODFDMCAxMy4xNzYyIDExLjIxNjIgMCAzNi4zMzI5IDBDNjEuNDQ5NSAwIDcyLjY2NTcgMTMuMTc2MiA3Mi42NjU3IDIwLjYzODFDNzIuNjY1NyAyMS44OTgxIDcyLjA1OTEgMjIuNTk2OCA3MC43MDcxIDIyLjU5NjhINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF83MDlfMjM3MzciPgo8cmVjdCB3aWR0aD0iNzkiIGhlaWdodD0iODAuMTc0NCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K
+servers:
+- url: https://sandbox-bk-partners.rbictg.com/api/v1
+  description: Sandbox server (uses test data)
+- url: https://bk-partners.rbictg.com/api/v1
+  description: Production server
+tags:
+- name: Stores
+paths:
+  /stores/{storeId}:
+    get:
+      tags:
+      - Stores
+      summary: Store
+      description: 'Store (restaurant) details.
+
+
+        Use this endpoint get the full details of a specific store, including the Detailed Availability by service mode
+
+        '
+      operationId: getStore
+      parameters:
+      - $ref: '#/components/parameters/region'
+      - name: storeId
+        in: path
+        description: Unique ID representing a store
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Store'
+              examples:
+                GetStore200Example:
+                  summary: Default getStore 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      availability:
+                        isEnabled: {}
+                        isOpen: {}
+                      franchiseGroupName: Acme Group
+                      location:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        locality: {}
+                        phoneNumber: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                      name: Example test lab
+                      posVendor: BRINK
+                      serviceHour:
+                      - {}
+                      storeId: '42'
+                      timezone: America/New_York
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStore403Example:
+                  summary: Default getStore 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStore404Example:
+                  summary: Default getStore 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /stores/{storeId}/store-status-changed:
+    post:
+      tags:
+      - Stores
+      summary: Store Status Changed
+      description: 'This endpoint is used to update the status of a store.
+
+        '
+      operationId: storeStatusChanged
+      parameters:
+      - name: storeId
+        in: path
+        description: Unique ID representing a store
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreStatusChanged'
+            examples:
+              StoreStatusChangedRequestExample:
+                summary: Default storeStatusChanged request
+                x-microcks-default: true
+                value:
+                  reason: store was deactivated due to high error rate
+                  region: US
+                  storeStatus: ACTIVE
+                  updatedAt: '1991-02-11T20:30:19Z'
+      responses:
+        '200':
+          description: Successfully updated the store status.
+        '400':
+          description: Bad request due to missing field or content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                StoreStatusChanged400Example:
+                  summary: Default storeStatusChanged 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                StoreStatusChanged403Example:
+                  summary: Default storeStatusChanged 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                StoreStatusChanged404Example:
+                  summary: Default storeStatusChanged 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /stores:
+    get:
+      tags:
+      - Stores
+      summary: List Stores
+      description: 'Store List.
+
+
+        Use this endpoint get a list of stores and their info.
+
+
+        **Pagination**
+
+
+        Pagination is provided in a cursor-basis. For each set of results, a `cursor` will be returned as part of the
+
+        response''s `meta`. Providing this `cursor` to the next call will fetch the next page of the result set.
+
+
+        The max amount of restaurants to be returned is controlled by `limit`
+
+        '
+      operationId: getStores
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      cursor:
+                        description: Cursor to fetch the next set of results
+                        $ref: '#/components/schemas/cursor'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Store'
+              examples:
+                GetStores200Example:
+                  summary: Default getStores 200 response
+                  x-microcks-default: true
+                  value:
+                    meta:
+                      cursor: cursor-id
+                    data:
+                    - availability: {}
+                      franchiseGroupName: Acme Group
+                      location: {}
+                      name: Example test lab
+                      posVendor: {}
+                      serviceHour:
+                      - {}
+                      storeId: {}
+                      timezone: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStores403Example:
+                  summary: Default getStores 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStores404Example:
+                  summary: Default getStores 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    limit:
+      title: Limit
+      description: Amount of results to fetch
+      example: 10
+      type: integer
+      minimum: 1
+      default: 20
+      maximum: 100
+    Reason:
+      title: reason
+      description: Reason for the change in store status
+      example: store was deactivated due to high error rate
+      type: string
+    Store:
+      title: Store
+      description: Information about a store
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/Available'
+          description: True if the store is available for ordering.
+        franchiseGroupName:
+          description: Store franchise group name.
+          type: string
+          example: Acme Group
+        location:
+          $ref: '#/components/schemas/Location'
+        name:
+          description: Store name
+          type: string
+          example: Example test lab
+        posVendor:
+          $ref: '#/components/schemas/PosVendor'
+        serviceHour:
+          description: Store operating hours by serviceMode
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHour'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        timezone:
+          $ref: '#/components/schemas/Timezone'
+      required:
+      - availability
+      - name
+      - storeId
+      - timezone
+      - posVendor
+      - location
+      - serviceHour
+    Region:
+      title: Region
+      description: 'Region
+
+        The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+        region code of the country or region of the address.
+
+        For example, the code for the United States is `US`.
+
+
+        For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+        '
+      example: US
+      type: string
+    StoreStatus:
+      title: storeStatus
+      description: The current marketplace status of the store
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    Error:
+      title: Error
+      type: object
+      description: Standard error format for all errors returned by the API
+      properties:
+        status:
+          description: HTTP status code
+          type: number
+          example: 400
+        code:
+          description: Unique error code. Same as errors[0].code
+          type: string
+          example: ValidationError
+        message:
+          description: Human readable error mesage. Same as errors[0].message
+          type: string
+          example: isAvailable must be a boolean value
+        errors:
+          description: All errors
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: Unique error code
+                type: string
+                example: ValidationError
+              details:
+                description: Detailed error information
+                type: string
+              message:
+                description: Human readable error mesage
+                type: string
+              domain:
+                type: string
+              location:
+                type: string
+                description: Location the error occurred. Interpreation depends on `locationType`
+                example: isAvailable
+              locationType:
+                type: string
+                description: How to interpret the location property
+                example: requestBody
+              sendReport:
+                description: URL to report this error
+                type: string
+              extendedHelp:
+                description: URL with additional information about the error type
+                type: string
+            required:
+            - code
+            - message
+      required:
+      - code
+      - message
+      - errors
+    Location:
+      title: Location
+      description: Information about a store location.
+      type: object
+      properties:
+        administrativeArea:
+          description: Location administrative area.
+          type: string
+          example: FL
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        formattedAddress:
+          description: Store address.
+          type: string
+          example: 5701 BLUE LAGOON DR, MIAMI, FL 33126
+        locality:
+          description: Store locality.
+          type: string
+          example: MIAMI
+        phoneNumber:
+          description: Store phone number.
+          type: string
+          example: 555-555-5555
+        postalCode:
+          description: Store postalCode.
+          type: string
+          example: '33126'
+        regionCode:
+          description: 'The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+            region code of the country or region of the address.
+
+            For example, the code for the United States is `US`.
+
+
+            For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+            '
+          type: string
+          example: US
+        route:
+          description: Store route.
+          type: string
+          example: 5701 BLUE LAGOON DR
+    TimeSlot:
+      title: TimeSlot
+      description: 'Contains information about the store service hours for a range of 15 consecutive days,
+
+        starting from the day before the request is made.
+
+        '
+      type: object
+      properties:
+        closes:
+          description: Store close time.
+          example: '1991-02-11 23:59:00'
+          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
+          type: string
+        date:
+          description: Calendar day that this time slot reflects
+          example: '1991-02-11'
+          format: ISO 8601 Date (YYYY-MM-DD)
+          type: string
+        isClosed:
+          description: 'Flag that determines if the store is closed.
+
+
+            If the store is open, this property won''t be returned.
+
+            '
+          type: boolean
+          example: true
+        opens:
+          description: Store open time.
+          example: '1991-02-11 00:00:00'
+          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
+          type: string
+      required:
+      - opens
+      - date
+      - closes
+    DateTime:
+      type: string
+      format: ISO 8601 Date Time
+      example: '1991-02-11T20:30:19Z'
+    WeekdayHours:
+      title: WeekDayHours
+      description: 'Human-readable view of a store''s weekly operating hours.
+
+
+        **Note**: This information is intended for display purposes only.
+
+        If you need to perform calculations based on the service hours, use the `timeSlots` property instead.
+
+        '
+      type: object
+      properties:
+        text:
+          description: "Human-readable days of operation.\n\nThe \"Time range\" looks like:\n- For days that the store is open:  \n  `Weekday: hh:mm A - hh:mm A` (`Sunday: 12:00 AM - 11:59 PM`)\n- For days that the store is closed:  \n  `Weekday: closed` (`Sunday: closed`)\n"
+          type: string
+          format: 'Weekday: Time range'
+          example: 'Sunday: 12:00 AM - 11:59 PM'
+    StoreStatusChanged:
+      title: StoreStatusChanged
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/Reason'
+        region:
+          $ref: '#/components/schemas/Region'
+        storeStatus:
+          $ref: '#/components/schemas/StoreStatus'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+      required:
+      - storeStatus
+      - region
+      - updatedAt
+    StoreId:
+      title: StoreId
+      description: Unique Store ID
+      example: '42'
+      pattern: ^\d+$
+      type: string
+    Available:
+      title: Available
+      description: Information about store availability
+      type: object
+      properties:
+        isEnabled:
+          description: Detailed availability per service mode.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/ServiceMode'
+              value:
+                type: boolean
+                description: "Returns true if the store is Operating Available.\n\n\"Operating Available\" considers the current date and time to calculate the current availability for the \nservice mode.\n"
+        isOpen:
+          description: True if the store is available for ordering.
+          type: boolean
+          example: true
+      required:
+      - isOpen
+    GeoPoint:
+      title: GeoPoint
+      description: The coordinates (latitude and longitude) for a given address.
+      type: object
+      required:
+      - latitude
+      - longitude
+      properties:
+        latitude:
+          description: Latitude
+          type: number
+          example: 25.782379
+        longitude:
+          description: Latitude
+          type: number
+          example: -80.289207
+    Timezone:
+      title: Timezone
+      description: 'Timezone from the IANA
+
+        [tz database](https://en.wikipedia.org/wiki/Tz_database)
+
+        '
+      example: America/New_York
+      type: string
+    cursor:
+      title: Cursor
+      description: Pagination cursor
+      example: cursor-id
+      type: string
+    ServiceMode:
+      title: Service Mode
+      description: 'How a customer would like their order served.
+
+
+        Note that not all service modes will be available at all restaurants.
+
+        '
+      type: string
+      example: TAKEOUT
+      enum:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+    PosVendor:
+      title: posVendor
+      description: The posVendor that is processing the order
+      type: string
+      enum:
+      - BRINK
+      - CARROLS
+      - NCR
+      - QDI
+      - SICOM
+    ServiceHour:
+      title: ServiceHour
+      description: Store operating hours by serviceMode
+      type: object
+      properties:
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        timeSlots:
+          description: 'Contains information about the store service hours for a range of 15 consecutive days,
+
+            starting from the day before the request is made.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeSlot'
+        weekdayHours:
+          description: 'Human-readable view of a store''s weekly operating hours.
+
+
+            **Note**: This information is intended for display purposes only.
+
+            If you need to perform calculations based on the service hours, use the `timeSlots` property instead.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/WeekdayHours'
+      required:
+      - serviceMode
+      - timeSlots
+  parameters:
+    cursor:
+      description: Pagination cursor
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/cursor'
+      example: example
+    region:
+      description: 'The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+        region code of the country or region of the address.
+
+
+        For the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+        '
+      name: x-ui-region
+      in: header
+      example: US
+      schema:
+        type: string
+    limit:
+      description: Number of results to fetch
+      name: limit
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/limit'
+      example: example
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-tagGroups:
+- name: API
+  tags:
+  - Loyalty
+  - Orders
+  - Menus
+  - Stores
+- name: Models
+  tags:
+  - OrderModel
+  - MenuModel
+  - StoreModel
+  - ErrorModel

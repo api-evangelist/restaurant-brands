@@ -1,0 +1,1873 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Burger King's Partners Loyalty Orders API
+  description: '## Overview
+
+
+    The Channel Partners API are provided for third party food ordering marketplaces
+
+    integrating into the Restaurant Brand International (RBI) fulfillment platform.
+
+
+    ## Authentication
+
+    ### Webhooks
+
+
+    Webhook requests are signed using `hex` encoded HMAC signatures.
+
+
+    An HMAC signature is derived for validation using three components:
+
+
+    - the secret shared between the service and the consumer
+
+    - the body of the request
+
+    - the hash function or algorithm (SHA-256)
+
+
+    Using these three pieces of information, compute an HMAC signature using the secret as the key and
+
+    the body of the request as the message and encode the signature to a hexadecimal string for comparison.
+
+
+    Compare the signature generated using the above information to the signature received in the `x-signature` header,
+
+    if the two signatures match, the request is valid.
+
+    '
+  x-logo:
+    altText: RBI logo
+    url: data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzkiIGhlaWdodD0iODEiIHZpZXdCb3g9IjAgMCA3OSA4MSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzcwOV8yMzczNykiPgo8cGF0aCBkPSJNNzMuMzgzMiA3NS4xMzQ4QzczLjM4MzIgNzMuNjA2MyA3NC41NjgzIDcyLjMyNjQgNzYuMTkxNiA3Mi4zMjY0Qzc3LjgxNDkgNzIuMzI2NCA3OSA3My42MDYzIDc5IDc1LjEzNDhDNzkgNzYuNzc4MSA3Ny44MTYyIDc3Ljk2MTkgNzYuMTkxNiA3Ny45NjE5Qzc0LjU2NjkgNzcuOTYxOSA3My4zODMyIDc2Ljc1ODEgNzMuMzgzMiA3NS4xMzQ4Wk03OC4zODgxIDc1LjEzNDhDNzguMzg4MSA3My43MjEyIDc3LjI4MDUgNzIuODk5NiA3Ni4xOTE2IDcyLjg5OTZDNzUuMTAyNyA3Mi44OTk2IDczLjk5NTEgNzMuNzIxMiA3My45OTUxIDc1LjEzNDhDNzMuOTk1MSA3Ni41NDgzIDc1LjEwMjcgNzcuMzg4NyA3Ni4xOTE2IDc3LjM4ODdDNzcuMjgwNSA3Ny4zODg3IDc4LjM4ODEgNzYuNjA1OCA3OC4zODgxIDc1LjEzNDhaTTc1LjIxNjMgNzYuMzM4NlY3My45NTFDNzUuMjE2MyA3My43OTg3IDc1LjM0OTkgNzMuNjQ1MSA3NS41MDM1IDczLjY0NTFINzYuMzA1MUM3Ni45MzU4IDczLjY0NTEgNzcuMzc1MyA3NC4wMjcyIDc3LjM3NTMgNzQuNTQyOUM3Ny4zNzUzIDc0Ljk4MjUgNzcuMTI2OCA3NS4zNjQ2IDc2LjU1MzcgNzUuNDU5NEw3Ny4xODQzIDc2LjE2NjJDNzcuMjQxNyA3Ni4yMjM3IDc3LjI4MDUgNzYuMjk5OCA3Ny4yODA1IDc2LjM1NzNDNzcuMjgwNSA3Ni41Mjk2IDc3LjE2NTYgNzYuNjQ0NSA3Ni45OTQ2IDc2LjY0NDVDNzYuODc5NyA3Ni42NDQ1IDc2LjgwMzUgNzYuNTg3MSA3Ni43NDYgNzYuNTEwOUw3NS45MDU3IDc1LjUxNjlINzUuODA5NVY3Ni4zMzg2Qzc1LjgwOTUgNzYuNDkwOSA3NS42NzU5IDc2LjYyNDUgNzUuNTAzNSA3Ni42MjQ1Qzc1LjM1MTIgNzYuNjI0NSA3NS4yMTYzIDc2LjQ5MDkgNzUuMjE2MyA3Ni4zMzg2Wk03Ni4yMjkgNzQuOTgyNUM3Ni41NzI0IDc0Ljk4MjUgNzYuNzYzNCA3NC44MTAxIDc2Ljc2MzQgNzQuNTgxN0M3Ni43NjM0IDc0LjMzMzEgNzYuNTkxMSA3NC4xOTk1IDc2LjI4NjQgNzQuMTk5NUg3NS44MDk1Vjc0Ljk4MjVINzYuMjMwM0g3Ni4yMjlaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDY3LjExNDRDNzIuMDU3OCA2Ny4xMTQ0IDcyLjY2NDQgNjcuNzY3NyA3Mi42NjQ0IDY4LjkxMDFDNzIuNjY0NCA3MC45MTU1IDcwLjgyMiA3My43MTQ2IDY3LjE4MzkgNzUuNzY2OEM2MS4xMjA4IDc5LjE5NTEgNTAuNzE5NiA4MC4xNzQ0IDM2LjMzMTUgODAuMTc0NEMyMS45NDM1IDgwLjE3NDQgMTEuNTQyMiA3OS4xOTUxIDUuNDc5MTggNzUuNzY2OEMxLjg0MTA5IDczLjcxNDYgLTAuMDAxMzQyNzcgNzAuOTE2OCAtMC4wMDEzNDI3NyA2OC45MTAxQy0wLjAwMTM0Mjc3IDY3Ljc2NzcgMC42MDUyMjkgNjcuMTE0NCAxLjk1NzMyIDY3LjExNDRINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPHBhdGggZD0iTTcuNjQ4OTUgNjAuNjMxOFY1Ni45MjQzQzcuNjQ4OTUgNTYuNTk4MyA3Ljc4OTIzIDU2LjM2NDQgOC4xMTUyMyA1Ni4zNjQ0QzguNTM0NzUgNTYuMzY0NCA4LjY1MDk5IDU2LjgwOCA4Ljc2ODU3IDU3LjAxNzhDOS40OTEzNyA1OC40NjM0IDEwLjcwNDUgNjEuNDI1NCAxMi4xNTAxIDYzLjAxMTRDMTMuMTI5NSA2NC4wODQyIDE0LjM0MjYgNjQuNzYwMyAxNS42MjUyIDY0Ljc2MDNDMTcuNzkzNyA2NC43NjAzIDE5LjYxMzQgNjIuODcxMSAxOS42MTM0IDYwLjg0MjlDMTkuNjEzNCA1OS41ODMgMTkuMDc3NiA1OC42NTA0IDE4LjA1MTUgNTcuNTMyMkMxNi43NDYyIDU2LjEwOTMgMTUuMjA3IDU0LjI0NDEgMTQuNjQ3MiA1My4zODFDMTQuNDM3NSA1My4wNTUgMTQuNDEzNCA1Mi44NDUzIDE0LjQxMzQgNTIuNzUxN0MxNC40MTM0IDUyLjQ5NTIgMTQuNTUzNyA1Mi4zMDgyIDE0LjgzMyA1Mi4wNTE2QzE1LjQ4NjMgNTEuNDQ1MSAxNy4wOTQ5IDQ5LjkzIDE3Ljk4MDcgNDguNTUzOEMxOC42NTY4IDQ3LjUwNSAxOC45MzczIDQ2LjU0ODQgMTguOTM3MyA0NS43NTQ4QzE4LjkzNzMgNDMuNzI1MyAxNy4wOTQ5IDQyLjE0MDcgMTUuMDg5NSA0Mi4xNDA3QzEzLjgwNjkgNDIuMTQwNyAxMi41OTM3IDQyLjg2MzUgMTEuNzc4NyA0NC4xOTI5QzEwLjY4MzEgNDUuOTY1OSA5LjU2MzUyIDQ4LjQ2MDMgOC42MzA5NSA0OS4zOTI5QzguMzk3MTQgNDkuNjI2NyA4LjI4MDkgNDkuNjcyMSA4LjA5NTE5IDQ5LjY3MjFDNy43OTE5IDQ5LjY3MjEgNy42NTE2MiA0OS40NjIzIDcuNjUxNjIgNDkuMTM2M1Y0Ni4yNjc4QzcuNjUxNjIgNDMuOTgxOCA2LjI5OTUyIDQyLjE0MDcgMy44NTA1MiA0Mi4xNDA3QzEuNDAxNTIgNDIuMTQwNyAwLjA0Njc1MjkgNDMuOTgxOCAwLjA0Njc1MjkgNDYuMjY2NVY2MC42MzE4QzAuMDQ2NzUyOSA2Mi45MTc4IDEuMzc2MTMgNjQuNzU4OSAzLjg0Nzg1IDY0Ljc1ODlDNi4zMTk1NiA2NC43NTg5IDcuNjQ4OTUgNjIuOTE2NSA3LjY0ODk1IDYwLjYzMThaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC40OTYgNDMuOTU3OEM2OS4wNzMxIDQyLjkwOSA2Ni45Mjg3IDQyLjEzOTQgNjMuODk1OCA0Mi4xMzk0QzU4LjQ2MjEgNDIuMTM5NCA1My4xNjg2IDQ1LjU2NzcgNTMuMTY4NiA1My41NDI3QzUzLjE2ODYgNjEuNTE3NiA1OC40NjIxIDY0LjczNjIgNjMuNjg2MSA2NC43MzYyQzY5LjE2NjYgNjQuNzM2MiA3Mi42NDAzIDYxLjM1NDYgNzIuNjQwMyA1Ni40MTEyQzcyLjY0MDMgNTMuMjg2MiA3MC42ODE3IDUxLjExNzcgNjYuNzQwMyA1MS4xMTc3SDY1LjU5OEM2My41NDU4IDUxLjExNzcgNjEuOTU5OSA1Mi4wNzQzIDYxLjk1OTkgNTQuMTczM0M2MS45NTk5IDU2LjA4NTIgNjMuNjg2MSA1Ni45OTUxIDY0Ljk2ODcgNTYuOTk1MUM2Ni4wNjQyIDU2Ljk5NTEgNjYuNTA3OCA1Ny4xODIxIDY2LjUwNzggNTcuNjcxMUM2Ni41MDc4IDU4LjI3NzcgNjUuOTI1MyA1OC42NzQ1IDY0LjUwMjQgNTguNjc0NUM2MS44Njc3IDU4LjY3NDUgNjAuMDcyIDU2Ljg3ODggNjAuMDcyIDUzLjU0NEM2MC4wNzIgNDkuODM2NCA2Mi41MjEgNDguNDgzIDY0LjQwODkgNDguNDgzQzY2LjcxNzYgNDguNDgzIDY3LjA5MDMgNDkuNjQ5NCA2OC43MDAzIDQ5LjY0OTRDNzAuNTY1NCA0OS42NDk0IDcxLjgyNTMgNDguMTMzIDcxLjgyNTMgNDYuNTkzOEM3MS44MjUzIDQ1LjQ1MTUgNzEuMzEyMyA0NC41NjQzIDcwLjQ5NiA0My45NTkxVjQzLjk1NzhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik01MS4zNTAyIDQ2LjA4MDhWNjAuNjA5MUM1MS4zNTAyIDYyLjkxNzggNDkuOTk4MSA2NC43NjAzIDQ3LjU0OTEgNjQuNzYwM0M0Ni4xMjYyIDY0Ljc2MDMgNDQuNzk2OCA2NC4yMDA0IDQzLjU2MSA2MS43OTgyTDQwLjMxOTcgNTUuNTI1NEM0MC4wODU5IDU1LjA4MTggMzkuOTIyOSA1NC45NjU2IDM5LjY5MDQgNTQuOTY1NkMzOS4zNjQ0IDU0Ljk2NTYgMzkuMjAwMSA1NS4xOTk0IDM5LjIwMDEgNTUuNzM1MkwzOS4yMjI4IDYwLjgxODlDMzkuMjIyOCA2My4wMTEzIDM3Ljk2MjkgNjQuNzYwMyAzNS42MDg3IDY0Ljc2MDNDMzMuMjU0NiA2NC43NjAzIDMyLjAxNzQgNjMuMDExMyAzMi4wMTc0IDYwLjgxODlWNDYuMjkwNUMzMi4wMTc0IDQzLjk4MTggMzMuMzY5NSA0Mi4xMzk0IDM1LjgxODUgNDIuMTM5NEMzNy4yODgyIDQyLjEzOTQgMzguNTcwOCA0Mi42OTkyIDM5LjgwNjYgNDUuMTAxNEw0My4wNDc5IDUxLjM3NDJDNDMuMjgxNyA1MS44MTc4IDQzLjQ0NDcgNTEuOTM0MSA0My42NzcyIDUxLjkzNDFDNDQuMDAzMiA1MS45MzQxIDQ0LjE2NzUgNTEuNzAwMyA0NC4xNjc1IDUxLjE2NDVMNDQuMTQ0OCA0Ni4wODA4QzQ0LjE0NDggNDMuODg4MyA0NS40MDQ3IDQyLjEzOTQgNDcuNzU4OSA0Mi4xMzk0QzUwLjExMyA0Mi4xMzk0IDUxLjM1MDIgNDMuODg4MyA1MS4zNTAyIDQ2LjA4MDhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik0yOS4zMTMyIDQ2LjU0NzFDMjkuMzEzMiA0NC4wOTgxIDI3Ljg5MDMgNDIuMTM5NCAyNS4yNzgzIDQyLjEzOTRDMjIuNjY2MyA0Mi4xMzk0IDIxLjI0MzQgNDQuMDk4MSAyMS4yNDM0IDQ2LjU0NzFWNjAuMzUyNkMyMS4yNDM0IDYyLjgwMTYgMjIuNjY2MyA2NC43NjAzIDI1LjI3ODMgNjQuNzYwM0MyNy44OTAzIDY0Ljc2MDMgMjkuMzEzMiA2Mi44MDE2IDI5LjMxMzIgNjAuMzUyNlY0Ni41NDcxWiIgZmlsbD0iI0Q2MjMwMCIvPgo8cGF0aCBkPSJNMzUuNzQ5IDM2LjcyODNDMzUuMzUyMiAzNi4yMzggMzQuMzcyOSAzNC45Nzk0IDM0LjE4NzIgMzQuMzI2MUMzNC4xMTc3IDM0LjA5MjMgMzQuMTQwNCAzMy45MjkzIDM0LjM1MDIgMzMuNzQzNkMzNS4wNzMgMzMuMDY3NSAzNS45MTIgMzIuMDE3NCAzNS45MTIgMzAuMTUyMkMzNS45MTIgMjYuOTU3NyAzMy40NjMgMjUuMzQ3OCAzMC41MDIzIDI1LjM0NzhIMjcuODY3NkMyNi4wMjUyIDI1LjM0NzggMjUuMTM5MyAyNi40MjA2IDI1LjEzOTMgMjcuODY2MlYzOC4yNjc1QzI1LjEzOTMgMzkuNjY2MyAyNS45NTU3IDQwLjc4NiAyNy40NDgxIDQwLjc4NkMyOC45NDA0IDQwLjc4NiAyOS43NTY4IDM5LjY2NjMgMjkuNzU2OCAzOC4yNjc1VjM1Ljk1ODhDMjkuNzU2OCAzNS42MDg3IDI5Ljg5NzEgMzUuMzUyMiAzMC4yNjk4IDM1LjM1MjJDMzAuNTk1OCAzNS4zNTIyIDMwLjczNjEgMzUuNjMxNCAzMC44MDU2IDM1Ljk1ODhDMzEuMDE1MyAzNi45ODQ5IDMxLjMxODYgMzguNTkzNSAzMS45NDc5IDM5LjQwOThDMzIuNzQwMiA0MC40NTg2IDMzLjQ4NzEgNDAuNzg2IDM0LjIzMzkgNDAuNzg2QzM1LjQ0NzEgNDAuNzg2IDM2LjQ5NTkgMzkuODI5MyAzNi40OTU5IDM4LjY0MDJDMzYuNDk1OSAzNy44NDggMzYuMTY5OSAzNy4yNjQxIDM1Ljc0OSAzNi43MjgzWk00LjY4NjkxIDM0LjIzMjZINS4zNDAyNEM2LjM4OTA1IDM0LjIzMjYgNi42OTIzMyAzNS4wMDIyIDYuNjkyMzMgMzUuNzAyMkM2LjY5MjMzIDM2LjQwMjMgNi4zODkwNSAzNy4xNzE5IDUuMzQwMjQgMzcuMTcxOUg0LjY4NjkxQzQuMjkwMSAzNy4xNzE5IDQuMTA0MzggMzYuOTM4MSA0LjEwNDM4IDM2LjYzNjJWMzQuNzcxQzQuMTA0MzggMzQuNDY3NyA0LjI5MTQzIDM0LjIzNTMgNC42ODY5MSAzNC4yMzUzVjM0LjIzMjZaTTQuNjg2OTEgMzEuNDgwM0M0LjI5MDEgMzEuNDgwMyA0LjEwNDM4IDMxLjI0NjUgNC4xMDQzOCAzMC45NDQ1VjI5LjM1ODZDNC4xMDQzOCAyOS4wNTUzIDQuMjkxNDMgMjguODIyOSA0LjY4NjkxIDI4LjgyMjlINS4yMjI2N0M2LjE1NTI0IDI4LjgyMjkgNi40MzU4MSAyOS40OTg5IDYuNDM1ODEgMzAuMTUyMkM2LjQzNTgxIDMwLjgwNTYgNi4xNTY1NyAzMS40ODE2IDUuMjIyNjcgMzEuNDgxNkg0LjY4NjkxVjMxLjQ4MDNaTTIuNzI4MjQgNDAuNjY4NEg2LjAxNjI5QzkuMTE3MjkgNDAuNjY4NCAxMS4wMDY1IDM4LjU5MzUgMTEuMDA2NSAzNi4wMDQyQzExLjAwNjUgMzMuOTk4OCA5Ljc3MDYyIDMzLjA4ODkgOS40OTAwNSAzMi44NTY0QzkuMzczODEgMzIuNzYyOSA5LjI1NjI0IDMyLjY2OTQgOS4yNTYyNCAzMi41NzcyQzkuMjU2MjQgMzIuNDYxIDkuMzAzIDMyLjQxNDIgOS40NDMyOSAzMi4yNzM5QzkuOTU2MzMgMzEuNzYwOSAxMC40NDY3IDMwLjg3NTEgMTAuNDQ2NyAyOS42MzkyQzEwLjQ0NjcgMjYuODQwMSA4LjQ0MTI0IDI1LjM0NzggNS41MDMyNCAyNS4zNDc4SDIuNzI4MjRDMC44ODU4MDkgMjUuMzQ3OCAwIDI2LjQyMDYgMCAyNy44NjYyVjM4LjE0OTlDMCAzOS41OTU1IDAuODg1ODA5IDQwLjY2ODQgMi43MjgyNCA0MC42Njg0Wk0zMC40MDg4IDMyLjI0OTlIMjkuODQ5QzI5LjQ1MjIgMzIuMjQ5OSAyOS4yNjY0IDMyLjAxNjEgMjkuMjY2NCAzMS43MTQxVjI5LjcwODdDMjkuMjY2NCAyOS40MDU0IDI5LjQ1MzUgMjkuMjE4MyAyOS44NDkgMjkuMjE4M0gzMC40MDg4QzMxLjU1MTEgMjkuMjE4MyAzMS45MDEyIDI5Ljk4NzkgMzEuOTAxMiAzMC43MTA3QzMxLjkwMTIgMzEuMzg2OCAzMS41NTExIDMyLjI0OTkgMzAuNDA4OCAzMi4yNDk5Wk01NS4yNDQ4IDM2LjEyMDRDNTUuMjQ0OCAzNi40MjM3IDU1LjQzMTkgMzYuNjU2MiA1NS44Mjc0IDM2LjY1NjJINTguMDg5M0M1OS4zMDI0IDM2LjY1NjIgNjAuMjU3NyAzNy4zNzkgNjAuMjU3NyAzOC42NjE2QzYwLjI1NzcgMzkuOTQ0MiA1OS4zMDExIDQwLjY2NzEgNTguMDg5MyA0MC42NjcxSDUzLjYzNDlDNTEuNzkyNCA0MC42NjcxIDUwLjkwNjYgMzkuNTk0MiA1MC45MDY2IDM4LjE0ODZWMjcuODY0OUM1MC45MDY2IDI2LjQxOTMgNTEuNzkyNCAyNS4zNDY0IDUzLjYzNDkgMjUuMzQ2NEg1OC4wODkzQzU5LjMwMjQgMjUuMzQ2NCA2MC4yNTc3IDI2LjA2OTIgNjAuMjU3NyAyNy4zNTE5QzYwLjI1NzcgMjguNjM0NSA1OS4zMDExIDI5LjM1NzMgNTguMDg5MyAyOS4zNTczSDU1LjgyNzRDNTUuNDMwNSAyOS4zNTczIDU1LjI0NDggMjkuNTkxMSA1NS4yNDQ4IDI5Ljg5MzFWMzAuNTY5MUM1NS4yNDQ4IDMwLjg3MjQgNTUuNDMxOSAzMS4xMDQ5IDU1LjgyNzQgMzEuMTA0OUg1Ny40MzZDNTguNTU1NiAzMS4xMDQ5IDU5LjQ0MTQgMzEuNzgwOSA1OS40NDE0IDMyLjk3QzU5LjQ0MTQgMzQuMTU5MSA1OC41NTU2IDM0LjgzNTEgNTcuNDM2IDM0LjgzNTFINTUuODI3NEM1NS40MzA1IDM0LjgzNTEgNTUuMjQ0OCAzNS4wNjkgNTUuMjQ0OCAzNS4zNzA5VjM2LjExNzhWMzYuMTIwNFpNNjYuNTc4NiAzMi4yNDk5SDY2LjAxODhDNjUuNjIyIDMyLjI0OTkgNjUuNDM2MyAzMi4wMTYxIDY1LjQzNjMgMzEuNzE0MVYyOS43MDg3QzY1LjQzNjMgMjkuNDA1NCA2NS42MjM0IDI5LjIxODMgNjYuMDE4OCAyOS4yMTgzSDY2LjU3ODZDNjcuNzIxIDI5LjIxODMgNjguMDcxIDI5Ljk4NzkgNjguMDcxIDMwLjcxMDdDNjguMDcxIDMxLjM4NjggNjcuNzIxIDMyLjI0OTkgNjYuNTc4NiAzMi4yNDk5Wk00OC4yNzE5IDI2LjM0OThDNDcuNzEyMSAyNS45MDYyIDQ2LjE3MyAyNS4yMDc1IDQzLjg2NDMgMjUuMjA3NUM0MC4yNTAyIDI1LjIwNzUgMzYuNzI4MyAyNy41ODU3IDM2LjcyODMgMzMuMDkwMkMzNi43MjgzIDM4LjU5NDggNDAuMjUwMiA0MC44MDg3IDQzLjcyNCA0MC44MDg3QzQ3LjM4NDggNDAuODA4NyA0OS42OTM1IDM4LjQ3NzIgNDkuNjkzNSAzNC45NzgxQzQ5LjY5MzUgMzIuODA5NyA0OC4zODgyIDMxLjMxNzMgNDUuNzc2MiAzMS4zMTczSDQ1LjAyOTNDNDMuNjUzMiAzMS4zMTczIDQyLjU4MDMgMzEuOTcwNiA0Mi41ODAzIDMzLjQzOUM0Mi41ODAzIDM0Ljc0NDMgNDMuNzIyNiAzNS4zNzQ5IDQ0LjY3OTIgMzUuMzc0OUM0NS4yODU4IDM1LjM3NDkgNDUuNjM1OSAzNS42NTQyIDQ1LjYzNTkgMzYuMDc1QzQ1LjYzNTkgMzYuNjM0OCA0NS4xNDU1IDM3LjAwNzYgNDQuMjU5NyAzNy4wMDc2QzQyLjQ0MTMgMzcuMDA3NiA0MS4zMjE3IDM1LjYwODcgNDEuMzIxNyAzMy4wOTAyQzQxLjMyMTcgMzAuNTcxOCA0Mi45NTQ0IDI5LjU5MjQgNDQuMjEzIDI5LjU5MjRDNDUuNzUyMSAyOS41OTI0IDQ2LjAwODYgMzAuMTc1IDQ3LjA4MTUgMzAuMTc1QzQ4LjMxNzMgMzAuMTc1IDQ5LjE1NjQgMjkuMTQ4OSA0OS4xNTY0IDI4LjA3NkM0OS4xNTY0IDI3LjI4MzcgNDguODA2MyAyNi43NzA3IDQ4LjI3MDYgMjYuMzQ5OEg0OC4yNzE5Wk02MS4zMDc5IDM4LjI2NjJDNjEuMzA3OSAzOS42NjUgNjIuMTI0MiA0MC43ODQ2IDYzLjYxNjYgNDAuNzg0NkM2NS4xMDkgNDAuNzg0NiA2NS45MjUzIDM5LjY2NSA2NS45MjUzIDM4LjI2NjJWMzUuOTU3NEM2NS45MjUzIDM1LjYwNzQgNjYuMDY1NiAzNS4zNTA5IDY2LjQzODQgMzUuMzUwOUM2Ni43NjQ0IDM1LjM1MDkgNjYuOTA0NiAzNS42MzAxIDY2Ljk3NDEgMzUuOTU3NEM2Ny4xNjEyIDM2Ljk4MzUgNjcuNDg3MiAzOC41OTIxIDY4LjExNjQgMzkuNDA4NUM2OC45MDg3IDQwLjQ1NzMgNjkuNjU1NiA0MC43ODQ2IDcwLjQwMjUgNDAuNzg0NkM3MS42MTU2IDQwLjc4NDYgNzIuNjY0NCAzOS44MjggNzIuNjY0NCAzOC42Mzg5QzcyLjY2NDQgMzcuODQ2NiA3Mi4zMzg0IDM3LjI2MjggNzEuOTE3NSAzNi43MjdDNzEuNTIwNyAzNi4yMzY3IDcwLjU0MTQgMzQuOTc4MSA3MC4zNTU3IDM0LjMyNDhDNzAuMjg2MiAzNC4wOTEgNzAuMzA4OSAzMy45MjggNzAuNTE4NyAzMy43NDIyQzcxLjI0MTUgMzMuMDY2MiA3Mi4wODA1IDMyLjAxNjEgNzIuMDgwNSAzMC4xNTA5QzcyLjA4MDUgMjYuOTU2NCA2OS42MzE1IDI1LjM0NjQgNjYuNjcwOCAyNS4zNDY0SDY0LjAzNjFDNjIuMTkzNyAyNS4zNDY0IDYxLjMwNzkgMjYuNDE5MyA2MS4zMDc5IDI3Ljg2NDlWMzguMjY2MlpNMTcuODYzMSA0MC43ODQ2QzE0LjA4NDggNDAuNzg0NiAxMi4xMDM0IDM4LjUyMjcgMTIuMTAzNCAzNS42NzgyVjI3LjgxOTVDMTIuMTAzNCAyNi40MjA2IDEyLjkxOTcgMjUuMzAxIDE0LjQxMjEgMjUuMzAxQzE1LjkwNDUgMjUuMzAxIDE2Ljc0MzUgMjYuNDIwNiAxNi43NDM1IDI3LjgxOTVWMzUuNDIxN0MxNi43NDM1IDM1Ljk4MTUgMTcuMDIyOCAzNi42MzQ4IDE3Ljg2MzEgMzYuNjM0OEMxOC43MDM1IDM2LjYzNDggMTkuMDI5NSAzNS45ODE1IDE5LjAyOTUgMzUuNDIxN1YyNy44MTk1QzE5LjAyOTUgMjYuNDIwNiAxOS44NDU5IDI1LjMwMSAyMS4zMzgyIDI1LjMwMUMyMi44MzA2IDI1LjMwMSAyMy42NDcgMjYuNDIwNiAyMy42NDcgMjcuODE5NVYzNS42NzgyQzIzLjY0NyAzOC41MjI3IDIxLjY0MTUgNDAuNzg0NiAxNy44NjMxIDQwLjc4NDZaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDIyLjU5NjhIMS45NTg2N0MwLjYwNjU3MiAyMi41OTY4IDAgMjEuODk2NyAwIDIwLjYzODFDMCAxMy4xNzYyIDExLjIxNjIgMCAzNi4zMzI5IDBDNjEuNDQ5NSAwIDcyLjY2NTcgMTMuMTc2MiA3Mi42NjU3IDIwLjYzODFDNzIuNjY1NyAyMS44OTgxIDcyLjA1OTEgMjIuNTk2OCA3MC43MDcxIDIyLjU5NjhINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF83MDlfMjM3MzciPgo8cmVjdCB3aWR0aD0iNzkiIGhlaWdodD0iODAuMTc0NCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K
+servers:
+- url: https://sandbox-bk-partners.rbictg.com/api/v1
+  description: Sandbox server (uses test data)
+- url: https://bk-partners.rbictg.com/api/v1
+  description: Production server
+tags:
+- name: Orders
+paths:
+  /orders/channel/{orderId}:
+    get:
+      tags:
+      - Orders
+      summary: Order
+      description: 'Retrieve an order by ID
+
+        '
+      operationId: getOrder
+      parameters:
+      - $ref: '#/components/parameters/order-id'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Order retrieve success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                GetOrder200Example:
+                  summary: Default getOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetOrder403Example:
+                  summary: Default getOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetOrder404Example:
+                  summary: Default getOrder 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                GetOrder500Example:
+                  summary: Default getOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/price:
+    post:
+      tags:
+      - Orders
+      summary: Price Order
+      description: "Price a new order.\n\nThe price order API must be called to create a new order and to validate the\ncart prices and item availability with the POS.  When the Price Order\nrequest returns a success reponse, a subsequent [Commit Order](#operation/\ncommitOrder) request should (but is not guarenteed to) succeed.\n\nPrice requests can fail for a variety of reasons. For example\\:\n- Restaurant - The restaurant is unavailable.\n- Menu - An item in the cart is unavailable or violates permitted constraints.\n- Loyalty - Invalid user details were provided or a discount redemption failed.\n- POS - The order failed to price or inject.\n\nLoyalty\n- Rewards:\n  the cart must contain a menu selection with the id of the reward and children menu selections with one of possible options.\n  If a reward points to a combo, then the combo must also contain menu selections for its options.\n  A reward can be reedemed muliple times by modifying the quantity of the root menuSelection. The quantity of the children menuSelection must always be 1.\n- Offers:\n  Offers are presented in the menu in a nested structure. The first level offer will always point to a second level offer by its options.\n  The second level offer defines the entries required in the cart by its options. If the options is of type ENTRY then the item is present in the menu as a regular item.\n  If an option has type 'SYSTEM_WIDE_OFFER' then an entity in the offer section will be present with that id and that entity should point to regular menu items by its options. In this scenario the client is given the capability to chose which option to include in the cart.\n  - Constraints\n    - An order can only contain one offer. This means it isn't possible to provide two menu selections with an offer or specifiying quantity different than 1."
+      operationId: priceOrder
+      parameters:
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceOrder'
+            examples:
+              PriceOrderRequestExample:
+                summary: Default priceOrder request
+                x-microcks-default: true
+                value:
+                  externalReferenceId: example
+                  storeId: '42'
+                  serviceMode: TAKEOUT
+                  cart:
+                    menuSelections:
+                    - {}
+                  customer:
+                    id: '500123'
+                    externalReferenceId: {}
+                    name: Whopper
+                    username: example
+                    phone: {}
+                    email: guest@example.com
+                  charges:
+                    tax: {}
+                    mpfTax: {}
+                    subTotal: {}
+                    total: {}
+                    fees: {}
+                  mpfOrderId: '123456789'
+                  deliveryAddress:
+                    administrativeArea: FL
+                    coordinates: {}
+                    formattedAddress: 5707 Blue Lagoon Drive
+                    instructions: example
+                    locality: Miami-Dade County
+                    postalCode: '33126'
+                    regionCode: US
+                    route: Blue Lagoon Drive
+                    streetNumber: '5707'
+                    sublocality: example
+                    subpremise: Suite 101
+                  loyalty:
+                    loyaltyId: {}
+                    transactionId: {}
+      responses:
+        '200':
+          description: Order price request success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                PriceOrder200Example:
+                  summary: Default priceOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PriceOrder400Example:
+                  summary: Default priceOrder 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PriceOrder403Example:
+                  summary: Default priceOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                PriceOrder500Example:
+                  summary: Default priceOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/{orderId}/commit:
+    post:
+      tags:
+      - Orders
+      summary: Commit Order
+      description: 'Commit an order.
+
+        '
+      operationId: commitOrder
+      parameters:
+      - $ref: '#/components/parameters/order-id'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommitOrder'
+            examples:
+              CommitOrderRequestExample:
+                summary: Default commitOrder request
+                x-microcks-default: true
+                value:
+                  charges:
+                    tax: {}
+                    mpfTax: {}
+                    subTotal: {}
+                    total: {}
+                    fees: {}
+                  mpfOrderId: '123456789'
+                  paymentMethod: APPLE_PAY
+                  fireOrderInSeconds: 600
+                  readyInSeconds: 600
+      responses:
+        '200':
+          description: Order commit success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                CommitOrder200Example:
+                  summary: Default commitOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '400':
+          description: Order commit failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                CommitOrder400Example:
+                  summary: Default commitOrder 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                CommitOrder403Example:
+                  summary: Default commitOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                CommitOrder404Example:
+                  summary: Default commitOrder 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                CommitOrder500Example:
+                  summary: Default commitOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/{orderId}/fire:
+    post:
+      tags:
+      - Orders
+      summary: Fire Order
+      description: 'Fire a committed order to the kitchen for preparation.
+
+
+        In cases when an order is committed with some pre-determined lead time
+
+        (e.g., 30 minutes from now), it may be necessary to "fire" or "release" the
+
+        order to the kitchen immediately before the original lead time has elapsed.
+
+        '
+      operationId: fireOrder
+      parameters:
+      - $ref: '#/components/parameters/order-id'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Order fire success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                FireOrder200Example:
+                  summary: Default fireOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                FireOrder403Example:
+                  summary: Default fireOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                FireOrder404Example:
+                  summary: Default fireOrder 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                FireOrder500Example:
+                  summary: Default fireOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/place:
+    post:
+      tags:
+      - Orders
+      summary: Place Order
+      description: 'Price and commit a new order.
+
+
+        The place order API [prices](#operation/priceOrder) and [commits](#operation/commitOrder) an order
+
+        asynchronously. Partners receive order changes via the [Order Updated webhook](#operation/orderUpdateEvent).
+
+
+        Place order can fail for the same reasons a Price and Commit calls can fail, but also:
+
+        - Price mismatches between partner and POS.'
+      operationId: placeOrder
+      parameters:
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceOrder'
+            examples:
+              PlaceOrderRequestExample:
+                summary: Default placeOrder request
+                x-microcks-default: true
+                value:
+                  externalReferenceId: example
+                  storeId: '42'
+                  serviceMode: TAKEOUT
+                  cart:
+                    menuSelections:
+                    - {}
+                  customer:
+                    id: '500123'
+                    externalReferenceId: {}
+                    name: Whopper
+                    username: example
+                    phone: {}
+                    email: guest@example.com
+                  charges:
+                    tax: {}
+                    mpfTax: {}
+                    subTotal: {}
+                    total: {}
+                    fees: {}
+                  deliveryAddress:
+                    administrativeArea: FL
+                    coordinates: {}
+                    formattedAddress: 5707 Blue Lagoon Drive
+                    instructions: example
+                    locality: Miami-Dade County
+                    postalCode: '33126'
+                    regionCode: US
+                    route: Blue Lagoon Drive
+                    streetNumber: '5707'
+                    sublocality: example
+                    subpremise: Suite 101
+                  paymentMethod: APPLE_PAY
+                  fireOrderInSeconds: 600
+                  readyInSeconds: 600
+                  mpfOrderId: '123456789'
+      responses:
+        '200':
+          description: Order place request success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OrderPlaced'
+                required:
+                - data
+              examples:
+                PlaceOrder200Example:
+                  summary: Default placeOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      callbackUrl: https://bk-partners.rbictg.com
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PlaceOrder400Example:
+                  summary: Default placeOrder 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PlaceOrder403Example:
+                  summary: Default placeOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PlaceOrder500Example:
+                  summary: Default placeOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OrderId:
+      title: OrderId
+      description: Unique identifier for an order
+      type: string
+      example: example-unique-id
+    MenuSelection:
+      title: Menu Selection
+      description: Menu selection in the cart
+      type: object
+      properties:
+        id:
+          type: string
+          description: Menu item identifier
+          example: item_42
+        referenceId:
+          type: string
+          description: 'Secondary menu item identifier.
+
+
+            ⚠️ This `referenceId` must be included along with the `id` when the value is present in the menu
+
+            '
+          example: item_603
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        quantity:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1
+        price:
+          $ref: '#/components/schemas/Money'
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - id
+      - quantity
+    Money:
+      title: Money
+      description: 'Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 "cents" or 1 USD).
+
+        '
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        amount:
+          title: Amount
+          description: Amount in the specified currency
+          type: number
+          example: 100
+          format: integer
+      required:
+      - currency
+      - amount
+    OrderError:
+      title: OrderError
+      type: object
+      description: Standard order error format
+      properties:
+        status:
+          description: HTTP status code
+          type: number
+          example: 400
+        code:
+          description: Unique error code. Same as errors[0].code
+          type: string
+          example: ValidationError
+        message:
+          description: Human readable error mesage. Same as errors[0].message
+          type: string
+          example: isAvailable must be a boolean value
+        errors:
+          description: All errors
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: Unique error code
+                type: string
+                example: ValidationError
+              message:
+                description: Human readable error mesage
+                type: string
+              details:
+                description: Detailed error information
+                type: string
+              domain:
+                type: string
+              location:
+                type: string
+                description: Location the error occurred. Interpreation depends on `locationType`
+                example: isAvailable
+              locationType:
+                type: string
+                description: How to interpret the location property
+                example: requestBody
+              sendReport:
+                description: URL to report this error
+                type: string
+              extendedHelp:
+                description: URL with additional information about the error type
+                type: string
+            required:
+            - code
+            - message
+        order:
+          $ref: '#/components/schemas/Order'
+      required:
+      - code
+      - message
+      - errors
+    OrderStatus:
+      title: Order Status
+      description: 'Order status, representing current state of order in its lifecycle.
+
+
+        When transitioning the order status, the status must always advance further in the lifecycle. All other transitions are invalid.
+
+
+        |Status   |Description                                                                 |
+
+        |---------|----------------------------------------------------------------------------|
+
+        |CREATED  |Order has been created.                                                     |
+
+        |PRICED   |Order has been priced. The POS has provided price information for the order.|
+
+        |COMMITTED|Order has been committed. The POS has accepted the order.                   |
+
+        |PREPARING|Order is being prepared in the restaurant                                   |
+
+        |PREPARED |Order has been prepared and is ready for pickup or delivery.                |
+
+        |DONE     |Order is done. This is the final state for a successful order.              |
+
+        |CANCELED |Order has been cancelled.                                                   |
+
+        |ERROR    |Error with the order. Customer should be notified and refunded.             |
+
+        '
+      type: string
+      enum:
+      - CREATED
+      - PRICED
+      - COMMITTED
+      - PREPARING
+      - PREPARED
+      - DONE
+      - CANCELED
+      - ERROR
+    Currency:
+      title: Currency Code
+      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
+      format: ISO-4217 alpha
+      type: string
+      example: USD
+    Error:
+      title: Error
+      type: object
+      description: Standard error format for all errors returned by the API
+      properties:
+        status:
+          description: HTTP status code
+          type: number
+          example: 400
+        code:
+          description: Unique error code. Same as errors[0].code
+          type: string
+          example: ValidationError
+        message:
+          description: Human readable error mesage. Same as errors[0].message
+          type: string
+          example: isAvailable must be a boolean value
+        errors:
+          description: All errors
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: Unique error code
+                type: string
+                example: ValidationError
+              details:
+                description: Detailed error information
+                type: string
+              message:
+                description: Human readable error mesage
+                type: string
+              domain:
+                type: string
+              location:
+                type: string
+                description: Location the error occurred. Interpreation depends on `locationType`
+                example: isAvailable
+              locationType:
+                type: string
+                description: How to interpret the location property
+                example: requestBody
+              sendReport:
+                description: URL to report this error
+                type: string
+              extendedHelp:
+                description: URL with additional information about the error type
+                type: string
+            required:
+            - code
+            - message
+      required:
+      - code
+      - message
+      - errors
+    FireOrderInSeconds:
+      title: Fire order in seconds
+      description: "Lead time in seconds before an injected order should be fired to the\nkitchen for preparation.\n- `fireOrderInSeconds=0` fire the order immediately to the kitchen.\n- `fireOrderInSeconds=null` hold the order in the POS without firing,\n  requiring an explicit [Fire Order](#operation/fireOrder) call.\n"
+      example: 600
+      type:
+      - integer
+      - 'null'
+      minimum: 0
+      maximum: 100000
+    Feedbacks:
+      title: Feedback
+      description: 'Feedback on cart prices and availability for cart menu selections. Cart
+
+        feedback will only be provided for adjusted entries.
+
+        '
+      type: array
+      items:
+        $ref: '#/components/schemas/Feedback'
+    Loyalty:
+      title: Loyalty information
+      description: User and transaction information regarding loyalty
+      type: object
+      properties:
+        loyaltyId:
+          $ref: '#/components/schemas/LoyaltyId'
+        transactionId:
+          $ref: '#/components/schemas/LoyaltyTransactionId'
+      required:
+      - loyaltyId
+      - transactionId
+    MpfOrderId:
+      title: mpfOrderId
+      description: "External References for the order.\n\nYou can use this field to provide additional identifiers or any other string data to the order to be injected. \nA common use for this is to hold additional external order numbers, like receipt number or third party short order ID.\n"
+      example: '123456789'
+      type: string
+    DateTime:
+      type: string
+      format: ISO 8601 Date Time
+      example: '1991-02-11T20:30:19Z'
+    Discounts:
+      title: Discounts
+      description: Any discounts which ought to be applied to the order
+      type: array
+      items:
+        $ref: '#/components/schemas/Discount'
+    Fees:
+      title: Fees
+      description: All applicable fees for an order
+      type: array
+      items:
+        $ref: '#/components/schemas/Fee'
+    PlaceOrder:
+      title: PlaceOrder
+      type: object
+      properties:
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+      required:
+      - storeId
+      - serviceMode
+      - cart
+      - customer
+      - paymentMethod
+      - fireOrderInSeconds
+    Feedback:
+      title: Menu Entry Feedback
+      description: 'Line item feedback for a cart entry.
+
+        '
+      type: object
+      required:
+      - entryId
+      properties:
+        entryId:
+          $ref: '#/components/schemas/EntryId'
+        isAvailable:
+          type: boolean
+          description: 'Up to date availability for the entry.
+
+
+            If omitted, entry will be assumed to be available.
+
+            '
+          example: true
+        price:
+          $ref: '#/components/schemas/Money'
+          description: 'Up to date price for the entry.
+
+
+            If omitted, entry will be assumed to have correct price.
+
+            '
+    StoreId:
+      title: StoreId
+      description: Unique Store ID
+      example: '42'
+      pattern: ^\d+$
+      type: string
+    ExternalReferenceId:
+      title: External Reference Id
+      description: External reference ID. An example might be the external menu selection ID, customer ID or order ID.
+      type: string
+    MFTaxes:
+      title: Market Place Facilitator Taxes
+      description: 'Representation of taxes calculated by the partner.
+
+        '
+      type: object
+      properties:
+        taxRemittedByMpf:
+          title: Tax Amount Remitted By Marketplace Facilitator
+          description: The subtotal taxes from the market place facilitator
+          $ref: '#/components/schemas/Money'
+        isTaxRemittedByMpf:
+          title: The taxes calculation is handled by the Marketplace Facilitator
+          description: Boolean which represents if the taxes are calculated from the Partner
+          type: boolean
+          example: true
+      required:
+      - taxRemittedByMpf
+      - isTaxRemittedByMpf
+    Address:
+      title: Address
+      description: Standardized representation of a physical address
+      type: object
+      properties:
+        administrativeArea:
+          description: 'The highest administrative subdivision of a country or region. This can
+
+            be a state, a province, an oblast, or a prefecture. For places that do
+
+            not have an administrative area, this field must be omitted.
+
+            '
+          type: string
+          example: FL
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        formattedAddress:
+          description: 'A locale-formatted version of the address appropriate for display.
+
+            '
+          type: string
+          example: 5707 Blue Lagoon Drive
+        instructions:
+          description: Free-form instructions for accessing the location
+          type: string
+          example: example
+        locality:
+          type: string
+          description: 'Generally refers to the city or town portion of the address.
+
+
+            Examples include a city in the United States, a comune in Italy, and a
+
+            post town in the United Kingdom.
+
+            '
+          example: Miami-Dade County
+        postalCode:
+          description: 'The postal code of the address. This field is optional because not all
+
+            countries use or require postal codes.
+
+            '
+          type: string
+          example: '33126'
+        regionCode:
+          description: 'The Unicode
+
+            [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+            region code of the country or region of the address. For example, the
+
+            code for the United States of America is `US`.
+
+
+            For the full list of codes, refer to the
+
+            [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+            '
+          type: string
+          example: US
+        route:
+          description: 'Indicates the named route. This is often the name of the street, like
+
+            `Blue Lagoon Drive`.
+
+            '
+          type: string
+          example: Blue Lagoon Drive
+        streetNumber:
+          description: 'Indicates the precise street number. An example is `5707`.
+
+            '
+          type: string
+          example: '5707'
+        sublocality:
+          description: 'A smaller area within the locality. Examples include neighborhoods,
+
+            boroughs, and districts.
+
+            '
+          type: string
+          example: example
+        subpremise:
+          description: 'Finer-grained information about the location like unit or suite number.
+
+            '
+          type: string
+          example: Suite 101
+      required:
+      - formattedAddress
+      - regionCode
+      - route
+      - streetNumber
+    Fee:
+      title: Fee
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of fee.
+
+
+            |Fee Type|Description                  |
+
+            |--------|-----------------------------|
+
+            |BAG_FEE |A fee for bags, as present in some municipalities for single use plastic bags               |
+
+            |CUP_FEE |A fee for cups, as present in some municipalities for single use cups               |
+
+            |DELIVERY_FEE|A fee for delivery, as often charged by delivery fulfillment providers           |
+
+            |SERVICE_FEE|A generic service fee. An example might be California''s "driver benefits" fee (Proposition 22)        |
+
+            '
+          enum:
+          - BAG_FEE
+          - CUP_FEE
+          - DELIVERY_FEE
+          - SERVICE_FEE
+          example: BAG_FEE
+        total:
+          $ref: '#/components/schemas/Money'
+          description: Total amount to charge for the fee
+    POSOrderError:
+      title: Order Error
+      description: Generic error object for order processing
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human readable error message
+          example: TERMINAL UPDATE IN PROGRESS
+        code:
+          type: string
+          description: Error code
+          example: STORE
+          enum:
+          - MENU
+          - STORE
+          - TIMEOUT
+          - UNKNOWN
+      required:
+      - message
+      - code
+    Order:
+      title: Order
+      description: Representation of an order placed by a customer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+          description: Internal order ID
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+          description: Internal store ID
+        cart:
+          $ref: '#/components/schemas/CartPriced'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        discounts:
+          $ref: '#/components/schemas/Discounts'
+        payment:
+          $ref: '#/components/schemas/Payment'
+        posVendor:
+          $ref: '#/components/schemas/PosVendor'
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+          description: Where the order will be delivered (only delivery orders)
+        loyaltyPointsEarned:
+          type: integer
+          description: Amount of Loyalty Points earned on this order
+          minimum: 0
+          example: 15
+        errors:
+          description: Any errors which occurred during order processing
+          type: array
+          items:
+            $ref: '#/components/schemas/POSOrderError'
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+          description: When the order was first created
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+          description: When the order was last updated
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        preparationTimeInSeconds:
+          type: integer
+          description: Estimated time it takes to prepare an order
+          minimum: 0
+          example: 300
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+      required:
+      - id
+      - cart
+      - customer
+      - storeId
+      - charges
+      - status
+      - channel
+      - serviceMode
+      - createdAt
+      - updatedAt
+      - posVendor
+      - fireOrderInSeconds
+      - preparationTimeInSeconds
+      - readyInSeconds
+    GeoPoint:
+      title: GeoPoint
+      description: The coordinates (latitude and longitude) for a given address.
+      type: object
+      required:
+      - latitude
+      - longitude
+      properties:
+        latitude:
+          description: Latitude
+          type: number
+          example: 25.782379
+        longitude:
+          description: Latitude
+          type: number
+          example: -80.289207
+    PriceOrder:
+      title: PriceOrder
+      type: object
+      properties:
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        loyalty:
+          $ref: '#/components/schemas/Loyalty'
+      required:
+      - storeId
+      - serviceMode
+      - cart
+      - customer
+    Payment:
+      title: Payment
+      type: object
+      properties:
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+    LoyaltyTransactionId:
+      title: Loyalty Transaction Id
+      description: The loyalty transaction id created for the identify request
+      example: a73ea594-202c-52b4-80af-1f6b518ef54d
+      type: string
+    MenuSelectionPriced:
+      title: Priced Menu Selection
+      description: Priced menu selection in the cart
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MenuSelection'
+      required:
+      - id
+      - price
+      - quantity
+    LoyaltyId:
+      title: Loyalty Id
+      description: The loyalty user id
+      example: a73ea594-202c-52b4-00a0-1f6b518ef54d
+      type: string
+    CartPriced:
+      title: Priced Cart
+      description: Cart containing a customer's selections from the menu with prices
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuSelectionPriced'
+        feedback:
+          $ref: '#/components/schemas/Feedbacks'
+      required:
+      - menuSelections
+    ServiceMode:
+      title: Service Mode
+      description: 'How a customer would like their order served.
+
+
+        Note that not all service modes will be available at all restaurants.
+
+        '
+      type: string
+      example: TAKEOUT
+      enum:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+    PaymentMethod:
+      title: Payment Method
+      description: How the customer has paid or will pay
+      type: string
+      enum:
+      - APPLE_PAY
+      - CASH
+      - CREDIT_CARD
+      - GIFTCARD
+      - GOOGLE_PAY
+      - PAYPAL
+      - UNPAID
+      - VENMO
+    EntryId:
+      title: EntryId
+      description: Unique identifier for a menu entity
+      type: string
+      example: entry-id
+    PosVendor:
+      title: posVendor
+      description: The posVendor that is processing the order
+      type: string
+      enum:
+      - BRINK
+      - CARROLS
+      - NCR
+      - QDI
+      - SICOM
+    OrderPlaced:
+      title: Order Placed
+      description: Representation of an order placed by a customer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+          description: Internal order ID
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+          description: Partner's order ID
+        callbackUrl:
+          type: string
+          description: URL to order details.
+          example: https://bk-partners.rbictg.com
+      required:
+      - id
+      - callbackUrl
+    Discount:
+      title: Discount
+      description: A discount which ought to be applied to an order
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of discount.
+
+
+            |Discount Type|Description                  |
+
+            |--------|-----------------------------|
+
+            |DISCOUNT | Generic type for any discount |
+
+            '
+          enum:
+          - DISCOUNT
+          example: DISCOUNT
+        total:
+          $ref: '#/components/schemas/Money'
+          description: Amount to be discounted
+    Customer:
+      title: Customer
+      description: Customer personal details
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal user ID
+          example: '500123'
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        name:
+          type: string
+          description: 'Customers''s name. Format will depend on the context (full name, first name and initials, etc)
+
+            '
+          example: Whopper
+        username:
+          type: string
+          description: Customer's username in the given context
+          example: example
+        phone:
+          $ref: '#/components/schemas/Phone'
+        email:
+          type: string
+          description: Customer's email
+          format: email
+          example: guest@example.com
+      required:
+      - name
+      - email
+    CommitOrder:
+      title: CommitOrder
+      type: object
+      properties:
+        charges:
+          $ref: '#/components/schemas/Charges'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+      required:
+      - paymentMethod
+      - fireOrderInSeconds
+    Charges:
+      title: Charges
+      description: Order pricing details
+      type: object
+      properties:
+        tax:
+          $ref: '#/components/schemas/Money'
+          description: Taxes the customer must pay
+        mpfTax:
+          $ref: '#/components/schemas/MFTaxes'
+          description: Taxes calculated from the partners side
+        subTotal:
+          $ref: '#/components/schemas/Money'
+          description: The subtotal the customer must pay
+        total:
+          $ref: '#/components/schemas/Money'
+          description: The total amount the customer must pay
+        fees:
+          $ref: '#/components/schemas/Fees'
+    Cart:
+      title: Cart
+      description: Cart representing a customer's selections from the menu
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - menuSelections
+    ReadyInSeconds:
+      title: Ready in seconds
+      description: "Time in seconds when the order will be ready.\n\nThis value incorporates the order `preparationTimeInSeconds` plus the \nvalue of `fireOrderInSeconds`. When `fireOrderInSeconds=0`, then `readyInSeconds`\nwill match the value of `preparationTimeInSeconds`, and when \n`fireOrderInSeconds=null`, then `readyInSeconds=null` as well.\n"
+      example: 600
+      type:
+      - integer
+      - 'null'
+      minimum: 0
+    Phone:
+      title: Phone
+      description: 'Phone number. Should always begin with the international country code (e.g., "+1")
+
+        '
+      type: string
+      example: '+12223334444'
+  parameters:
+    region:
+      description: 'The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+        region code of the country or region of the address.
+
+
+        For the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+        '
+      name: x-ui-region
+      in: header
+      example: US
+      schema:
+        type: string
+    order-id:
+      description: Unique Order ID
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: '500123'
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-tagGroups:
+- name: API
+  tags:
+  - Loyalty
+  - Orders
+  - Menus
+  - Stores
+- name: Models
+  tags:
+  - OrderModel
+  - MenuModel
+  - StoreModel
+  - ErrorModel
