@@ -2,9 +2,22 @@ aid: restaurant-brands
 name: Restaurant Brands International
 url: https://raw.githubusercontent.com/api-evangelist/restaurant-brands/refs/heads/main/apis.yml
 type: Index
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consuming
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/restaurant-brands.png
 tags:
   - Fortune 500
   - Franchising
@@ -34,47 +47,98 @@ description: >-
   is no public self-service signup, pricing, or rate card. The public GitHub presence (github.com/rbilabs) is limited to
   internal tooling forks and an archived hackathon repo.
 apis:
-  - name: Channel Partners API
-    description: >-
-      Burger King's Partners API v1 — the Channel Partners API for third-party food ordering marketplaces integrating
-      into the Restaurant Brands International (RBI) fulfillment platform. Covers loyalty identification, store and menu
-      retrieval, the order lifecycle (price, commit, fire, place), and order/menu/store webhooks. OpenAPI 3.1.0, bearer
-      JWT auth.
-    baseURL: https://bk-partners.rbictg.com/api/v1
-    humanURL: https://bk-partners.rbictg.com/docs/channel/
-    tags:
-      - Ordering
-      - Loyalty
-      - Menus
-      - Stores
-      - Partner Integration
-    properties:
-      - type: OpenAPI
-        url: openapi/channel-openapi.yml
-      - type: APIReference
-        url: https://bk-partners.rbictg.com/docs/channel/
-      - type: Documentation
-        url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
-      - type: Authentication
-        url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
-      - type: JSONLD
-        url: json-ld/restaurant-brands-channel-context.jsonld
-  - name: Partners Menu API v2
-    description: >-
-      Burger King's Partners API v2 — the Partners Menu API for third-party food ordering marketplaces retrieving store
-      menus from Burger King's end-to-end fulfillment platform. OpenAPI 3.1.0, bearer JWT auth.
-    baseURL: https://bk-partners.rbictg.com/api/v2
-    humanURL: https://bk-partners.rbictg.com/docs/v2/
-    tags:
-      - Menus
-      - Partner Integration
-    properties:
-      - type: OpenAPI
-        url: openapi/menu-v2-openapi.yml
-      - type: APIReference
-        url: https://bk-partners.rbictg.com/docs/v2/
-      - type: JSONLD
-        url: json-ld/restaurant-brands-menu-v2-context.jsonld
+- aid: restaurant-brands:restaurant-brands-loyalty-api
+  name: Restaurant Brands International Loyalty API
+  description: The Loyalty API from Restaurant Brands International — 1 operation(s) for loyalty.
+  humanURL: https://bk-partners.rbictg.com/docs/channel/
+  baseURL: https://bk-partners.rbictg.com/api/v1
+  tags:
+  - Loyalty
+  properties:
+  - type: OpenAPI
+    url: openapi/restaurant-brands-loyalty-api-openapi.yml
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/channel/
+  - type: Documentation
+    url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+  - type: Authentication
+    url: >-
+      https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+  - type: JSONLD
+    url: json-ld/restaurant-brands-channel-context.jsonld
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/v2/
+  - type: JSONLD
+    url: json-ld/restaurant-brands-menu-v2-context.jsonld
+- aid: restaurant-brands:restaurant-brands-menus-api
+  name: Restaurant Brands International Menus API
+  description: The Menus API from Restaurant Brands International — 3 operation(s) for menus.
+  humanURL: https://bk-partners.rbictg.com/docs/channel/
+  baseURL: https://bk-partners.rbictg.com/api/v1
+  tags:
+  - Menus
+  properties:
+  - type: OpenAPI
+    url: openapi/restaurant-brands-menus-api-openapi.yml
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/channel/
+  - type: Documentation
+    url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+  - type: Authentication
+    url: >-
+      https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+  - type: JSONLD
+    url: json-ld/restaurant-brands-channel-context.jsonld
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/v2/
+  - type: JSONLD
+    url: json-ld/restaurant-brands-menu-v2-context.jsonld
+- aid: restaurant-brands:restaurant-brands-orders-api
+  name: Restaurant Brands International Orders API
+  description: The Orders API from Restaurant Brands International — 5 operation(s) for orders.
+  humanURL: https://bk-partners.rbictg.com/docs/channel/
+  baseURL: https://bk-partners.rbictg.com/api/v1
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/restaurant-brands-orders-api-openapi.yml
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/channel/
+  - type: Documentation
+    url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+  - type: Authentication
+    url: >-
+      https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+  - type: JSONLD
+    url: json-ld/restaurant-brands-channel-context.jsonld
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/v2/
+  - type: JSONLD
+    url: json-ld/restaurant-brands-menu-v2-context.jsonld
+- aid: restaurant-brands:restaurant-brands-stores-api
+  name: Restaurant Brands International Stores API
+  description: The Stores API from Restaurant Brands International — 3 operation(s) for stores.
+  humanURL: https://bk-partners.rbictg.com/docs/channel/
+  baseURL: https://bk-partners.rbictg.com/api/v1
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/restaurant-brands-stores-api-openapi.yml
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/channel/
+  - type: Documentation
+    url: https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4279763050/Partner+API+s
+  - type: Authentication
+    url: >-
+      https://rbictg.atlassian.net/wiki/spaces/RDP/pages/4963106827/Loyalty+API+-+Getting+Started
+  - type: JSONLD
+    url: json-ld/restaurant-brands-channel-context.jsonld
+  - type: APIReference
+    url: https://bk-partners.rbictg.com/docs/v2/
+  - type: JSONLD
+    url: json-ld/restaurant-brands-menu-v2-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/restaurant-brands-agentic-access.yml
