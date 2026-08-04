@@ -1,0 +1,3247 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Burger King's Partners API
+  description: "## Overview\n\nThe Channel Partners API are provided for third party food ordering marketplaces\nintegrating into the Restaurant Brand International (RBI) fulfillment platform.\n\n## Authentication\n### Webhooks\n\nWebhook requests are signed using `hex` encoded HMAC signatures.\n\nAn HMAC signature is derived for validation using three components:\n\n- the secret shared between the service and the consumer\n- the body of the request\n- the hash function or algorithm (SHA-256)\n\nUsing these three pieces of information, compute an HMAC signature using the secret as the key and\nthe body of the request as the message and encode the signature to a hexadecimal string for comparison.\n\nCompare the signature generated using the above information to the signature received in the `x-signature` header,\nif the two signatures match, the request is valid.\n"
+  x-logo:
+    altText: RBI logo
+    url: 
+      data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzkiIGhlaWdodD0iODEiIHZpZXdCb3g9IjAgMCA3OSA4MSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzcwOV8yMzczNykiPgo8cGF0aCBkPSJNNzMuMzgzMiA3NS4xMzQ4QzczLjM4MzIgNzMuNjA2MyA3NC41NjgzIDcyLjMyNjQgNzYuMTkxNiA3Mi4zMjY0Qzc3LjgxNDkgNzIuMzI2NCA3OSA3My42MDYzIDc5IDc1LjEzNDhDNzkgNzYuNzc4MSA3Ny44MTYyIDc3Ljk2MTkgNzYuMTkxNiA3Ny45NjE5Qzc0LjU2NjkgNzcuOTYxOSA3My4zODMyIDc2Ljc1ODEgNzMuMzgzMiA3NS4xMzQ4Wk03OC4zODgxIDc1LjEzNDhDNzguMzg4MSA3My43MjEyIDc3LjI4MDUgNzIuODk5NiA3Ni4xOTE2IDcyLjg5OTZDNzUuMTAyNyA3Mi44OTk2IDczLjk5NTEgNzMuNzIxMiA3My45OTUxIDc1LjEzNDhDNzMuOTk1MSA3Ni41NDgzIDc1LjEwMjcgNzcuMzg4NyA3Ni4xOTE2IDc3LjM4ODdDNzcuMjgwNSA3Ny4zODg3IDc4LjM4ODEgNzYuNjA1OCA3OC4zODgxIDc1LjEzNDhaTTc1LjIxNjMgNzYuMzM4NlY3My45NTFDNzUuMjE2MyA3My43OTg3IDc1LjM0OTkgNzMuNjQ1MSA3NS41MDM1IDczLjY0NTFINzYuMzA1MUM3Ni45MzU4IDczLjY0NTEgNzcuMzc1MyA3NC4wMjcyIDc3LjM3NTMgNzQuNTQyOUM3Ny4zNzUzIDc0Ljk4MjUgNzcuMTI2OCA3NS4zNjQ2IDc2LjU1MzcgNzUuNDU5NEw3Ny4xODQzIDc2LjE2NjJDNzcuMjQxNyA3Ni4yMjM3IDc3LjI4MDUgNzYuMjk5OCA3Ny4yODA1IDc2LjM1NzNDNzcuMjgwNSA3Ni41Mjk2IDc3LjE2NTYgNzYuNjQ0NSA3Ni45OTQ2IDc2LjY0NDVDNzYuODc5NyA3Ni42NDQ1IDc2LjgwMzUgNzYuNTg3MSA3Ni43NDYgNzYuNTEwOUw3NS45MDU3IDc1LjUxNjlINzUuODA5NVY3Ni4zMzg2Qzc1LjgwOTUgNzYuNDkwOSA3NS42NzU5IDc2LjYyNDUgNzUuNTAzNSA3Ni42MjQ1Qzc1LjM1MTIgNzYuNjI0NSA3NS4yMTYzIDc2LjQ5MDkgNzUuMjE2MyA3Ni4zMzg2Wk03Ni4yMjkgNzQuOTgyNUM3Ni41NzI0IDc0Ljk4MjUgNzYuNzYzNCA3NC44MTAxIDc2Ljc2MzQgNzQuNTgxN0M3Ni43NjM0IDc0LjMzMzEgNzYuNTkxMSA3NC4xOTk1IDc2LjI4NjQgNzQuMTk5NUg3NS44MDk1Vjc0Ljk4MjVINzYuMjMwM0g3Ni4yMjlaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDY3LjExNDRDNzIuMDU3OCA2Ny4xMTQ0IDcyLjY2NDQgNjcuNzY3NyA3Mi42NjQ0IDY4LjkxMDFDNzIuNjY0NCA3MC45MTU1IDcwLjgyMiA3My43MTQ2IDY3LjE4MzkgNzUuNzY2OEM2MS4xMjA4IDc5LjE5NTEgNTAuNzE5NiA4MC4xNzQ0IDM2LjMzMTUgODAuMTc0NEMyMS45NDM1IDgwLjE3NDQgMTEuNTQyMiA3OS4xOTUxIDUuNDc5MTggNzUuNzY2OEMxLjg0MTA5IDczLjcxNDYgLTAuMDAxMzQyNzcgNzAuOTE2OCAtMC4wMDEzNDI3NyA2OC45MTAxQy0wLjAwMTM0Mjc3IDY3Ljc2NzcgMC42MDUyMjkgNjcuMTE0NCAxLjk1NzMyIDY3LjExNDRINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPHBhdGggZD0iTTcuNjQ4OTUgNjAuNjMxOFY1Ni45MjQzQzcuNjQ4OTUgNTYuNTk4MyA3Ljc4OTIzIDU2LjM2NDQgOC4xMTUyMyA1Ni4zNjQ0QzguNTM0NzUgNTYuMzY0NCA4LjY1MDk5IDU2LjgwOCA4Ljc2ODU3IDU3LjAxNzhDOS40OTEzNyA1OC40NjM0IDEwLjcwNDUgNjEuNDI1NCAxMi4xNTAxIDYzLjAxMTRDMTMuMTI5NSA2NC4wODQyIDE0LjM0MjYgNjQuNzYwMyAxNS42MjUyIDY0Ljc2MDNDMTcuNzkzNyA2NC43NjAzIDE5LjYxMzQgNjIuODcxMSAxOS42MTM0IDYwLjg0MjlDMTkuNjEzNCA1OS41ODMgMTkuMDc3NiA1OC42NTA0IDE4LjA1MTUgNTcuNTMyMkMxNi43NDYyIDU2LjEwOTMgMTUuMjA3IDU0LjI0NDEgMTQuNjQ3MiA1My4zODFDMTQuNDM3NSA1My4wNTUgMTQuNDEzNCA1Mi44NDUzIDE0LjQxMzQgNTIuNzUxN0MxNC40MTM0IDUyLjQ5NTIgMTQuNTUzNyA1Mi4zMDgyIDE0LjgzMyA1Mi4wNTE2QzE1LjQ4NjMgNTEuNDQ1MSAxNy4wOTQ5IDQ5LjkzIDE3Ljk4MDcgNDguNTUzOEMxOC42NTY4IDQ3LjUwNSAxOC45MzczIDQ2LjU0ODQgMTguOTM3MyA0NS43NTQ4QzE4LjkzNzMgNDMuNzI1MyAxNy4wOTQ5IDQyLjE0MDcgMTUuMDg5NSA0Mi4xNDA3QzEzLjgwNjkgNDIuMTQwNyAxMi41OTM3IDQyLjg2MzUgMTEuNzc4NyA0NC4xOTI5QzEwLjY4MzEgNDUuOTY1OSA5LjU2MzUyIDQ4LjQ2MDMgOC42MzA5NSA0OS4zOTI5QzguMzk3MTQgNDkuNjI2NyA4LjI4MDkgNDkuNjcyMSA4LjA5NTE5IDQ5LjY3MjFDNy43OTE5IDQ5LjY3MjEgNy42NTE2MiA0OS40NjIzIDcuNjUxNjIgNDkuMTM2M1Y0Ni4yNjc4QzcuNjUxNjIgNDMuOTgxOCA2LjI5OTUyIDQyLjE0MDcgMy44NTA1MiA0Mi4xNDA3QzEuNDAxNTIgNDIuMTQwNyAwLjA0Njc1MjkgNDMuOTgxOCAwLjA0Njc1MjkgNDYuMjY2NVY2MC42MzE4QzAuMDQ2NzUyOSA2Mi45MTc4IDEuMzc2MTMgNjQuNzU4OSAzLjg0Nzg1IDY0Ljc1ODlDNi4zMTk1NiA2NC43NTg5IDcuNjQ4OTUgNjIuOTE2NSA3LjY0ODk1IDYwLjYzMThaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC40OTYgNDMuOTU3OEM2OS4wNzMxIDQyLjkwOSA2Ni45Mjg3IDQyLjEzOTQgNjMuODk1OCA0Mi4xMzk0QzU4LjQ2MjEgNDIuMTM5NCA1My4xNjg2IDQ1LjU2NzcgNTMuMTY4NiA1My41NDI3QzUzLjE2ODYgNjEuNTE3NiA1OC40NjIxIDY0LjczNjIgNjMuNjg2MSA2NC43MzYyQzY5LjE2NjYgNjQuNzM2MiA3Mi42NDAzIDYxLjM1NDYgNzIuNjQwMyA1Ni40MTEyQzcyLjY0MDMgNTMuMjg2MiA3MC42ODE3IDUxLjExNzcgNjYuNzQwMyA1MS4xMTc3SDY1LjU5OEM2My41NDU4IDUxLjExNzcgNjEuOTU5OSA1Mi4wNzQzIDYxLjk1OTkgNTQuMTczM0M2MS45NTk5IDU2LjA4NTIgNjMuNjg2MSA1Ni45OTUxIDY0Ljk2ODcgNTYuOTk1MUM2Ni4wNjQyIDU2Ljk5NTEgNjYuNTA3OCA1Ny4xODIxIDY2LjUwNzggNTcuNjcxMUM2Ni41MDc4IDU4LjI3NzcgNjUuOTI1MyA1OC42NzQ1IDY0LjUwMjQgNTguNjc0NUM2MS44Njc3IDU4LjY3NDUgNjAuMDcyIDU2Ljg3ODggNjAuMDcyIDUzLjU0NEM2MC4wNzIgNDkuODM2NCA2Mi41MjEgNDguNDgzIDY0LjQwODkgNDguNDgzQzY2LjcxNzYgNDguNDgzIDY3LjA5MDMgNDkuNjQ5NCA2OC43MDAzIDQ5LjY0OTRDNzAuNTY1NCA0OS42NDk0IDcxLjgyNTMgNDguMTMzIDcxLjgyNTMgNDYuNTkzOEM3MS44MjUzIDQ1LjQ1MTUgNzEuMzEyMyA0NC41NjQzIDcwLjQ5NiA0My45NTkxVjQzLjk1NzhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik01MS4zNTAyIDQ2LjA4MDhWNjAuNjA5MUM1MS4zNTAyIDYyLjkxNzggNDkuOTk4MSA2NC43NjAzIDQ3LjU0OTEgNjQuNzYwM0M0Ni4xMjYyIDY0Ljc2MDMgNDQuNzk2OCA2NC4yMDA0IDQzLjU2MSA2MS43OTgyTDQwLjMxOTcgNTUuNTI1NEM0MC4wODU5IDU1LjA4MTggMzkuOTIyOSA1NC45NjU2IDM5LjY5MDQgNTQuOTY1NkMzOS4zNjQ0IDU0Ljk2NTYgMzkuMjAwMSA1NS4xOTk0IDM5LjIwMDEgNTUuNzM1MkwzOS4yMjI4IDYwLjgxODlDMzkuMjIyOCA2My4wMTEzIDM3Ljk2MjkgNjQuNzYwMyAzNS42MDg3IDY0Ljc2MDNDMzMuMjU0NiA2NC43NjAzIDMyLjAxNzQgNjMuMDExMyAzMi4wMTc0IDYwLjgxODlWNDYuMjkwNUMzMi4wMTc0IDQzLjk4MTggMzMuMzY5NSA0Mi4xMzk0IDM1LjgxODUgNDIuMTM5NEMzNy4yODgyIDQyLjEzOTQgMzguNTcwOCA0Mi42OTkyIDM5LjgwNjYgNDUuMTAxNEw0My4wNDc5IDUxLjM3NDJDNDMuMjgxNyA1MS44MTc4IDQzLjQ0NDcgNTEuOTM0MSA0My42NzcyIDUxLjkzNDFDNDQuMDAzMiA1MS45MzQxIDQ0LjE2NzUgNTEuNzAwMyA0NC4xNjc1IDUxLjE2NDVMNDQuMTQ0OCA0Ni4wODA4QzQ0LjE0NDggNDMuODg4MyA0NS40MDQ3IDQyLjEzOTQgNDcuNzU4OSA0Mi4xMzk0QzUwLjExMyA0Mi4xMzk0IDUxLjM1MDIgNDMuODg4MyA1MS4zNTAyIDQ2LjA4MDhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik0yOS4zMTMyIDQ2LjU0NzFDMjkuMzEzMiA0NC4wOTgxIDI3Ljg5MDMgNDIuMTM5NCAyNS4yNzgzIDQyLjEzOTRDMjIuNjY2MyA0Mi4xMzk0IDIxLjI0MzQgNDQuMDk4MSAyMS4yNDM0IDQ2LjU0NzFWNjAuMzUyNkMyMS4yNDM0IDYyLjgwMTYgMjIuNjY2MyA2NC43NjAzIDI1LjI3ODMgNjQuNzYwM0MyNy44OTAzIDY0Ljc2MDMgMjkuMzEzMiA2Mi44MDE2IDI5LjMxMzIgNjAuMzUyNlY0Ni41NDcxWiIgZmlsbD0iI0Q2MjMwMCIvPgo8cGF0aCBkPSJNMzUuNzQ5IDM2LjcyODNDMzUuMzUyMiAzNi4yMzggMzQuMzcyOSAzNC45Nzk0IDM0LjE4NzIgMzQuMzI2MUMzNC4xMTc3IDM0LjA5MjMgMzQuMTQwNCAzMy45MjkzIDM0LjM1MDIgMzMuNzQzNkMzNS4wNzMgMzMuMDY3NSAzNS45MTIgMzIuMDE3NCAzNS45MTIgMzAuMTUyMkMzNS45MTIgMjYuOTU3NyAzMy40NjMgMjUuMzQ3OCAzMC41MDIzIDI1LjM0NzhIMjcuODY3NkMyNi4wMjUyIDI1LjM0NzggMjUuMTM5MyAyNi40MjA2IDI1LjEzOTMgMjcuODY2MlYzOC4yNjc1QzI1LjEzOTMgMzkuNjY2MyAyNS45NTU3IDQwLjc4NiAyNy40NDgxIDQwLjc4NkMyOC45NDA0IDQwLjc4NiAyOS43NTY4IDM5LjY2NjMgMjkuNzU2OCAzOC4yNjc1VjM1Ljk1ODhDMjkuNzU2OCAzNS42MDg3IDI5Ljg5NzEgMzUuMzUyMiAzMC4yNjk4IDM1LjM1MjJDMzAuNTk1OCAzNS4zNTIyIDMwLjczNjEgMzUuNjMxNCAzMC44MDU2IDM1Ljk1ODhDMzEuMDE1MyAzNi45ODQ5IDMxLjMxODYgMzguNTkzNSAzMS45NDc5IDM5LjQwOThDMzIuNzQwMiA0MC40NTg2IDMzLjQ4NzEgNDAuNzg2IDM0LjIzMzkgNDAuNzg2QzM1LjQ0NzEgNDAuNzg2IDM2LjQ5NTkgMzkuODI5MyAzNi40OTU5IDM4LjY0MDJDMzYuNDk1OSAzNy44NDggMzYuMTY5OSAzNy4yNjQxIDM1Ljc0OSAzNi43MjgzWk00LjY4NjkxIDM0LjIzMjZINS4zNDAyNEM2LjM4OTA1IDM0LjIzMjYgNi42OTIzMyAzNS4wMDIyIDYuNjkyMzMgMzUuNzAyMkM2LjY5MjMzIDM2LjQwMjMgNi4zODkwNSAzNy4xNzE5IDUuMzQwMjQgMzcuMTcxOUg0LjY4NjkxQzQuMjkwMSAzNy4xNzE5IDQuMTA0MzggMzYuOTM4MSA0LjEwNDM4IDM2LjYzNjJWMzQuNzcxQzQuMTA0MzggMzQuNDY3NyA0LjI5MTQzIDM0LjIzNTMgNC42ODY5MSAzNC4yMzUzVjM0LjIzMjZaTTQuNjg2OTEgMzEuNDgwM0M0LjI5MDEgMzEuNDgwMyA0LjEwNDM4IDMxLjI0NjUgNC4xMDQzOCAzMC45NDQ1VjI5LjM1ODZDNC4xMDQzOCAyOS4wNTUzIDQuMjkxNDMgMjguODIyOSA0LjY4NjkxIDI4LjgyMjlINS4yMjI2N0M2LjE1NTI0IDI4LjgyMjkgNi40MzU4MSAyOS40OTg5IDYuNDM1ODEgMzAuMTUyMkM2LjQzNTgxIDMwLjgwNTYgNi4xNTY1NyAzMS40ODE2IDUuMjIyNjcgMzEuNDgxNkg0LjY4NjkxVjMxLjQ4MDNaTTIuNzI4MjQgNDAuNjY4NEg2LjAxNjI5QzkuMTE3MjkgNDAuNjY4NCAxMS4wMDY1IDM4LjU5MzUgMTEuMDA2NSAzNi4wMDQyQzExLjAwNjUgMzMuOTk4OCA5Ljc3MDYyIDMzLjA4ODkgOS40OTAwNSAzMi44NTY0QzkuMzczODEgMzIuNzYyOSA5LjI1NjI0IDMyLjY2OTQgOS4yNTYyNCAzMi41NzcyQzkuMjU2MjQgMzIuNDYxIDkuMzAzIDMyLjQxNDIgOS40NDMyOSAzMi4yNzM5QzkuOTU2MzMgMzEuNzYwOSAxMC40NDY3IDMwLjg3NTEgMTAuNDQ2NyAyOS42MzkyQzEwLjQ0NjcgMjYuODQwMSA4LjQ0MTI0IDI1LjM0NzggNS41MDMyNCAyNS4zNDc4SDIuNzI4MjRDMC44ODU4MDkgMjUuMzQ3OCAwIDI2LjQyMDYgMCAyNy44NjYyVjM4LjE0OTlDMCAzOS41OTU1IDAuODg1ODA5IDQwLjY2ODQgMi43MjgyNCA0MC42Njg0Wk0zMC40MDg4IDMyLjI0OTlIMjkuODQ5QzI5LjQ1MjIgMzIuMjQ5OSAyOS4yNjY0IDMyLjAxNjEgMjkuMjY2NCAzMS43MTQxVjI5LjcwODdDMjkuMjY2NCAyOS40MDU0IDI5LjQ1MzUgMjkuMjE4MyAyOS44NDkgMjkuMjE4M0gzMC40MDg4QzMxLjU1MTEgMjkuMjE4MyAzMS45MDEyIDI5Ljk4NzkgMzEuOTAxMiAzMC43MTA3QzMxLjkwMTIgMzEuMzg2OCAzMS41NTExIDMyLjI0OTkgMzAuNDA4OCAzMi4yNDk5Wk01NS4yNDQ4IDM2LjEyMDRDNTUuMjQ0OCAzNi40MjM3IDU1LjQzMTkgMzYuNjU2MiA1NS44Mjc0IDM2LjY1NjJINTguMDg5M0M1OS4zMDI0IDM2LjY1NjIgNjAuMjU3NyAzNy4zNzkgNjAuMjU3NyAzOC42NjE2QzYwLjI1NzcgMzkuOTQ0MiA1OS4zMDExIDQwLjY2NzEgNTguMDg5MyA0MC42NjcxSDUzLjYzNDlDNTEuNzkyNCA0MC42NjcxIDUwLjkwNjYgMzkuNTk0MiA1MC45MDY2IDM4LjE0ODZWMjcuODY0OUM1MC45MDY2IDI2LjQxOTMgNTEuNzkyNCAyNS4zNDY0IDUzLjYzNDkgMjUuMzQ2NEg1OC4wODkzQzU5LjMwMjQgMjUuMzQ2NCA2MC4yNTc3IDI2LjA2OTIgNjAuMjU3NyAyNy4zNTE5QzYwLjI1NzcgMjguNjM0NSA1OS4zMDExIDI5LjM1NzMgNTguMDg5MyAyOS4zNTczSDU1LjgyNzRDNTUuNDMwNSAyOS4zNTczIDU1LjI0NDggMjkuNTkxMSA1NS4yNDQ4IDI5Ljg5MzFWMzAuNTY5MUM1NS4yNDQ4IDMwLjg3MjQgNTUuNDMxOSAzMS4xMDQ5IDU1LjgyNzQgMzEuMTA0OUg1Ny40MzZDNTguNTU1NiAzMS4xMDQ5IDU5LjQ0MTQgMzEuNzgwOSA1OS40NDE0IDMyLjk3QzU5LjQ0MTQgMzQuMTU5MSA1OC41NTU2IDM0LjgzNTEgNTcuNDM2IDM0LjgzNTFINTUuODI3NEM1NS40MzA1IDM0LjgzNTEgNTUuMjQ0OCAzNS4wNjkgNTUuMjQ0OCAzNS4zNzA5VjM2LjExNzhWMzYuMTIwNFpNNjYuNTc4NiAzMi4yNDk5SDY2LjAxODhDNjUuNjIyIDMyLjI0OTkgNjUuNDM2MyAzMi4wMTYxIDY1LjQzNjMgMzEuNzE0MVYyOS43MDg3QzY1LjQzNjMgMjkuNDA1NCA2NS42MjM0IDI5LjIxODMgNjYuMDE4OCAyOS4yMTgzSDY2LjU3ODZDNjcuNzIxIDI5LjIxODMgNjguMDcxIDI5Ljk4NzkgNjguMDcxIDMwLjcxMDdDNjguMDcxIDMxLjM4NjggNjcuNzIxIDMyLjI0OTkgNjYuNTc4NiAzMi4yNDk5Wk00OC4yNzE5IDI2LjM0OThDNDcuNzEyMSAyNS45MDYyIDQ2LjE3MyAyNS4yMDc1IDQzLjg2NDMgMjUuMjA3NUM0MC4yNTAyIDI1LjIwNzUgMzYuNzI4MyAyNy41ODU3IDM2LjcyODMgMzMuMDkwMkMzNi43MjgzIDM4LjU5NDggNDAuMjUwMiA0MC44MDg3IDQzLjcyNCA0MC44MDg3QzQ3LjM4NDggNDAuODA4NyA0OS42OTM1IDM4LjQ3NzIgNDkuNjkzNSAzNC45NzgxQzQ5LjY5MzUgMzIuODA5NyA0OC4zODgyIDMxLjMxNzMgNDUuNzc2MiAzMS4zMTczSDQ1LjAyOTNDNDMuNjUzMiAzMS4zMTczIDQyLjU4MDMgMzEuOTcwNiA0Mi41ODAzIDMzLjQzOUM0Mi41ODAzIDM0Ljc0NDMgNDMuNzIyNiAzNS4zNzQ5IDQ0LjY3OTIgMzUuMzc0OUM0NS4yODU4IDM1LjM3NDkgNDUuNjM1OSAzNS42NTQyIDQ1LjYzNTkgMzYuMDc1QzQ1LjYzNTkgMzYuNjM0OCA0NS4xNDU1IDM3LjAwNzYgNDQuMjU5NyAzNy4wMDc2QzQyLjQ0MTMgMzcuMDA3NiA0MS4zMjE3IDM1LjYwODcgNDEuMzIxNyAzMy4wOTAyQzQxLjMyMTcgMzAuNTcxOCA0Mi45NTQ0IDI5LjU5MjQgNDQuMjEzIDI5LjU5MjRDNDUuNzUyMSAyOS41OTI0IDQ2LjAwODYgMzAuMTc1IDQ3LjA4MTUgMzAuMTc1QzQ4LjMxNzMgMzAuMTc1IDQ5LjE1NjQgMjkuMTQ4OSA0OS4xNTY0IDI4LjA3NkM0OS4xNTY0IDI3LjI4MzcgNDguODA2MyAyNi43NzA3IDQ4LjI3MDYgMjYuMzQ5OEg0OC4yNzE5Wk02MS4zMDc5IDM4LjI2NjJDNjEuMzA3OSAzOS42NjUgNjIuMTI0MiA0MC43ODQ2IDYzLjYxNjYgNDAuNzg0NkM2NS4xMDkgNDAuNzg0NiA2NS45MjUzIDM5LjY2NSA2NS45MjUzIDM4LjI2NjJWMzUuOTU3NEM2NS45MjUzIDM1LjYwNzQgNjYuMDY1NiAzNS4zNTA5IDY2LjQzODQgMzUuMzUwOUM2Ni43NjQ0IDM1LjM1MDkgNjYuOTA0NiAzNS42MzAxIDY2Ljk3NDEgMzUuOTU3NEM2Ny4xNjEyIDM2Ljk4MzUgNjcuNDg3MiAzOC41OTIxIDY4LjExNjQgMzkuNDA4NUM2OC45MDg3IDQwLjQ1NzMgNjkuNjU1NiA0MC43ODQ2IDcwLjQwMjUgNDAuNzg0NkM3MS42MTU2IDQwLjc4NDYgNzIuNjY0NCAzOS44MjggNzIuNjY0NCAzOC42Mzg5QzcyLjY2NDQgMzcuODQ2NiA3Mi4zMzg0IDM3LjI2MjggNzEuOTE3NSAzNi43MjdDNzEuNTIwNyAzNi4yMzY3IDcwLjU0MTQgMzQuOTc4MSA3MC4zNTU3IDM0LjMyNDhDNzAuMjg2MiAzNC4wOTEgNzAuMzA4OSAzMy45MjggNzAuNTE4NyAzMy43NDIyQzcxLjI0MTUgMzMuMDY2MiA3Mi4wODA1IDMyLjAxNjEgNzIuMDgwNSAzMC4xNTA5QzcyLjA4MDUgMjYuOTU2NCA2OS42MzE1IDI1LjM0NjQgNjYuNjcwOCAyNS4zNDY0SDY0LjAzNjFDNjIuMTkzNyAyNS4zNDY0IDYxLjMwNzkgMjYuNDE5MyA2MS4zMDc5IDI3Ljg2NDlWMzguMjY2MlpNMTcuODYzMSA0MC43ODQ2QzE0LjA4NDggNDAuNzg0NiAxMi4xMDM0IDM4LjUyMjcgMTIuMTAzNCAzNS42NzgyVjI3LjgxOTVDMTIuMTAzNCAyNi40MjA2IDEyLjkxOTcgMjUuMzAxIDE0LjQxMjEgMjUuMzAxQzE1LjkwNDUgMjUuMzAxIDE2Ljc0MzUgMjYuNDIwNiAxNi43NDM1IDI3LjgxOTVWMzUuNDIxN0MxNi43NDM1IDM1Ljk4MTUgMTcuMDIyOCAzNi42MzQ4IDE3Ljg2MzEgMzYuNjM0OEMxOC43MDM1IDM2LjYzNDggMTkuMDI5NSAzNS45ODE1IDE5LjAyOTUgMzUuNDIxN1YyNy44MTk1QzE5LjAyOTUgMjYuNDIwNiAxOS44NDU5IDI1LjMwMSAyMS4zMzgyIDI1LjMwMUMyMi44MzA2IDI1LjMwMSAyMy42NDcgMjYuNDIwNiAyMy42NDcgMjcuODE5NVYzNS42NzgyQzIzLjY0NyAzOC41MjI3IDIxLjY0MTUgNDAuNzg0NiAxNy44NjMxIDQwLjc4NDZaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDIyLjU5NjhIMS45NTg2N0MwLjYwNjU3MiAyMi41OTY4IDAgMjEuODk2NyAwIDIwLjYzODFDMCAxMy4xNzYyIDExLjIxNjIgMCAzNi4zMzI5IDBDNjEuNDQ5NSAwIDcyLjY2NTcgMTMuMTc2MiA3Mi42NjU3IDIwLjYzODFDNzIuNjY1NyAyMS44OTgxIDcyLjA1OTEgMjIuNTk2OCA3MC43MDcxIDIyLjU5NjhINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF83MDlfMjM3MzciPgo8cmVjdCB3aWR0aD0iNzkiIGhlaWdodD0iODAuMTc0NCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K
+servers:
+- url: https://sandbox-bk-partners.rbictg.com/api/v1
+  description: Sandbox server (uses test data)
+- url: https://bk-partners.rbictg.com/api/v1
+  description: Production server
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    Identifier:
+      title: Identifier
+      description: An OTP code (6 digit code) or a static Offer code (4 digit code)
+      example: '1234'
+      pattern: ^(\d{6}|\d{4})$
+      type: string
+    IdentifierType:
+      title: Identifier Type
+      description: Determines the type of identifier being sent
+      type: string
+      example: OTP
+      enum:
+      - OTP
+      - OFFER_CODE
+    StoreId:
+      title: StoreId
+      description: Unique Store ID
+      example: '42'
+      pattern: ^\d+$
+      type: string
+    ServiceMode:
+      title: Service Mode
+      description: "How a customer would like their order served.\n\nNote that not all service modes will be available at all restaurants.\n"
+      type: string
+      example: TAKEOUT
+      enum:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+    Operator:
+      title: Operator
+      description: The cashier id submitting the transaction.
+      example: ninja123
+      type: string
+    Terminal:
+      title: Terminal
+      description: The terminal name.
+      example: window-2
+      type: string
+    TransactionId:
+      title: Transaction Id
+      description: The Partner specific order lookup id.
+      example: ORD-000002
+      type: string
+    IdentifyRequestDetails:
+      title: Identify Request Details
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/Operator'
+        terminal:
+          $ref: '#/components/schemas/Terminal'
+        transactionId:
+          $ref: '#/components/schemas/TransactionId'
+    IdentifyRequest:
+      title: Identify Request
+      type: object
+      properties:
+        identifier:
+          $ref: '#/components/schemas/Identifier'
+        identifierType:
+          $ref: '#/components/schemas/IdentifierType'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        details:
+          $ref: '#/components/schemas/IdentifyRequestDetails'
+      required:
+      - identifier
+      - identifierType
+      - storeId
+      - serviceMode
+    ExternalReferenceId:
+      title: External Reference Id
+      description: External reference ID. An example might be the external menu selection ID, customer ID or order ID.
+      type: string
+    Currency:
+      title: Currency Code
+      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
+      format: ISO-4217 alpha
+      type: string
+      example: USD
+    Money:
+      title: Money
+      description: "Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 \"cents\" or 1 USD).\n"
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        amount:
+          title: Amount
+          description: Amount in the specified currency
+          type: number
+          example: 100
+          format: integer
+      required:
+      - currency
+      - amount
+    MenuSelection:
+      title: Menu Selection
+      description: Menu selection in the cart
+      type: object
+      properties:
+        id:
+          type: string
+          description: Menu item identifier
+          example: item_42
+        referenceId:
+          type: string
+          description: "Secondary menu item identifier.\n\n⚠️ This `referenceId` must be included along with the `id` when the value is present in the menu\n"
+          example: item_603
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        quantity:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1
+        price:
+          $ref: '#/components/schemas/Money'
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - id
+      - quantity
+    Cart:
+      title: Cart
+      description: Cart representing a customer's selections from the menu
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - menuSelections
+    Phone:
+      title: Phone
+      description: "Phone number. Should always begin with the international country code (e.g., \"+1\")\n"
+      type: string
+      example: '+12223334444'
+    Customer:
+      title: Customer
+      description: Customer personal details
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal user ID
+          example: '500123'
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        name:
+          type: string
+          description: "Customers's name. Format will depend on the context (full name, first name and initials, etc)\n"
+          example: Whopper
+        username:
+          type: string
+          description: Customer's username in the given context
+          example: example
+        phone:
+          $ref: '#/components/schemas/Phone'
+        email:
+          type: string
+          description: Customer's email
+          format: email
+          example: guest@example.com
+      required:
+      - name
+      - email
+    Balance:
+      title: Balance
+      description: The amount of a given currency the user has
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 599
+        currency:
+          type: string
+          example: USD
+    LoyaltyId:
+      title: Loyalty Id
+      description: The loyalty user id
+      example: a73ea594-202c-52b4-00a0-1f6b518ef54d
+      type: string
+    LoyaltyTransactionId:
+      title: Loyalty Transaction Id
+      description: The loyalty transaction id created for the identify request
+      example: a73ea594-202c-52b4-80af-1f6b518ef54d
+      type: string
+    IdentifyLoyalty:
+      title: Loyalty Information
+      description: User information on the Loyalty user identified
+      type: object
+      properties:
+        balances:
+          description: "The loyalty user's balances\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+        loyaltyId:
+          $ref: '#/components/schemas/LoyaltyId'
+        transactionId:
+          $ref: '#/components/schemas/LoyaltyTransactionId'
+      required:
+      - balances
+      - loyaltyId
+      - transactionId
+    IdentifyResponse:
+      title: Identify Response
+      type: object
+      properties:
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        loyalty:
+          $ref: '#/components/schemas/IdentifyLoyalty'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+      required:
+      - cart
+      - storeId
+      - serviceMode
+    Error:
+      title: Error
+      type: object
+      description: Standard error format for all errors returned by the API
+      properties:
+        status:
+          description: HTTP status code
+          type: number
+          example: 400
+        code:
+          description: Unique error code. Same as errors[0].code
+          type: string
+          example: ValidationError
+        message:
+          description: Human readable error mesage. Same as errors[0].message
+          type: string
+          example: isAvailable must be a boolean value
+        errors:
+          description: All errors
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: Unique error code
+                type: string
+                example: ValidationError
+              details:
+                description: Detailed error information
+                type: string
+              message:
+                description: Human readable error mesage
+                type: string
+              domain:
+                type: string
+              location:
+                type: string
+                description: Location the error occurred. Interpreation depends on `locationType`
+                example: isAvailable
+              locationType:
+                type: string
+                description: How to interpret the location property
+                example: requestBody
+              sendReport:
+                description: URL to report this error
+                type: string
+              extendedHelp:
+                description: URL with additional information about the error type
+                type: string
+            required:
+            - code
+            - message
+      required:
+      - code
+      - message
+      - errors
+    Brand:
+      type: string
+      enum:
+      - BK
+      example: BK
+    Locale:
+      title: Locale
+      description: Locale details to help render localized text. Locales are composed of the [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code, separated by an underscore ("_").
+      format: ISO-639-1_ISO 3166-1 alpha-2
+      example: en_us
+      type: string
+    DayPartId:
+      title: DayPartId
+      description: Unique identifier for a day part
+      type: string
+      example: breakfast
+    DayPart:
+      title: Menu availability
+      type: object
+      description: "Day parts define a window of time during which any associated menu items should be available for orders.\n"
+      properties:
+        id:
+          $ref: '#/components/schemas/DayPartId'
+        daysOfWeek:
+          description: "Days of week for which daypart is applicable\n"
+          type: array
+          example:
+          - saturday
+          - sunday
+          items:
+            type: string
+            enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+        startTime:
+          description: "Restaurant local start time formatted as ISO 8601 time.\n"
+          type: string
+          format: hh:mm:ss
+          example: 07:00:00
+        endTime:
+          description: "Restaurant local end time formatted as ISO 8601 time.\n"
+          type: string
+          format: hh:mm:ss
+          example: 22:00:00
+    EntryId:
+      title: EntryId
+      description: Unique identifier for a menu entity
+      type: string
+      example: entry-id
+    LocalizedText:
+      title: Localized Text
+      description: Text that has been translated to the correct locale for the current context
+      type: string
+    Image:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://bk-partners.rbictg.com
+        altText:
+          $ref: '#/components/schemas/LocalizedText'
+    PriceRange:
+      title: PriceRange
+      description: "Default, minimum, and maximum prices.\n"
+      type: object
+      properties:
+        default:
+          title: Default
+          description: Default price in cents
+          type: number
+          format: integer
+          example: 1.0
+        max:
+          title: Max
+          description: Max price in cents
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        min:
+          title: Min
+          description: Min price in cents
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+    QuantityConstraints:
+      title: QuantityConstraints
+      type: object
+      description: "Quantity constraints on selection. Can apply either to items or selections\nwith an options group.\n\nNote\\: We use a `minAmount` of 1 with a `maxAmount` of 1 to indicate\nselection is required\n"
+      properties:
+        defaultAmount:
+          description: (Optional) Default amount that can be select
+          type: number
+          format: integer
+          minimum: 0
+          example: 599
+        minAmount:
+          description: (Optional) Minimum amount that must be select
+          type: number
+          format: integer
+          minimum: 0
+          example: 599
+        maxAmount:
+          description: (Optional) Maximum amount that can be select
+          type: number
+          format: integer
+          minimum: 0
+          example: 599
+    EntryRef:
+      title: Entry Reference
+      description: Reference to entry and optional the price of this entry
+      type: object
+      properties:
+        amount:
+          title: Amount
+          description: Amount in the specified currency
+          type: number
+          format: integer
+          minimum: 0
+          example: 599
+        entryId:
+          $ref: '#/components/schemas/EntryId'
+    Calories:
+      title: Calories
+      description: Calories range
+      type: object
+      properties:
+        default:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        displayType:
+          type: string
+          enum:
+          - Range
+          - Lower
+          - Upper
+          example: Range
+        lowerRange:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        upperRange:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+    Nutrient:
+      title: Nutrient
+      description: Details for an individual nutrient
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - SODIUM
+          example: SODIUM
+        value:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        unit:
+          type: string
+          enum:
+          - G
+          - KJ
+          example: G
+    Allergen:
+      title: Allergen
+      description: Allergen (such as "Peanuts")
+      type: object
+      properties:
+        allergen:
+          type: string
+          enum:
+          - PEANUTS
+          example: PEANUTS
+        contains:
+          type: number
+          description: 3 = Contains; 2 = May Contain; 1 = Cooked in same equipment; 0 = Free From
+          format: integer
+          example: 1.0
+    Nutrition:
+      title: NutritionalInfo
+      description: Nutrition Details
+      type: object
+      properties:
+        calories:
+          $ref: '#/components/schemas/Calories'
+        nutrients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nutrient'
+        allergens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Allergen'
+    Entry:
+      title: Entry
+      type: object
+      description: "Any entry available for selection on the store menu.\n"
+      properties:
+        id:
+          $ref: '#/components/schemas/EntryId'
+        referenceId:
+          $ref: '#/components/schemas/EntryId'
+        type:
+          type: string
+          enum:
+          - COMBO
+          - ITEM
+          - GROUP
+          - MODIFIER
+          example: COMBO
+        groupType:
+          type: string
+          enum:
+          - ASPECT_OPTION
+          - COMBO_SLOT
+          - MENU
+          - MODIFIER_GROUP
+          - PICKER
+          - PICKER_ASPECT
+          - SECTION
+          - SLOT_OPTION
+          example: ASPECT_OPTION
+        name:
+          $ref: '#/components/schemas/LocalizedText'
+          example: Whopper
+        description:
+          $ref: '#/components/schemas/LocalizedText'
+          example: A delicious burger
+        available:
+          description: "Whether or not the entry is available.\nIf this property is undefined, then the entry will be marked as available.\n"
+          type: boolean
+          example: true
+        image:
+          $ref: '#/components/schemas/Image'
+        price:
+          $ref: '#/components/schemas/PriceRange'
+        options:
+          type: object
+          properties:
+            quantityConstraints:
+              $ref: '#/components/schemas/QuantityConstraints'
+            defaultSelections:
+              type: array
+              description: "Options which should be selected by default\n"
+              items:
+                $ref: '#/components/schemas/EntryId'
+            displayType:
+              description: "Recommendations for display of options\n\n* `LIST`: Display options in any \"list\" format, to make all options visible (\"Lettuce\", \"Tomato\")\n* `STEPPER`: Display options in a \"stepper\" format, to mask options behind an increment/decrement interface (\"No Lettuce\", \"Lettuce\", \"Extra Lettuce\")\n* `BOOLEAN`: Display options in a \"boolean\" format, allowing guests to toggle between options (\"No Bacon\", \"Bacon\")\n* `SINGLE_ENTRY`: One option that maps to options to select from\n* `SELECT`: Group with Single Selection Option\n* `MULTI-SELECT`: Group with Multiple Selection Options\n* `COLLAPSED`: Group that should be collapsed\n"
+              type: string
+              enum:
+              - LIST
+              - STEPPER
+              - BOOLEAN
+              - SINGLE_ENTRY
+              - SELECT
+              - MULTI_SELECT
+              - COLLAPSED
+            entries:
+              description: "Collection of references to the item's options. Options may\nthemselves be items or a grouping of items collected in an\n\"Options Group\". The item's options define a parent-child\nrelationship.\n"
+              type: array
+              items:
+                $ref: '#/components/schemas/EntryRef'
+          example: {}
+        dayParts:
+          description: "Collection of references to the item's day parts. The item should only\nbe available during the associated day parts.\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/DayPartId'
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
+        translations:
+          description: "Translation details per language.\n"
+          type: array
+          items:
+            type: object
+            properties:
+              lang:
+                description: "The entry 2 character language code.\n"
+                type: string
+                example: fr
+              name:
+                description: "The translated name.\n"
+                type: string
+                example: Le Whopper.
+              description:
+                description: "The translated decription.\n"
+                type: string
+                example: "Notre sandwich WHOPPER® est fait d'un quart de livre de savoureux bœuf grillé sur le feu, garni de tomates juteuses, de laitue fraîche, de mayonnaise onctueuse, de cornichons croquants et d'oignons blancs émincés.\nLe tout est servi sur un pain aux graines de sésame grillé à point.\n"
+      required:
+      - id
+      - type
+    LoyaltyBaseEntry:
+      title: LoyaltyBaseEntry
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EntryId'
+          example: foo-discount-id
+        type:
+          type: string
+          enum:
+          - DISCOUNT
+          example: DISCOUNT
+        name:
+          $ref: '#/components/schemas/LocalizedText'
+          example: 40% OFF
+        description:
+          $ref: '#/components/schemas/LocalizedText'
+          example: 40% OFF of your cart
+        availability:
+          description: "Whether or not the entry is available.\nIf this property is undefined, then the entry will be marked as available.\n"
+          type: boolean
+          example: true
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          example: PERCENTAGE
+          description: "Provides if the discount should be calculated as a percentage or an amount.\n\n*Note: this is only available for `\"DISCOUNT\"` type.*\n\n| Discount Type | Calculation |\n|---|---|\n| `\"AMOUNT\"` | `Price - discountValue` |\n| `\"PERCENTAGE\"` | `Price - (discountValue% of Price)` |\n"
+        discountValue:
+          type: number
+          format: integer
+          example: 40
+          description: "Amount that should be discounted.\n\n*Note: this is only available for `\"DISCOUNT\"` type.*\n\n| Discount Type | Discount Value unit |\n|---|---|\n| `\"AMOUNT\"` | Dollar amount |\n| `\"PERCENTAGE\"` | Percentage discount |\n"
+        loyaltyPoints:
+          type: number
+          format: integer
+          example: 100
+          description: "Amount of Loyalty Points required to redeem this offer\n"
+        price:
+          $ref: '#/components/schemas/PriceRange'
+        quantityConstraints:
+          $ref: '#/components/schemas/QuantityConstraints'
+        options:
+          type: object
+          description: "Collection of typed references to other entities in the menu.\n"
+          properties:
+            entries:
+              description: "Depending of the type, the entity referenced will be located\nin different places of the menu:\n\n| Type | Entity Location |\n|---|---|\n| `\"ENTRY\"` | `entries` |\n| `\"SYSTEM_WIDE_OFFER\"` | `systemWideOfferEntries` |\n| `\"REWARD\"` | `rewardEntries` |\n| `\"CONFIG_OFFER\"` | `configOfferEntries` |\n"
+              type: array
+              items:
+                type: object
+                properties:
+                  entryId:
+                    $ref: '#/components/schemas/EntryId'
+                  type:
+                    type: string
+                    enum:
+                    - ENTRY
+                    - SYSTEM_WIDE_OFFER
+                    - REWARD
+                    - CONFIG_OFFER
+                required:
+                - entryId
+                - type
+          required:
+          - id
+          - type
+          example: {}
+    SystemWideOfferEntry:
+      title: SystemWideOfferEntry
+      type: object
+      description: "These represent System-wide Offers available for this menu.\n"
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyBaseEntry'
+      - properties:
+          id:
+            example: foo-offer-entity-id
+          type:
+            enum:
+            - SYSTEM_WIDE_OFFER
+            example: SYSTEM_WIDE_OFFER
+          name:
+            example: $5 Double Whopper and Small Fries
+          description:
+            example: 1 Double Whopper and 1 Small Fries
+    RewardEntry:
+      title: RewardEntry
+      type: object
+      description: "These represent Reward Offers available for this menu.\n"
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyBaseEntry'
+      - properties:
+          id:
+            example: foo-reward-entity-id
+          type:
+            enum:
+            - REWARD
+            example: REWARD
+          name:
+            example: 4pc Nuggets
+          description:
+            example: 4pc Nuggets
+          loyaltyPoints:
+            example: '250'
+    ConfigOfferEntry:
+      title: ConfigOfferEntry
+      type: object
+      description:
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyBaseEntry'
+      - properties:
+          type:
+            enum:
+            - CONFIG_OFFER
+            example: CONFIG_OFFER
+          loyaltyPoints:
+            example: '250'
+    Menu:
+      title: Menu
+      description: "Store menu\n"
+      type: object
+      properties:
+        meta:
+          description: Metadata about the menu document
+          properties:
+            brand:
+              $ref: '#/components/schemas/Brand'
+            currency:
+              $ref: '#/components/schemas/Currency'
+            locale:
+              $ref: '#/components/schemas/Locale'
+            serviceMode:
+              type: string
+              enum:
+              - delivery
+              - pickup
+            version:
+              type: string
+              example: xyz1
+          example: example
+        dayParts:
+          description: "Categories of menu availability by day and time\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/DayPart'
+        rootMenuEntryId:
+          $ref: '#/components/schemas/EntryId'
+          description: Reference to root menu entry
+        entries:
+          description: "All valid menu entries\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        systemWideOfferEntries:
+          description: "All System-Wide Offer Entries\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemWideOfferEntry'
+        rewardEntries:
+          description: "All Reward Entries\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardEntry'
+        configOfferEntries:
+          description: "All Config Offer Entries\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigOfferEntry'
+      required:
+      - meta
+      - dayParts
+      - rootMenuEntryId
+      - entries
+    OrderId:
+      title: OrderId
+      description: Unique identifier for an order
+      type: string
+      example: example-unique-id
+    MenuSelectionPriced:
+      title: Priced Menu Selection
+      description: Priced menu selection in the cart
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MenuSelection'
+      required:
+      - id
+      - price
+      - quantity
+    Feedback:
+      title: Menu Entry Feedback
+      description: "Line item feedback for a cart entry.\n"
+      type: object
+      required:
+      - entryId
+      properties:
+        entryId:
+          $ref: '#/components/schemas/EntryId'
+        isAvailable:
+          type: boolean
+          description: "Up to date availability for the entry.\n\nIf omitted, entry will be assumed to be available.\n"
+          example: true
+        price:
+          $ref: '#/components/schemas/Money'
+          description: "Up to date price for the entry.\n\nIf omitted, entry will be assumed to have correct price.\n"
+    Feedbacks:
+      title: Feedback
+      description: "Feedback on cart prices and availability for cart menu selections. Cart\nfeedback will only be provided for adjusted entries.\n"
+      type: array
+      items:
+        $ref: '#/components/schemas/Feedback'
+    CartPriced:
+      title: Priced Cart
+      description: Cart containing a customer's selections from the menu with prices
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuSelectionPriced'
+        feedback:
+          $ref: '#/components/schemas/Feedbacks'
+      required:
+      - menuSelections
+    MFTaxes:
+      title: Market Place Facilitator Taxes
+      description: "Representation of taxes calculated by the partner.\n"
+      type: object
+      properties:
+        taxRemittedByMpf:
+          title: Tax Amount Remitted By Marketplace Facilitator
+          description: The subtotal taxes from the market place facilitator
+          $ref: '#/components/schemas/Money'
+        isTaxRemittedByMpf:
+          title: The taxes calculation is handled by the Marketplace Facilitator
+          description: Boolean which represents if the taxes are calculated from the Partner
+          type: boolean
+          example: true
+      required:
+      - taxRemittedByMpf
+      - isTaxRemittedByMpf
+    Fee:
+      title: Fee
+      type: object
+      properties:
+        type:
+          type: string
+          description: "Type of fee.\n\n|Fee Type|Description                  |\n|--------|-----------------------------|\n|BAG_FEE |A fee for bags, as present in some municipalities for single use plastic bags               |\n|CUP_FEE |A fee for cups, as present in some municipalities for single use cups               |\n|DELIVERY_FEE|A fee for delivery, as often charged by delivery fulfillment providers           |\n|SERVICE_FEE|A generic service fee. An example might be California's \"driver benefits\" fee (Proposition 22)        |\n"
+          enum:
+          - BAG_FEE
+          - CUP_FEE
+          - DELIVERY_FEE
+          - SERVICE_FEE
+          example: BAG_FEE
+        total:
+          $ref: '#/components/schemas/Money'
+          description: Total amount to charge for the fee
+    Fees:
+      title: Fees
+      description: All applicable fees for an order
+      type: array
+      items:
+        $ref: '#/components/schemas/Fee'
+    Charges:
+      title: Charges
+      description: Order pricing details
+      type: object
+      properties:
+        tax:
+          $ref: '#/components/schemas/Money'
+          description: Taxes the customer must pay
+        mpfTax:
+          $ref: '#/components/schemas/MFTaxes'
+          description: Taxes calculated from the partners side
+        subTotal:
+          $ref: '#/components/schemas/Money'
+          description: The subtotal the customer must pay
+        total:
+          $ref: '#/components/schemas/Money'
+          description: The total amount the customer must pay
+        fees:
+          $ref: '#/components/schemas/Fees'
+    Discount:
+      title: Discount
+      description: A discount which ought to be applied to an order
+      type: object
+      properties:
+        type:
+          type: string
+          description: "Type of discount.\n\n|Discount Type|Description                  |\n|--------|-----------------------------|\n|DISCOUNT | Generic type for any discount |\n"
+          enum:
+          - DISCOUNT
+          example: DISCOUNT
+        total:
+          $ref: '#/components/schemas/Money'
+          description: Amount to be discounted
+    Discounts:
+      title: Discounts
+      description: Any discounts which ought to be applied to the order
+      type: array
+      items:
+        $ref: '#/components/schemas/Discount'
+    PaymentMethod:
+      title: Payment Method
+      description: How the customer has paid or will pay
+      type: string
+      enum:
+      - APPLE_PAY
+      - CASH
+      - CREDIT_CARD
+      - GIFTCARD
+      - GOOGLE_PAY
+      - PAYPAL
+      - UNPAID
+      - VENMO
+    Payment:
+      title: Payment
+      type: object
+      properties:
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+    PosVendor:
+      title: posVendor
+      description: The posVendor that is processing the order
+      type: string
+      enum:
+      - BRINK
+      - CARROLS
+      - NCR
+      - QDI
+      - SICOM
+    OrderStatus:
+      title: Order Status
+      description: "Order status, representing current state of order in its lifecycle.\n\nWhen transitioning the order status, the status must always advance further in the lifecycle. All other transitions are invalid.\n\n|Status   |Description                                                                 |\n|---------|----------------------------------------------------------------------------|\n|CREATED  |Order has been created.                                                     |\n|PRICED   |Order has been priced. The POS has provided price information for the order.|\n|COMMITTED|Order has been committed. The POS has accepted the order.                   |\n|PREPARING|Order is being prepared in the restaurant                                   |\n|PREPARED |Order has been prepared and is ready for pickup or delivery.                |\n|DONE     |Order is done. This is the final state for a successful order.              |\n|CANCELED |Order has been cancelled.                                                   |\n|ERROR    |Error with the order. Customer should be notified and refunded.             |\n"
+      type: string
+      enum:
+      - CREATED
+      - PRICED
+      - COMMITTED
+      - PREPARING
+      - PREPARED
+      - DONE
+      - CANCELED
+      - ERROR
+    GeoPoint:
+      title: GeoPoint
+      description: The coordinates (latitude and longitude) for a given address.
+      type: object
+      required:
+      - latitude
+      - longitude
+      properties:
+        latitude:
+          description: Latitude
+          type: number
+          example: 25.782379
+        longitude:
+          description: Latitude
+          type: number
+          example: -80.289207
+    Address:
+      title: Address
+      description: Standardized representation of a physical address
+      type: object
+      properties:
+        administrativeArea:
+          description: "The highest administrative subdivision of a country or region. This can\nbe a state, a province, an oblast, or a prefecture. For places that do\nnot have an administrative area, this field must be omitted.\n"
+          type: string
+          example: FL
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        formattedAddress:
+          description: "A locale-formatted version of the address appropriate for display.\n"
+          type: string
+          example: 5707 Blue Lagoon Drive
+        instructions:
+          description: Free-form instructions for accessing the location
+          type: string
+          example: example
+        locality:
+          type: string
+          description: "Generally refers to the city or town portion of the address.\n\nExamples include a city in the United States, a comune in Italy, and a\npost town in the United Kingdom.\n"
+          example: Miami-Dade County
+        postalCode:
+          description: "The postal code of the address. This field is optional because not all\ncountries use or require postal codes.\n"
+          type: string
+          example: '33126'
+        regionCode:
+          description: "The Unicode\n[Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address. For example, the\ncode for the United States of America is `US`.\n\nFor the full list of codes, refer to the\n[CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+          type: string
+          example: US
+        route:
+          description: "Indicates the named route. This is often the name of the street, like\n`Blue Lagoon Drive`.\n"
+          type: string
+          example: Blue Lagoon Drive
+        streetNumber:
+          description: "Indicates the precise street number. An example is `5707`.\n"
+          type: string
+          example: '5707'
+        sublocality:
+          description: "A smaller area within the locality. Examples include neighborhoods,\nboroughs, and districts.\n"
+          type: string
+          example: example
+        subpremise:
+          description: "Finer-grained information about the location like unit or suite number.\n"
+          type: string
+          example: Suite 101
+      required:
+      - formattedAddress
+      - regionCode
+      - route
+      - streetNumber
+    POSOrderError:
+      title: Order Error
+      description: Generic error object for order processing
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human readable error message
+          example: TERMINAL UPDATE IN PROGRESS
+        code:
+          type: string
+          description: Error code
+          example: STORE
+          enum:
+          - MENU
+          - STORE
+          - TIMEOUT
+          - UNKNOWN
+      required:
+      - message
+      - code
+    DateTime:
+      type: string
+      format: ISO 8601 Date Time
+      example: '1991-02-11T20:30:19Z'
+    FireOrderInSeconds:
+      title: Fire order in seconds
+      description: "Lead time in seconds before an injected order should be fired to the\nkitchen for preparation.\n- `fireOrderInSeconds=0` fire the order immediately to the kitchen.\n- `fireOrderInSeconds=null` hold the order in the POS without firing,\n  requiring an explicit [Fire Order](#operation/fireOrder) call.\n"
+      example: 600
+      type:
+      - integer
+      - 'null'
+      minimum: 0
+      maximum: 100000
+    ReadyInSeconds:
+      title: Ready in seconds
+      description: "Time in seconds when the order will be ready.\n\nThis value incorporates the order `preparationTimeInSeconds` plus the \nvalue of `fireOrderInSeconds`. When `fireOrderInSeconds=0`, then `readyInSeconds`\nwill match the value of `preparationTimeInSeconds`, and when \n`fireOrderInSeconds=null`, then `readyInSeconds=null` as well.\n"
+      example: 600
+      type:
+      - integer
+      - 'null'
+      minimum: 0
+    Order:
+      title: Order
+      description: Representation of an order placed by a customer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+          description: Internal order ID
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+          description: Internal store ID
+        cart:
+          $ref: '#/components/schemas/CartPriced'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        discounts:
+          $ref: '#/components/schemas/Discounts'
+        payment:
+          $ref: '#/components/schemas/Payment'
+        posVendor:
+          $ref: '#/components/schemas/PosVendor'
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+          description: Where the order will be delivered (only delivery orders)
+        loyaltyPointsEarned:
+          type: integer
+          description: Amount of Loyalty Points earned on this order
+          minimum: 0
+          example: 15
+        errors:
+          description: Any errors which occurred during order processing
+          type: array
+          items:
+            $ref: '#/components/schemas/POSOrderError'
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+          description: When the order was first created
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+          description: When the order was last updated
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        preparationTimeInSeconds:
+          type: integer
+          description: Estimated time it takes to prepare an order
+          minimum: 0
+          example: 300
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+      required:
+      - id
+      - cart
+      - customer
+      - storeId
+      - charges
+      - status
+      - channel
+      - serviceMode
+      - createdAt
+      - updatedAt
+      - posVendor
+      - fireOrderInSeconds
+      - preparationTimeInSeconds
+      - readyInSeconds
+    OrderError:
+      title: OrderError
+      type: object
+      description: Standard order error format
+      properties:
+        status:
+          description: HTTP status code
+          type: number
+          example: 400
+        code:
+          description: Unique error code. Same as errors[0].code
+          type: string
+          example: ValidationError
+        message:
+          description: Human readable error mesage. Same as errors[0].message
+          type: string
+          example: isAvailable must be a boolean value
+        errors:
+          description: All errors
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: Unique error code
+                type: string
+                example: ValidationError
+              message:
+                description: Human readable error mesage
+                type: string
+              details:
+                description: Detailed error information
+                type: string
+              domain:
+                type: string
+              location:
+                type: string
+                description: Location the error occurred. Interpreation depends on `locationType`
+                example: isAvailable
+              locationType:
+                type: string
+                description: How to interpret the location property
+                example: requestBody
+              sendReport:
+                description: URL to report this error
+                type: string
+              extendedHelp:
+                description: URL with additional information about the error type
+                type: string
+            required:
+            - code
+            - message
+        order:
+          $ref: '#/components/schemas/Order'
+      required:
+      - code
+      - message
+      - errors
+    MpfOrderId:
+      title: mpfOrderId
+      description: "External References for the order.\n\nYou can use this field to provide additional identifiers or any other string data to the order to be injected. \nA common use for this is to hold additional external order numbers, like receipt number or third party short order ID.\n"
+      example: '123456789'
+      type: string
+    Loyalty:
+      title: Loyalty information
+      description: User and transaction information regarding loyalty
+      type: object
+      properties:
+        loyaltyId:
+          $ref: '#/components/schemas/LoyaltyId'
+        transactionId:
+          $ref: '#/components/schemas/LoyaltyTransactionId'
+      required:
+      - loyaltyId
+      - transactionId
+    PriceOrder:
+      title: PriceOrder
+      type: object
+      properties:
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        loyalty:
+          $ref: '#/components/schemas/Loyalty'
+      required:
+      - storeId
+      - serviceMode
+      - cart
+      - customer
+    CommitOrder:
+      title: CommitOrder
+      type: object
+      properties:
+        charges:
+          $ref: '#/components/schemas/Charges'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+      required:
+      - paymentMethod
+      - fireOrderInSeconds
+    PlaceOrder:
+      title: PlaceOrder
+      type: object
+      properties:
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+      required:
+      - storeId
+      - serviceMode
+      - cart
+      - customer
+      - paymentMethod
+      - fireOrderInSeconds
+    OrderPlaced:
+      title: Order Placed
+      description: Representation of an order placed by a customer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+          description: Internal order ID
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+          description: Partner's order ID
+        callbackUrl:
+          type: string
+          description: URL to order details.
+          example: https://bk-partners.rbictg.com
+      required:
+      - id
+      - callbackUrl
+    Available:
+      title: Available
+      description: Information about store availability
+      type: object
+      properties:
+        isEnabled:
+          description: Detailed availability per service mode.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/ServiceMode'
+              value:
+                type: boolean
+                description: "Returns true if the store is Operating Available.\n\n\"Operating Available\" considers the current date and time to calculate the current availability for the \nservice mode.\n"
+        isOpen:
+          description: True if the store is available for ordering.
+          type: boolean
+          example: true
+      required:
+      - isOpen
+    Location:
+      title: Location
+      description: Information about a store location.
+      type: object
+      properties:
+        administrativeArea:
+          description: Location administrative area.
+          type: string
+          example: FL
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        formattedAddress:
+          description: Store address.
+          type: string
+          example: 5701 BLUE LAGOON DR, MIAMI, FL 33126
+        locality:
+          description: Store locality.
+          type: string
+          example: MIAMI
+        phoneNumber:
+          description: Store phone number.
+          type: string
+          example: 555-555-5555
+        postalCode:
+          description: Store postalCode.
+          type: string
+          example: '33126'
+        regionCode:
+          description: "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\nFor example, the code for the United States is `US`.\n\nFor the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+          type: string
+          example: US
+        route:
+          description: Store route.
+          type: string
+          example: 5701 BLUE LAGOON DR
+    TimeSlot:
+      title: TimeSlot
+      description: "Contains information about the store service hours for a range of 15 consecutive days,\nstarting from the day before the request is made.\n"
+      type: object
+      properties:
+        closes:
+          description: Store close time.
+          example: '1991-02-11 23:59:00'
+          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
+          type: string
+        date:
+          description: Calendar day that this time slot reflects
+          example: '1991-02-11'
+          format: ISO 8601 Date (YYYY-MM-DD)
+          type: string
+        isClosed:
+          description: "Flag that determines if the store is closed.\n\nIf the store is open, this property won't be returned.\n"
+          type: boolean
+          example: true
+        opens:
+          description: Store open time.
+          example: '1991-02-11 00:00:00'
+          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
+          type: string
+      required:
+      - opens
+      - date
+      - closes
+    WeekdayHours:
+      title: WeekDayHours
+      description: "Human-readable view of a store's weekly operating hours.\n\n**Note**: This information is intended for display purposes only.\nIf you need to perform calculations based on the service hours, use the `timeSlots` property instead.\n"
+      type: object
+      properties:
+        text:
+          description: "Human-readable days of operation.\n\nThe \"Time range\" looks like:\n- For days that the store is open:  \n  `Weekday: hh:mm A - hh:mm A` (`Sunday: 12:00 AM - 11:59 PM`)\n- For days that the store is closed:  \n  `Weekday: closed` (`Sunday: closed`)\n"
+          type: string
+          format: 'Weekday: Time range'
+          example: 'Sunday: 12:00 AM - 11:59 PM'
+    ServiceHour:
+      title: ServiceHour
+      description: Store operating hours by serviceMode
+      type: object
+      properties:
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        timeSlots:
+          description: "Contains information about the store service hours for a range of 15 consecutive days,\nstarting from the day before the request is made.\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeSlot'
+        weekdayHours:
+          description: "Human-readable view of a store's weekly operating hours.\n\n**Note**: This information is intended for display purposes only.\nIf you need to perform calculations based on the service hours, use the `timeSlots` property instead.\n"
+          type: array
+          items:
+            $ref: '#/components/schemas/WeekdayHours'
+      required:
+      - serviceMode
+      - timeSlots
+    Timezone:
+      title: Timezone
+      description: "Timezone from the IANA\n[tz database](https://en.wikipedia.org/wiki/Tz_database)\n"
+      example: America/New_York
+      type: string
+    Store:
+      title: Store
+      description: Information about a store
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/Available'
+          description: True if the store is available for ordering.
+        franchiseGroupName:
+          description: Store franchise group name.
+          type: string
+          example: Acme Group
+        location:
+          $ref: '#/components/schemas/Location'
+        name:
+          description: Store name
+          type: string
+          example: Example test lab
+        posVendor:
+          $ref: '#/components/schemas/PosVendor'
+        serviceHour:
+          description: Store operating hours by serviceMode
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHour'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        timezone:
+          $ref: '#/components/schemas/Timezone'
+      required:
+      - availability
+      - name
+      - storeId
+      - timezone
+      - posVendor
+      - location
+      - serviceHour
+    Reason:
+      title: reason
+      description: Reason for the change in store status
+      example: store was deactivated due to high error rate
+      type: string
+    Region:
+      title: Region
+      description: "Region\nThe Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\nFor example, the code for the United States is `US`.\n\nFor the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+      example: US
+      type: string
+    StoreStatus:
+      title: storeStatus
+      description: The current marketplace status of the store
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    StoreStatusChanged:
+      title: StoreStatusChanged
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/Reason'
+        region:
+          $ref: '#/components/schemas/Region'
+        storeStatus:
+          $ref: '#/components/schemas/StoreStatus'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+      required:
+      - storeStatus
+      - region
+      - updatedAt
+    limit:
+      title: Limit
+      description: Amount of results to fetch
+      example: 10
+      type: integer
+      minimum: 1
+      default: 20
+      maximum: 100
+    cursor:
+      title: Cursor
+      description: Pagination cursor
+      example: cursor-id
+      type: string
+  parameters:
+    region:
+      description: "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n"
+      name: x-ui-region
+      in: header
+      example: US
+      schema:
+        type: string
+    store-id:
+      description: Unique Store ID
+      name: storeId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/StoreId'
+      example: '500123'
+    order-id:
+      description: Unique Order ID
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: '500123'
+    limit:
+      description: Number of results to fetch
+      name: limit
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/limit'
+      example: example
+    cursor:
+      description: Pagination cursor
+      name: cursor
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/cursor'
+      example: example
+paths:
+  /loyalty/identify:
+    post:
+      summary: Identify
+      tags:
+      - Loyalty
+      operationId: identify
+      parameters: []
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdentifyRequest'
+            examples:
+              IdentifyRequestExample:
+                summary: Default identify request
+                x-microcks-default: true
+                value:
+                  identifier: '1234'
+                  identifierType: OTP
+                  storeId: '42'
+                  serviceMode: TAKEOUT
+                  details:
+                    operator: {}
+                    terminal: {}
+                    transactionId: {}
+      responses:
+        '200':
+          description: Loyalty identified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/IdentifyResponse'
+                required:
+                - data
+              examples:
+                Identify200Example:
+                  summary: Default identify 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      cart:
+                        menuSelections: {}
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      loyalty:
+                        balances: {}
+                        loyaltyId: {}
+                        transactionId: {}
+                      storeId: '42'
+                      serviceMode: TAKEOUT
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Identify400Example:
+                  summary: Default identify 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Identify403Example:
+                  summary: Default identify 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Identifier Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Identify404Example:
+                  summary: Default identify 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Identify500Example:
+                  summary: Default identify 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /stores/{storeId}/menus/{serviceMode}:
+    get:
+      tags:
+      - Menus
+      summary: Menu
+      description: "Get full menu for an individual store\n\nThe menu response is a \"flat\" JSON (it doesn't have nested structures). All fields are root level properties, so you can refer to them simply by ID. The below example is a walk-through from menu to modifier.\n\n| Tenders example | Type | ID | Name |\n|-----------------|------|----|------|\n| Menu | Group | menu_1 | Menu |\n| Section | Group | 4763b543-2d04-40a6-8b95-d55750ec554a | Tenders |\n| Picker | Group | xdgrygmaqSf78Pjdh6UrTF | 3Pc Tenders Meal |\n| picker_pickerAspect | Group | xdgrygmaqSf78Pjdh6UrTF-76b9c2d3-536e-46bb-a060-f805a63b0063 | Choose a Size |\n| picker_pickerAspectOption | Group | xdgrygmaqSf78Pjdh6UrTF-medium | Large Combo |\n| picker_pickerAspect_pickerAspectOption_pickerAspect | Group | xdgrygmaqSf78Pjdh6UrTF-76b9c2d3-536e-46bb-a060-f805a63b0063-medium-b376ee07-5ba9-464d-a3b0-e79ad3643e2a | Choice of Tenders Preparation |\n| picker_pickerAspectOption_pickerAspectOption2 | Group | xdgrygmaqSf78Pjdh6UrTF-medium-spicy | Spicy |\n| combo | Combo | 00cc6fc6-5ce7-4361-aa95-9d6d726b5bbd | 3Pc Tenders Medium Combo - Spicy |\n| comboSlot | Group | group_item_40961 | Main Item |\n| comboSlotOption | Group | option_group_item_40961 | N/A |\n| item | Item | item_40961 | 3Pc Tenders - Spicy |\n| modifierGroup | Group | ModifierGroup_60 | Sauces - 1 Included |\n| modifier | Modifier | modifierMultiplier_1-00-163758 | Tartar Sauce |\n\nDefault entry: For each Picker & Modifier Group, each group will have a property, “defaultSelection”.\nDefaultSelection will have an ID for an entry that is default for that group\n\n\nGROUPS:\nThe menu has four types: Combo, Item, Group and Modifier.\nThe group type exists to wrap relevant references to walk through the menu. Only Combo, Item and\nModifier will be passed to and committed to POS in Cart.\n\n| Types of Groups | Description | Display type |\n|-----------------|-------------|--------------|\n| Menu | Group of Sections | List |\n| Section | Section is a broad container. It can contain pickers, items , combos as well as other sections | List |\n| Picker | Pickers allows an step by step selection process that ultimate resolve in Combos or Item. Pickers have only one immediate child, a reference to the first aspect. | Single entry |\n| Picker Aspect | Group of Picker Aspect Options | Select |\n| Picker Aspect Option | Group of picker Options - References the next aspect for the picker. The picker options of the last aspect reference the final selection result (combo/item) | Single entry |\n| Combo Slot | Group of Combo Slot Options | Select |\n| Combo Slot Option | References Combo Slot Option | Single entry |\n| Modifier Group | Group of Modifiers | Multi-select |\n\n| Group display type | Description |\n|--------------------|-------------|\n| List | Group of Sections & Pickers(subsections) |\n| Single-Entry | \tOne option that maps to options to select from (Size, Choice of Prep) |\n| Select | \tGroup with Single Selection Option |\n| Multi-Select | Group with Multiple Selection Options |\n"
+      operationId: getStoreMenu
+      parameters:
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/store-id'
+      - name: serviceMode
+        description: Service mode
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ServiceMode'
+        example: DELIVERY
+      - name: version
+        description: Menu version ID
+        example: '1'
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Menu'
+              examples:
+                GetStoreMenu200Example:
+                  summary: Default getStoreMenu 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      meta: example
+                      dayParts:
+                      - {}
+                      rootMenuEntryId: entry-id
+                      entries:
+                      - {}
+                      systemWideOfferEntries:
+                      - {}
+                      rewardEntries:
+                      - {}
+                      configOfferEntries:
+                      - {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStoreMenu403Example:
+                  summary: Default getStoreMenu 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStoreMenu404Example:
+                  summary: Default getStoreMenu 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/channel/{orderId}:
+    get:
+      tags:
+      - Orders
+      summary: Order
+      description: "Retrieve an order by ID\n"
+      operationId: getOrder
+      parameters:
+      - $ref: '#/components/parameters/order-id'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Order retrieve success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                GetOrder200Example:
+                  summary: Default getOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetOrder403Example:
+                  summary: Default getOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetOrder404Example:
+                  summary: Default getOrder 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                GetOrder500Example:
+                  summary: Default getOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/price:
+    post:
+      tags:
+      - Orders
+      summary: Price Order
+      description: "Price a new order.\n\nThe price order API must be called to create a new order and to validate the\ncart prices and item availability with the POS.  When the Price Order\nrequest returns a success reponse, a subsequent [Commit Order](#operation/\ncommitOrder) request should (but is not guarenteed to) succeed.\n\nPrice requests can fail for a variety of reasons. For example\\:\n- Restaurant - The restaurant is unavailable.\n- Menu - An item in the cart is unavailable or violates permitted constraints.\n- Loyalty - Invalid user details were provided or a discount redemption failed.\n- POS - The order failed to price or inject.\n\nLoyalty\n- Rewards:\n  the cart must contain a menu selection with the id of the reward and children menu selections with one of possible options.\n  If a reward points to a combo, then the combo must also contain menu selections for its options.\n  A reward can be reedemed muliple times by modifying the quantity of the root menuSelection. The quantity of the children menuSelection must always be 1.\n- Offers:\n  Offers are presented in the menu in a nested structure. The first level offer will always point to a second level offer by its options.\n  The second level offer defines the entries required in the cart by its options. If the options is of type ENTRY then the item is present in the menu as a regular item.\n  If an option has type 'SYSTEM_WIDE_OFFER' then an entity in the offer section will be present with that id and that entity should point to regular menu items by its options. In this scenario the client is given the capability to chose which option to include in the cart.\n  - Constraints\n    - An order can only contain one offer. This means it isn't possible to provide two menu selections with an offer or specifiying quantity different than 1."
+      operationId: priceOrder
+      parameters:
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceOrder'
+            examples:
+              PriceOrderRequestExample:
+                summary: Default priceOrder request
+                x-microcks-default: true
+                value:
+                  externalReferenceId: example
+                  storeId: '42'
+                  serviceMode: TAKEOUT
+                  cart:
+                    menuSelections:
+                    - {}
+                  customer:
+                    id: '500123'
+                    externalReferenceId: {}
+                    name: Whopper
+                    username: example
+                    phone: {}
+                    email: guest@example.com
+                  charges:
+                    tax: {}
+                    mpfTax: {}
+                    subTotal: {}
+                    total: {}
+                    fees: {}
+                  mpfOrderId: '123456789'
+                  deliveryAddress:
+                    administrativeArea: FL
+                    coordinates: {}
+                    formattedAddress: 5707 Blue Lagoon Drive
+                    instructions: example
+                    locality: Miami-Dade County
+                    postalCode: '33126'
+                    regionCode: US
+                    route: Blue Lagoon Drive
+                    streetNumber: '5707'
+                    sublocality: example
+                    subpremise: Suite 101
+                  loyalty:
+                    loyaltyId: {}
+                    transactionId: {}
+      responses:
+        '200':
+          description: Order price request success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                PriceOrder200Example:
+                  summary: Default priceOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PriceOrder400Example:
+                  summary: Default priceOrder 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PriceOrder403Example:
+                  summary: Default priceOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                PriceOrder500Example:
+                  summary: Default priceOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/{orderId}/commit:
+    post:
+      tags:
+      - Orders
+      summary: Commit Order
+      description: "Commit an order.\n"
+      operationId: commitOrder
+      parameters:
+      - $ref: '#/components/parameters/order-id'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommitOrder'
+            examples:
+              CommitOrderRequestExample:
+                summary: Default commitOrder request
+                x-microcks-default: true
+                value:
+                  charges:
+                    tax: {}
+                    mpfTax: {}
+                    subTotal: {}
+                    total: {}
+                    fees: {}
+                  mpfOrderId: '123456789'
+                  paymentMethod: APPLE_PAY
+                  fireOrderInSeconds: 600
+                  readyInSeconds: 600
+      responses:
+        '200':
+          description: Order commit success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                CommitOrder200Example:
+                  summary: Default commitOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '400':
+          description: Order commit failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                CommitOrder400Example:
+                  summary: Default commitOrder 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                CommitOrder403Example:
+                  summary: Default commitOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                CommitOrder404Example:
+                  summary: Default commitOrder 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                CommitOrder500Example:
+                  summary: Default commitOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/{orderId}/fire:
+    post:
+      tags:
+      - Orders
+      summary: Fire Order
+      description: "Fire a committed order to the kitchen for preparation.\n\nIn cases when an order is committed with some pre-determined lead time\n(e.g., 30 minutes from now), it may be necessary to \"fire\" or \"release\" the\norder to the kitchen immediately before the original lead time has elapsed.\n"
+      operationId: fireOrder
+      parameters:
+      - $ref: '#/components/parameters/order-id'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Order fire success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+                required:
+                - data
+              examples:
+                FireOrder200Example:
+                  summary: Default fireOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      storeId: '42'
+                      cart:
+                        menuSelections: {}
+                        feedback: {}
+                      serviceMode: TAKEOUT
+                      customer:
+                        id: {}
+                        externalReferenceId: {}
+                        name: {}
+                        username: {}
+                        phone: {}
+                        email: {}
+                      charges:
+                        tax: {}
+                        mpfTax: {}
+                        subTotal: {}
+                        total: {}
+                        fees: {}
+                      discounts:
+                      - {}
+                      payment:
+                        paymentMethod: {}
+                      posVendor: BRINK
+                      status: CREATED
+                      deliveryAddress:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        instructions: {}
+                        locality: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                        streetNumber: {}
+                        sublocality: {}
+                        subpremise: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: '1991-02-11T20:30:19Z'
+                      updatedAt: '1991-02-11T20:30:19Z'
+                      fireOrderInSeconds: 600
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: 600
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                FireOrder403Example:
+                  summary: Default fireOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                FireOrder404Example:
+                  summary: Default fireOrder 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderError'
+              examples:
+                FireOrder500Example:
+                  summary: Default fireOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      message: example
+                      details: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+                    order:
+                      id: {}
+                      externalReferenceId: {}
+                      storeId: {}
+                      cart: {}
+                      serviceMode: {}
+                      customer: {}
+                      charges: {}
+                      discounts: {}
+                      payment: {}
+                      posVendor: {}
+                      status: {}
+                      deliveryAddress: {}
+                      loyaltyPointsEarned: 15
+                      errors:
+                      - {}
+                      createdAt: {}
+                      updatedAt: {}
+                      fireOrderInSeconds: {}
+                      preparationTimeInSeconds: 300
+                      readyInSeconds: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /orders/place:
+    post:
+      tags:
+      - Orders
+      summary: Place Order
+      description: "Price and commit a new order.\n\nThe place order API [prices](#operation/priceOrder) and [commits](#operation/commitOrder) an order\nasynchronously. Partners receive order changes via the [Order Updated webhook](#operation/orderUpdateEvent).\n\nPlace order can fail for the same reasons a Price and Commit calls can fail, but also:\n- Price mismatches between partner and POS."
+      operationId: placeOrder
+      parameters:
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceOrder'
+            examples:
+              PlaceOrderRequestExample:
+                summary: Default placeOrder request
+                x-microcks-default: true
+                value:
+                  externalReferenceId: example
+                  storeId: '42'
+                  serviceMode: TAKEOUT
+                  cart:
+                    menuSelections:
+                    - {}
+                  customer:
+                    id: '500123'
+                    externalReferenceId: {}
+                    name: Whopper
+                    username: example
+                    phone: {}
+                    email: guest@example.com
+                  charges:
+                    tax: {}
+                    mpfTax: {}
+                    subTotal: {}
+                    total: {}
+                    fees: {}
+                  deliveryAddress:
+                    administrativeArea: FL
+                    coordinates: {}
+                    formattedAddress: 5707 Blue Lagoon Drive
+                    instructions: example
+                    locality: Miami-Dade County
+                    postalCode: '33126'
+                    regionCode: US
+                    route: Blue Lagoon Drive
+                    streetNumber: '5707'
+                    sublocality: example
+                    subpremise: Suite 101
+                  paymentMethod: APPLE_PAY
+                  fireOrderInSeconds: 600
+                  readyInSeconds: 600
+                  mpfOrderId: '123456789'
+      responses:
+        '200':
+          description: Order place request success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OrderPlaced'
+                required:
+                - data
+              examples:
+                PlaceOrder200Example:
+                  summary: Default placeOrder 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: example-unique-id
+                      externalReferenceId: example
+                      callbackUrl: https://bk-partners.rbictg.com
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PlaceOrder400Example:
+                  summary: Default placeOrder 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Authentication failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PlaceOrder403Example:
+                  summary: Default placeOrder 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                PlaceOrder500Example:
+                  summary: Default placeOrder 500 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /stores/{storeId}:
+    get:
+      tags:
+      - Stores
+      summary: Store
+      description: "Store (restaurant) details.\n\nUse this endpoint get the full details of a specific store, including the Detailed Availability by service mode\n"
+      operationId: getStore
+      parameters:
+      - $ref: '#/components/parameters/region'
+      - name: storeId
+        in: path
+        description: Unique ID representing a store
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Store'
+              examples:
+                GetStore200Example:
+                  summary: Default getStore 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      availability:
+                        isEnabled: {}
+                        isOpen: {}
+                      franchiseGroupName: Acme Group
+                      location:
+                        administrativeArea: {}
+                        coordinates: {}
+                        formattedAddress: {}
+                        locality: {}
+                        phoneNumber: {}
+                        postalCode: {}
+                        regionCode: {}
+                        route: {}
+                      name: Example test lab
+                      posVendor: BRINK
+                      serviceHour:
+                      - {}
+                      storeId: '42'
+                      timezone: America/New_York
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStore403Example:
+                  summary: Default getStore 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStore404Example:
+                  summary: Default getStore 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /stores/{storeId}/store-status-changed:
+    post:
+      tags:
+      - Stores
+      summary: Store Status Changed
+      description: "This endpoint is used to update the status of a store.\n"
+      operationId: storeStatusChanged
+      parameters:
+      - name: storeId
+        in: path
+        description: Unique ID representing a store
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      security:
+      - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreStatusChanged'
+            examples:
+              StoreStatusChangedRequestExample:
+                summary: Default storeStatusChanged request
+                x-microcks-default: true
+                value:
+                  reason: store was deactivated due to high error rate
+                  region: US
+                  storeStatus: ACTIVE
+                  updatedAt: '1991-02-11T20:30:19Z'
+      responses:
+        '200':
+          description: Successfully updated the store status.
+        '400':
+          description: Bad request due to missing field or content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                StoreStatusChanged400Example:
+                  summary: Default storeStatusChanged 400 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                StoreStatusChanged403Example:
+                  summary: Default storeStatusChanged 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                StoreStatusChanged404Example:
+                  summary: Default storeStatusChanged 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /stores:
+    get:
+      tags:
+      - Stores
+      summary: List Stores
+      description: "Store List.\n\nUse this endpoint get a list of stores and their info.\n\n**Pagination**\n\nPagination is provided in a cursor-basis. For each set of results, a `cursor` will be returned as part of the\nresponse's `meta`. Providing this `cursor` to the next call will fetch the next page of the result set.\n\nThe max amount of restaurants to be returned is controlled by `limit`\n"
+      operationId: getStores
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/region'
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      cursor:
+                        description: Cursor to fetch the next set of results
+                        $ref: '#/components/schemas/cursor'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Store'
+              examples:
+                GetStores200Example:
+                  summary: Default getStores 200 response
+                  x-microcks-default: true
+                  value:
+                    meta:
+                      cursor: cursor-id
+                    data:
+                    - availability: {}
+                      franchiseGroupName: Acme Group
+                      location: {}
+                      name: Example test lab
+                      posVendor: {}
+                      serviceHour:
+                      - {}
+                      storeId: {}
+                      timezone: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStores403Example:
+                  summary: Default getStores 403 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+        '404':
+          description: Store not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetStores404Example:
+                  summary: Default getStores 404 response
+                  x-microcks-default: false
+                  value:
+                    status: 400
+                    code: ValidationError
+                    message: isAvailable must be a boolean value
+                    errors:
+                    - code: ValidationError
+                      details: example
+                      message: example
+                      domain: example
+                      location: isAvailable
+                      locationType: requestBody
+                      sendReport: example
+                      extendedHelp: example
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+webhooks:
+  menuUpdate:
+    post:
+      summary: Menu Updated Event
+      description: "Menu updated events are dispatched when a store's menu changes.\n\nMenus can change for a variety of reasons. Some stores may update the\navailability of an item to make it unavailable for orders (\"stock out\").\nOperators also make frequent changes to menu prices throughout the day,\nand at the brand-level menu entries are being added and removed\ncontinuously.\n\nWhen these `\"MENU_UPDATED\"` events are delivered, a request *must* be\nmade to the provided `callbackUrl` to fetch the latest store menu details.\n"
+      tags:
+      - Menus
+      parameters:
+      - in: header
+        name: x-signature
+        description: A hex encoded HMAC signature
+        schema:
+          type: string
+      operationId: storeMenuUpdateEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand:
+                  $ref: '#/components/schemas/Brand'
+                callbackUrl:
+                  description: "URL from which the updated menu contents may be retrieved\n"
+                  type: string
+                  format: url
+                  example: https://rbictg.com/api/v1/menus/41?servicemode=DELIVERY&version=1
+                eventTime:
+                  description: "When the menu update occurred\n"
+                  $ref: '#/components/schemas/DateTime'
+                eventType:
+                  description: Webhook event type
+                  type: string
+                  enum:
+                  - MENU_UPDATED
+                region:
+                  $ref: '#/components/schemas/Region'
+                serviceMode:
+                  description: Menu service mode
+                  $ref: '#/components/schemas/ServiceMode'
+                storeId:
+                  $ref: '#/components/schemas/StoreId'
+                version:
+                  description: "Unique ID for the menu iteration that triggered the update.\n\nEach store menu update for a store and service mode will include\na unique version ID.\n"
+                  type: string
+              required:
+              - brand
+              - callbackUrl
+              - eventTime
+              - eventType
+              - serviceMode
+              - storeId
+              - version
+      responses:
+        2XX:
+          description: Event acknowledged
+        4XX:
+          description: Failed to acknowledge
+        5XX:
+          description: Failed to acknowledge
+  storeUpdate:
+    post:
+      summary: Store Updated Event
+      description: "Store updated events are dispatched when a store's availability or metadata\nhas changed.\n\nThe availability of individual stores can change regularly for a variety of\nreasons. In some cases a store may be experiencing a temporary outage, or a\nmore widespread outage may be affecting the Point of Sale (POS) vendor. In\naddition, store operators can update operating hours and service modes, and\nexpect these changes to be reflected across all supported platforms.\n\nWhen these `\"STORE_UPDATED\"` events are delivered, a request *must* be\nmade to the provided `callbackUrl` to fetch the latest store details.\n"
+      tags:
+      - Stores
+      parameters:
+      - in: header
+        name: x-signature
+        description: A hex encoded HMAC signature
+        schema:
+          type: string
+      operationId: storeUpdateEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand:
+                  $ref: '#/components/schemas/Brand'
+                callbackUrl:
+                  description: "URL from which the updated store details may be retrieved.\n"
+                  type: string
+                  format: url
+                  example: https://partners-bk.rbictg.com/api/v1/stores/42
+                eventTime:
+                  description: Store update event time.
+                  $ref: '#/components/schemas/DateTime'
+                eventType:
+                  description: Webhook event type.
+                  type: string
+                  enum:
+                  - STORE_UPDATED
+                region:
+                  $ref: '#/components/schemas/Region'
+                storeId:
+                  $ref: '#/components/schemas/StoreId'
+              required:
+              - brand
+              - callbackUrl
+              - eventTime
+              - eventType
+              - region
+              - storeId
+      responses:
+        2XX:
+          description: Event acknowledged
+        4XX:
+          description: Failed to acknowledge
+        5XX:
+          description: Failed to acknowledge
+  orderUpdate:
+    post:
+      summary: Order Updated Event
+      description: "Order updated events are dispatched as an order state transitions.\n\nWhen these `\"ORDER_UPDATED\"` events are delivered, a request *must* be\nmade to the provided `callbackUrl` to fetch the latest order details.\n"
+      tags:
+      - Orders
+      parameters:
+      - in: header
+        name: x-signature
+        description: A hex encoded HMAC signature
+        schema:
+          type: string
+      operationId: orderUpdateEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand:
+                  $ref: '#/components/schemas/Brand'
+                callbackUrl:
+                  description: "URL from which the updated order contents may be retrieved\n"
+                  type: string
+                  format: url
+                  example: https://rbictg.com/api/v1/orders/41
+                eventTime:
+                  description: "When the order update occurred\n"
+                  $ref: '#/components/schemas/DateTime'
+                eventType:
+                  description: Webhook event type
+                  type: string
+                  enum:
+                  - ORDER_UPDATED
+                region:
+                  $ref: '#/components/schemas/Region'
+                id:
+                  $ref: '#/components/schemas/OrderId'
+              required:
+              - brand
+              - callbackUrl
+              - eventTime
+              - eventType
+              - region
+              - id
+      responses:
+        2XX:
+          description: Event acknowledged
+        4XX:
+          description: Failed to acknowledge
+        5XX:
+          description: Failed to acknowledge
+tags:
+- name: LoyaltyAPI
+  x-displayName: Loyalty
+  description: "Loyalty\n\n#### Identify\n\nThis step allows for the identification of loyalty users or offers\n"
+- name: OrdersAPI
+  x-displayName: Orders
+  description: "Order fulfillment is implemented as 2-step workflow: **Price** and **Commit**.\n\n#### Price Order\n\nThe mandatory [Price Order](#operation/priceOrder) API validates the order request and returns the\nsubtotal, total, and tax amounts for the order from the restaurant POS. The request also returns a\nunique order `id`, which must be provided to the subsequent Commit (and/or Fire) API calls.\n\n#### Commit Order\n\nAny successfully priced order may be injected by passing its `orderId` to the [Commit\nOrder](#operation/commitOrder) API.\n\n#### (Optional) Fire Order\n\nFires (dispatches) any committed order to the kitchen for preparation.\n\nOrders may be committed to the restaurant POS, but held indefinitely rather than being \"fired\" to\nthe kitchen for preparation. This preparation time is managed with the `fireOrderInSeconds` attribute\nprovided with the [Commit Order](#operation/commitOrder) API call.\n"
+- name: MenusAPI
+  x-displayName: Menus
+  description: ''
+- name: StoresAPI
+  x-displayName: Stores
+  description: ''
+- name: OrderModel
+  x-displayName: Order
+  description: "<SchemaDefinition schemaRef=\"#/components/schemas/Order\" />\n"
+- name: MenuModel
+  x-displayName: Menu
+  description: "<SchemaDefinition schemaRef=\"#/components/schemas/Menu\" />\n"
+- name: StoreModel
+  x-displayName: Store
+  description: "<SchemaDefinition schemaRef=\"#/components/schemas/Store\" />\n"
+- name: ErrorModel
+  x-displayName: Error
+  description: "<SchemaDefinition schemaRef=\"#/components/schemas/Error\" />\n"
+x-tagGroups:
+- name: API
+  tags:
+  - Loyalty
+  - Orders
+  - Menus
+  - Stores
+- name: Models
+  tags:
+  - OrderModel
+  - MenuModel
+  - StoreModel
+  - ErrorModel

@@ -1,0 +1,20 @@
+{
+  "provider": "restaurant-brands",
+  "sources": [
+    "restaurant-brands-loyalty-api-openapi.yml",
+    "restaurant-brands-menus-api-openapi.yml",
+    "restaurant-brands-orders-api-openapi.yml",
+    "restaurant-brands-stores-api-openapi.yml"
+  ],
+  "outputs": [
+    "restaurant-brands-loyalty-api-openapi.yml",
+    "restaurant-brands-menus-api-openapi.yml",
+    "restaurant-brands-orders-api-openapi.yml",
+    "restaurant-brands-stores-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
