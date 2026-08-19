@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Burger King's Partners Loyalty Stores API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores/:storeId",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique ID representing a store"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Store (restaurant) details.\n\nUse this endpoint get the full details of a specific store, including the Detailed Availability by service mode\n"
+        },
+        {
+          "info": {
+            "name": "Store Status Changed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores/:storeId/store-status-changed",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique ID representing a store"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to update the status of a store.\n"
+        },
+        {
+          "info": {
+            "name": "List Stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/stores",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "example",
+                "type": "query",
+                "description": "Number of results to fetch"
+              },
+              {
+                "name": "cursor",
+                "value": "example",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Store List.\n\nUse this endpoint get a list of stores and their info.\n\n**Pagination**\n\nPagination is provided in a cursor-basis. For each set of results, a `cursor` will be returned as part of the\nresponse's `meta`. Providing this `cursor` to the next call will fetch the next page of the result set.\n\nThe max amount of restaurants to be returned is controlled by `limit`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

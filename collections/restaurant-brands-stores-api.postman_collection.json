@@ -1,0 +1,806 @@
+{
+  "item": [
+    {
+      "id": "27a88025-a887-44ee-aef3-2a246a14862f",
+      "name": "Stores",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e730853f-2b78-4747-990c-0ae26fa167bc",
+          "name": "Store",
+          "request": {
+            "name": "Store",
+            "description": {
+              "content": "Store (restaurant) details.\n\nUse this endpoint get the full details of a specific store, including the Detailed Availability by service mode\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) Unique ID representing a store"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1f46c4fd-18e8-4996-bbe0-829f3ef8738b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"availability\": {\n      \"isEnabled\": {},\n      \"isOpen\": {}\n    },\n    \"franchiseGroupName\": \"Acme Group\",\n    \"location\": {\n      \"administrativeArea\": {},\n      \"coordinates\": {},\n      \"formattedAddress\": {},\n      \"locality\": {},\n      \"phoneNumber\": {},\n      \"postalCode\": {},\n      \"regionCode\": {},\n      \"route\": {}\n    },\n    \"name\": \"Example test lab\",\n    \"posVendor\": \"BRINK\",\n    \"serviceHour\": [\n      {}\n    ],\n    \"storeId\": \"42\",\n    \"timezone\": \"America/New_York\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca822702-7916-4eb9-9fd7-27d51ac700e9",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe4033c1-e791-485e-9372-92c7dfc20b1f",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16272114-09b8-48af-97c6-96200d6194f9",
+          "name": "Store Status Changed",
+          "request": {
+            "name": "Store Status Changed",
+            "description": {
+              "content": "This endpoint is used to update the status of a store.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId",
+                "store-status-changed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) Unique ID representing a store"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"storeStatus\": \"<string>\",\n  \"region\": \"<string>\",\n  \"updatedAt\": \"<ISO 8601 Date Time>\",\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ccdfc261-9872-4d1f-a75e-b29ecb36ecc9",
+              "name": "Successfully updated the store status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "532ed773-f22c-411b-890b-f0814f205dac",
+              "name": "Bad request due to missing field or content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d5dce89-96af-443f-ac3b-e4bc50f9b8bd",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af6729b9-a657-4da5-b3e0-c99857cf4be5",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId",
+                    "store-status-changed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) Unique ID representing a store"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"store was deactivated due to high error rate\",\n  \"region\": \"US\",\n  \"storeStatus\": \"ACTIVE\",\n  \"updatedAt\": \"1991-02-11T20:30:19Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3200f76-5f40-46a4-b24c-c7fc1b9b0e70",
+          "name": "List Stores",
+          "request": {
+            "name": "List Stores",
+            "description": {
+              "content": "Store List.\n\nUse this endpoint get a list of stores and their info.\n\n**Pagination**\n\nPagination is provided in a cursor-basis. For each set of results, a `cursor` will be returned as part of the\nresponse's `meta`. Providing this `cursor` to the next call will fetch the next page of the result set.\n\nThe max amount of restaurants to be returned is controlled by `limit`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to fetch"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                "key": "x-ui-region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a3b3d2c7-8ab9-423c-b9b7-11592916ec50",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "example"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"cursor\": \"cursor-id\"\n  },\n  \"data\": [\n    {\n      \"availability\": {},\n      \"franchiseGroupName\": \"Acme Group\",\n      \"location\": {},\n      \"name\": \"Example test lab\",\n      \"posVendor\": {},\n      \"serviceHour\": [\n        {}\n      ],\n      \"storeId\": {},\n      \"timezone\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "460c254e-7eec-49be-91d0-e90864d10f17",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "example"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8a247d9-b22c-4b98-b99a-f987ecb20e62",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "example"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nregion code of the country or region of the address.\n\nFor the full list of country codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).\n",
+                    "key": "x-ui-region",
+                    "value": "US"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sandbox-bk-partners.rbictg.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5efb9b26-8e21-4dcc-a562-13b253ac4cb0",
+    "name": "Burger King's Partners Loyalty Stores API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Overview\n\nThe Channel Partners API are provided for third party food ordering marketplaces\nintegrating into the Restaurant Brand International (RBI) fulfillment platform.\n\n## Authentication\n### Webhooks\n\nWebhook requests are signed using `hex` encoded HMAC signatures.\n\nAn HMAC signature is derived for validation using three components:\n\n- the secret shared between the service and the consumer\n- the body of the request\n- the hash function or algorithm (SHA-256)\n\nUsing these three pieces of information, compute an HMAC signature using the secret as the key and\nthe body of the request as the message and encode the signature to a hexadecimal string for comparison.\n\nCompare the signature generated using the above information to the signature received in the `x-signature` header,\nif the two signatures match, the request is valid.\n",
+      "type": "text/plain"
+    }
+  }
+}

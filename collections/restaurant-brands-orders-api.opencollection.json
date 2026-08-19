@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Burger King's Partners Loyalty Orders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/channel/:orderId",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Order ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve an order by ID\n"
+        },
+        {
+          "info": {
+            "name": "Price Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/price",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Price a new order.\n\nThe price order API must be called to create a new order and to validate the\ncart prices and item availability with the POS.  When the Price Order\nrequest returns a success reponse, a subsequent [Commit Order](#operation/\ncommitOrder) request should (but is not guarenteed to) succeed.\n\nPrice requests can fail for a variety of reasons. For example\\:\n- Restaurant - The restaurant is unavailable.\n- Menu - An item in the cart is unavailable or violates permitted constraints.\n- Lo"
+        },
+        {
+          "info": {
+            "name": "Commit Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/:orderId/commit",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Order ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Commit an order.\n"
+        },
+        {
+          "info": {
+            "name": "Fire Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/:orderId/fire",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "500123",
+                "type": "path",
+                "description": "Unique Order ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fire a committed order to the kitchen for preparation.\n\nIn cases when an order is committed with some pre-determined lead time\n(e.g., 30 minutes from now), it may be necessary to \"fire\" or \"release\" the\norder to the kitchen immediately before the original lead time has elapsed.\n"
+        },
+        {
+          "info": {
+            "name": "Place Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/orders/place",
+            "headers": [
+              {
+                "name": "x-ui-region",
+                "value": "US"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Price and commit a new order.\n\nThe place order API [prices](#operation/priceOrder) and [commits](#operation/commitOrder) an order\nasynchronously. Partners receive order changes via the [Order Updated webhook](#operation/orderUpdateEvent).\n\nPlace order can fail for the same reasons a Price and Commit calls can fail, but also:\n- Price mismatches between partner and POS."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

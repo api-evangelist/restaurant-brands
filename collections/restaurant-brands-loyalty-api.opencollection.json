@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Burger King's Partners Loyalty API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Loyalty",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Identify",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-bk-partners.rbictg.com/api/v1/loyalty/identify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Identify"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

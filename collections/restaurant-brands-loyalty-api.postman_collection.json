@@ -1,0 +1,346 @@
+{
+  "item": [
+    {
+      "id": "9926afe9-d13f-49b8-9573-53bf38ad7c90",
+      "name": "Loyalty",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "244aa92c-33fd-4311-b4fb-f7cab9db784f",
+          "name": "Identify",
+          "request": {
+            "name": "Identify",
+            "description": {},
+            "url": {
+              "path": [
+                "loyalty",
+                "identify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"identifierType\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"serviceMode\": \"<string>\",\n  \"details\": {\n    \"operator\": \"<string>\",\n    \"terminal\": \"<string>\",\n    \"transactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "31f00f2d-09c3-4355-a7a3-dc7892eb3d94",
+              "name": "Loyalty identified",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"cart\": {\n      \"menuSelections\": {}\n    },\n    \"customer\": {\n      \"id\": {},\n      \"externalReferenceId\": {},\n      \"name\": {},\n      \"username\": {},\n      \"phone\": {},\n      \"email\": {}\n    },\n    \"loyalty\": {\n      \"balances\": {},\n      \"loyaltyId\": {},\n      \"transactionId\": {}\n    },\n    \"storeId\": \"42\",\n    \"serviceMode\": \"TAKEOUT\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fae1f47a-f4cd-46e4-966f-80a10731a5ac",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2732ace3-ef92-4115-b504-7800ef67a0d6",
+              "name": "Authentication failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87edddf2-755e-437a-a51f-c6e9d15f7ba9",
+              "name": "Identifier Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37d41dc0-3371-48c7-a67d-1b5ff77a3b7e",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loyalty",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"1234\",\n  \"identifierType\": \"OTP\",\n  \"storeId\": \"42\",\n  \"serviceMode\": \"TAKEOUT\",\n  \"details\": {\n    \"operator\": {},\n    \"terminal\": {},\n    \"transactionId\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 400,\n  \"code\": \"ValidationError\",\n  \"message\": \"isAvailable must be a boolean value\",\n  \"errors\": [\n    {\n      \"code\": \"ValidationError\",\n      \"details\": \"example\",\n      \"message\": \"example\",\n      \"domain\": \"example\",\n      \"location\": \"isAvailable\",\n      \"locationType\": \"requestBody\",\n      \"sendReport\": \"example\",\n      \"extendedHelp\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sandbox-bk-partners.rbictg.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "58e4db43-7268-4d3b-83b6-00448d8f41be",
+    "name": "Burger King's Partners Loyalty API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Overview\n\nThe Channel Partners API are provided for third party food ordering marketplaces\nintegrating into the Restaurant Brand International (RBI) fulfillment platform.\n\n## Authentication\n### Webhooks\n\nWebhook requests are signed using `hex` encoded HMAC signatures.\n\nAn HMAC signature is derived for validation using three components:\n\n- the secret shared between the service and the consumer\n- the body of the request\n- the hash function or algorithm (SHA-256)\n\nUsing these three pieces of information, compute an HMAC signature using the secret as the key and\nthe body of the request as the message and encode the signature to a hexadecimal string for comparison.\n\nCompare the signature generated using the above information to the signature received in the `x-signature` header,\nif the two signatures match, the request is valid.\n",
+      "type": "text/plain"
+    }
+  }
+}
