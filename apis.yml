@@ -27,7 +27,7 @@ tags:
   - Restaurants
 created: '2026-05-23'
 modified: '2026-06-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 kind: company
 x-type: company
 x-tier: 2
