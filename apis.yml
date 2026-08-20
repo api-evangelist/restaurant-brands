@@ -24,6 +24,13 @@ tags:
   - Hospitality
   - NYSE QSR
   - Quick Service Restaurants
+  - Restaurant
+tags_raw:
+  - Fortune 500
+  - Franchising
+  - Hospitality
+  - NYSE QSR
+  - Quick Service Restaurants
   - Restaurants
 created: '2026-05-23'
 modified: '2026-06-03'
@@ -99,6 +106,8 @@ apis:
   humanURL: https://bk-partners.rbictg.com/docs/channel/
   baseURL: https://bk-partners.rbictg.com/api/v1
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
