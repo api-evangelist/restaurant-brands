@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   version: 1.0.0
   title: Burger King's Partners Loyalty API
@@ -207,6 +207,13 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Phone:
+      title: Phone
+      description: 'Phone number. Should always begin with the international country code (e.g., "+1")
+
+        '
+      type: string
+      example: '+12223334444'
     MenuSelection:
       title: Menu Selection
       description: Menu selection in the cart
@@ -242,6 +249,45 @@ components:
       required:
       - id
       - quantity
+    IdentifyRequestDetails:
+      title: Identify Request Details
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/Operator'
+        terminal:
+          $ref: '#/components/schemas/Terminal'
+        transactionId:
+          $ref: '#/components/schemas/TransactionId'
+    Identifier:
+      title: Identifier
+      description: An OTP code (6 digit code) or a static Offer code (4 digit code)
+      example: '1234'
+      pattern: ^(\d{6}|\d{4})$
+      type: string
+    Balance:
+      title: Balance
+      description: The amount of a given currency the user has
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 599
+        currency:
+          type: string
+          example: USD
+    Cart:
+      title: Cart
+      description: Cart representing a customer's selections from the menu
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - menuSelections
     IdentifierType:
       title: Identifier Type
       description: Determines the type of identifier being sent
@@ -250,30 +296,11 @@ components:
       enum:
       - OTP
       - OFFER_CODE
-    Money:
-      title: Money
-      description: 'Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 "cents" or 1 USD).
-
-        '
-      type: object
-      properties:
-        currency:
-          $ref: '#/components/schemas/Currency'
-        amount:
-          title: Amount
-          description: Amount in the specified currency
-          type: number
-          example: 100
-          format: integer
-      required:
-      - currency
-      - amount
-    Currency:
-      title: Currency Code
-      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
-      format: ISO-4217 alpha
+    TransactionId:
+      title: Transaction Id
+      description: The Partner specific order lookup id.
+      example: ORD-000002
       type: string
-      example: USD
     IdentifyResponse:
       title: Identify Response
       type: object
@@ -348,26 +375,33 @@ components:
       - code
       - message
       - errors
-    Terminal:
-      title: Terminal
-      description: The terminal name.
-      example: window-2
+    ServiceMode:
+      title: Service Mode
+      description: 'How a customer would like their order served.
+
+
+        Note that not all service modes will be available at all restaurants.
+
+        '
       type: string
-    IdentifyRequestDetails:
-      title: Identify Request Details
-      type: object
-      properties:
-        operator:
-          $ref: '#/components/schemas/Operator'
-        terminal:
-          $ref: '#/components/schemas/Terminal'
-        transactionId:
-          $ref: '#/components/schemas/TransactionId'
+      example: TAKEOUT
+      enum:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
     StoreId:
       title: StoreId
       description: Unique Store ID
       example: '42'
       pattern: ^\d+$
+      type: string
+    Terminal:
+      title: Terminal
+      description: The terminal name.
+      example: window-2
       type: string
     IdentifyRequest:
       title: Identify Request
@@ -388,73 +422,6 @@ components:
       - identifierType
       - storeId
       - serviceMode
-    ExternalReferenceId:
-      title: External Reference Id
-      description: External reference ID. An example might be the external menu selection ID, customer ID or order ID.
-      type: string
-    IdentifyLoyalty:
-      title: Loyalty Information
-      description: User information on the Loyalty user identified
-      type: object
-      properties:
-        balances:
-          description: 'The loyalty user''s balances
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/Balance'
-        loyaltyId:
-          $ref: '#/components/schemas/LoyaltyId'
-        transactionId:
-          $ref: '#/components/schemas/LoyaltyTransactionId'
-      required:
-      - balances
-      - loyaltyId
-      - transactionId
-    TransactionId:
-      title: Transaction Id
-      description: The Partner specific order lookup id.
-      example: ORD-000002
-      type: string
-    LoyaltyTransactionId:
-      title: Loyalty Transaction Id
-      description: The loyalty transaction id created for the identify request
-      example: a73ea594-202c-52b4-80af-1f6b518ef54d
-      type: string
-    LoyaltyId:
-      title: Loyalty Id
-      description: The loyalty user id
-      example: a73ea594-202c-52b4-00a0-1f6b518ef54d
-      type: string
-    ServiceMode:
-      title: Service Mode
-      description: 'How a customer would like their order served.
-
-
-        Note that not all service modes will be available at all restaurants.
-
-        '
-      type: string
-      example: TAKEOUT
-      enum:
-      - CURBSIDE
-      - DELIVERY
-      - DRIVE_THRU
-      - EAT_IN
-      - TABLE_SERVICE
-      - TAKEOUT
-    Operator:
-      title: Operator
-      description: The cashier id submitting the transaction.
-      example: ninja123
-      type: string
-    Identifier:
-      title: Identifier
-      description: An OTP code (6 digit code) or a static Offer code (4 digit code)
-      example: '1234'
-      pattern: ^(\d{6}|\d{4})$
-      type: string
     Customer:
       title: Customer
       description: Customer personal details
@@ -486,36 +453,69 @@ components:
       required:
       - name
       - email
-    Cart:
-      title: Cart
-      description: Cart representing a customer's selections from the menu
+    Operator:
+      title: Operator
+      description: The cashier id submitting the transaction.
+      example: ninja123
+      type: string
+    Currency:
+      title: Currency Code
+      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
+      format: ISO-4217 alpha
+      type: string
+      example: USD
+    LoyaltyTransactionId:
+      title: Loyalty Transaction Id
+      description: The loyalty transaction id created for the identify request
+      example: a73ea594-202c-52b4-80af-1f6b518ef54d
+      type: string
+    IdentifyLoyalty:
+      title: Loyalty Information
+      description: User information on the Loyalty user identified
       type: object
       properties:
-        menuSelections:
+        balances:
+          description: 'The loyalty user''s balances
+
+            '
           type: array
-          minItems: 1
           items:
-            $ref: '#/components/schemas/MenuSelection'
+            $ref: '#/components/schemas/Balance'
+        loyaltyId:
+          $ref: '#/components/schemas/LoyaltyId'
+        transactionId:
+          $ref: '#/components/schemas/LoyaltyTransactionId'
       required:
-      - menuSelections
-    Phone:
-      title: Phone
-      description: 'Phone number. Should always begin with the international country code (e.g., "+1")
+      - balances
+      - loyaltyId
+      - transactionId
+    Money:
+      title: Money
+      description: 'Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 "cents" or 1 USD).
 
         '
-      type: string
-      example: '+12223334444'
-    Balance:
-      title: Balance
-      description: The amount of a given currency the user has
       type: object
       properties:
-        amount:
-          type: number
-          example: 599
         currency:
-          type: string
-          example: USD
+          $ref: '#/components/schemas/Currency'
+        amount:
+          title: Amount
+          description: Amount in the specified currency
+          type: number
+          example: 100
+          format: integer
+      required:
+      - currency
+      - amount
+    ExternalReferenceId:
+      title: External Reference Id
+      description: External reference ID. An example might be the external menu selection ID, customer ID or order ID.
+      type: string
+    LoyaltyId:
+      title: Loyalty Id
+      description: The loyalty user id
+      example: a73ea594-202c-52b4-00a0-1f6b518ef54d
+      type: string
   securitySchemes:
     bearer:
       scheme: bearer

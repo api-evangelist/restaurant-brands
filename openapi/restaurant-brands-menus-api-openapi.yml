@@ -1,50 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Burger King's Partners Loyalty Menus API
-  description: '## Overview
-
-
-    The Channel Partners API are provided for third party food ordering marketplaces
-
-    integrating into the Restaurant Brand International (RBI) fulfillment platform.
-
-
-    ## Authentication
-
-    ### Webhooks
-
-
-    Webhook requests are signed using `hex` encoded HMAC signatures.
-
-
-    An HMAC signature is derived for validation using three components:
-
-
-    - the secret shared between the service and the consumer
-
-    - the body of the request
-
-    - the hash function or algorithm (SHA-256)
-
-
-    Using these three pieces of information, compute an HMAC signature using the secret as the key and
-
-    the body of the request as the message and encode the signature to a hexadecimal string for comparison.
-
-
-    Compare the signature generated using the above information to the signature received in the `x-signature` header,
-
-    if the two signatures match, the request is valid.
-
-    '
+  title: Restaurant Brands Menus API
   x-logo:
     altText: RBI logo
     url: data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzkiIGhlaWdodD0iODEiIHZpZXdCb3g9IjAgMCA3OSA4MSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzcwOV8yMzczNykiPgo8cGF0aCBkPSJNNzMuMzgzMiA3NS4xMzQ4QzczLjM4MzIgNzMuNjA2MyA3NC41NjgzIDcyLjMyNjQgNzYuMTkxNiA3Mi4zMjY0Qzc3LjgxNDkgNzIuMzI2NCA3OSA3My42MDYzIDc5IDc1LjEzNDhDNzkgNzYuNzc4MSA3Ny44MTYyIDc3Ljk2MTkgNzYuMTkxNiA3Ny45NjE5Qzc0LjU2NjkgNzcuOTYxOSA3My4zODMyIDc2Ljc1ODEgNzMuMzgzMiA3NS4xMzQ4Wk03OC4zODgxIDc1LjEzNDhDNzguMzg4MSA3My43MjEyIDc3LjI4MDUgNzIuODk5NiA3Ni4xOTE2IDcyLjg5OTZDNzUuMTAyNyA3Mi44OTk2IDczLjk5NTEgNzMuNzIxMiA3My45OTUxIDc1LjEzNDhDNzMuOTk1MSA3Ni41NDgzIDc1LjEwMjcgNzcuMzg4NyA3Ni4xOTE2IDc3LjM4ODdDNzcuMjgwNSA3Ny4zODg3IDc4LjM4ODEgNzYuNjA1OCA3OC4zODgxIDc1LjEzNDhaTTc1LjIxNjMgNzYuMzM4NlY3My45NTFDNzUuMjE2MyA3My43OTg3IDc1LjM0OTkgNzMuNjQ1MSA3NS41MDM1IDczLjY0NTFINzYuMzA1MUM3Ni45MzU4IDczLjY0NTEgNzcuMzc1MyA3NC4wMjcyIDc3LjM3NTMgNzQuNTQyOUM3Ny4zNzUzIDc0Ljk4MjUgNzcuMTI2OCA3NS4zNjQ2IDc2LjU1MzcgNzUuNDU5NEw3Ny4xODQzIDc2LjE2NjJDNzcuMjQxNyA3Ni4yMjM3IDc3LjI4MDUgNzYuMjk5OCA3Ny4yODA1IDc2LjM1NzNDNzcuMjgwNSA3Ni41Mjk2IDc3LjE2NTYgNzYuNjQ0NSA3Ni45OTQ2IDc2LjY0NDVDNzYuODc5NyA3Ni42NDQ1IDc2LjgwMzUgNzYuNTg3MSA3Ni43NDYgNzYuNTEwOUw3NS45MDU3IDc1LjUxNjlINzUuODA5NVY3Ni4zMzg2Qzc1LjgwOTUgNzYuNDkwOSA3NS42NzU5IDc2LjYyNDUgNzUuNTAzNSA3Ni42MjQ1Qzc1LjM1MTIgNzYuNjI0NSA3NS4yMTYzIDc2LjQ5MDkgNzUuMjE2MyA3Ni4zMzg2Wk03Ni4yMjkgNzQuOTgyNUM3Ni41NzI0IDc0Ljk4MjUgNzYuNzYzNCA3NC44MTAxIDc2Ljc2MzQgNzQuNTgxN0M3Ni43NjM0IDc0LjMzMzEgNzYuNTkxMSA3NC4xOTk1IDc2LjI4NjQgNzQuMTk5NUg3NS44MDk1Vjc0Ljk4MjVINzYuMjMwM0g3Ni4yMjlaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDY3LjExNDRDNzIuMDU3OCA2Ny4xMTQ0IDcyLjY2NDQgNjcuNzY3NyA3Mi42NjQ0IDY4LjkxMDFDNzIuNjY0NCA3MC45MTU1IDcwLjgyMiA3My43MTQ2IDY3LjE4MzkgNzUuNzY2OEM2MS4xMjA4IDc5LjE5NTEgNTAuNzE5NiA4MC4xNzQ0IDM2LjMzMTUgODAuMTc0NEMyMS45NDM1IDgwLjE3NDQgMTEuNTQyMiA3OS4xOTUxIDUuNDc5MTggNzUuNzY2OEMxLjg0MTA5IDczLjcxNDYgLTAuMDAxMzQyNzcgNzAuOTE2OCAtMC4wMDEzNDI3NyA2OC45MTAxQy0wLjAwMTM0Mjc3IDY3Ljc2NzcgMC42MDUyMjkgNjcuMTE0NCAxLjk1NzMyIDY3LjExNDRINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPHBhdGggZD0iTTcuNjQ4OTUgNjAuNjMxOFY1Ni45MjQzQzcuNjQ4OTUgNTYuNTk4MyA3Ljc4OTIzIDU2LjM2NDQgOC4xMTUyMyA1Ni4zNjQ0QzguNTM0NzUgNTYuMzY0NCA4LjY1MDk5IDU2LjgwOCA4Ljc2ODU3IDU3LjAxNzhDOS40OTEzNyA1OC40NjM0IDEwLjcwNDUgNjEuNDI1NCAxMi4xNTAxIDYzLjAxMTRDMTMuMTI5NSA2NC4wODQyIDE0LjM0MjYgNjQuNzYwMyAxNS42MjUyIDY0Ljc2MDNDMTcuNzkzNyA2NC43NjAzIDE5LjYxMzQgNjIuODcxMSAxOS42MTM0IDYwLjg0MjlDMTkuNjEzNCA1OS41ODMgMTkuMDc3NiA1OC42NTA0IDE4LjA1MTUgNTcuNTMyMkMxNi43NDYyIDU2LjEwOTMgMTUuMjA3IDU0LjI0NDEgMTQuNjQ3MiA1My4zODFDMTQuNDM3NSA1My4wNTUgMTQuNDEzNCA1Mi44NDUzIDE0LjQxMzQgNTIuNzUxN0MxNC40MTM0IDUyLjQ5NTIgMTQuNTUzNyA1Mi4zMDgyIDE0LjgzMyA1Mi4wNTE2QzE1LjQ4NjMgNTEuNDQ1MSAxNy4wOTQ5IDQ5LjkzIDE3Ljk4MDcgNDguNTUzOEMxOC42NTY4IDQ3LjUwNSAxOC45MzczIDQ2LjU0ODQgMTguOTM3MyA0NS43NTQ4QzE4LjkzNzMgNDMuNzI1MyAxNy4wOTQ5IDQyLjE0MDcgMTUuMDg5NSA0Mi4xNDA3QzEzLjgwNjkgNDIuMTQwNyAxMi41OTM3IDQyLjg2MzUgMTEuNzc4NyA0NC4xOTI5QzEwLjY4MzEgNDUuOTY1OSA5LjU2MzUyIDQ4LjQ2MDMgOC42MzA5NSA0OS4zOTI5QzguMzk3MTQgNDkuNjI2NyA4LjI4MDkgNDkuNjcyMSA4LjA5NTE5IDQ5LjY3MjFDNy43OTE5IDQ5LjY3MjEgNy42NTE2MiA0OS40NjIzIDcuNjUxNjIgNDkuMTM2M1Y0Ni4yNjc4QzcuNjUxNjIgNDMuOTgxOCA2LjI5OTUyIDQyLjE0MDcgMy44NTA1MiA0Mi4xNDA3QzEuNDAxNTIgNDIuMTQwNyAwLjA0Njc1MjkgNDMuOTgxOCAwLjA0Njc1MjkgNDYuMjY2NVY2MC42MzE4QzAuMDQ2NzUyOSA2Mi45MTc4IDEuMzc2MTMgNjQuNzU4OSAzLjg0Nzg1IDY0Ljc1ODlDNi4zMTk1NiA2NC43NTg5IDcuNjQ4OTUgNjIuOTE2NSA3LjY0ODk1IDYwLjYzMThaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC40OTYgNDMuOTU3OEM2OS4wNzMxIDQyLjkwOSA2Ni45Mjg3IDQyLjEzOTQgNjMuODk1OCA0Mi4xMzk0QzU4LjQ2MjEgNDIuMTM5NCA1My4xNjg2IDQ1LjU2NzcgNTMuMTY4NiA1My41NDI3QzUzLjE2ODYgNjEuNTE3NiA1OC40NjIxIDY0LjczNjIgNjMuNjg2MSA2NC43MzYyQzY5LjE2NjYgNjQuNzM2MiA3Mi42NDAzIDYxLjM1NDYgNzIuNjQwMyA1Ni40MTEyQzcyLjY0MDMgNTMuMjg2MiA3MC42ODE3IDUxLjExNzcgNjYuNzQwMyA1MS4xMTc3SDY1LjU5OEM2My41NDU4IDUxLjExNzcgNjEuOTU5OSA1Mi4wNzQzIDYxLjk1OTkgNTQuMTczM0M2MS45NTk5IDU2LjA4NTIgNjMuNjg2MSA1Ni45OTUxIDY0Ljk2ODcgNTYuOTk1MUM2Ni4wNjQyIDU2Ljk5NTEgNjYuNTA3OCA1Ny4xODIxIDY2LjUwNzggNTcuNjcxMUM2Ni41MDc4IDU4LjI3NzcgNjUuOTI1MyA1OC42NzQ1IDY0LjUwMjQgNTguNjc0NUM2MS44Njc3IDU4LjY3NDUgNjAuMDcyIDU2Ljg3ODggNjAuMDcyIDUzLjU0NEM2MC4wNzIgNDkuODM2NCA2Mi41MjEgNDguNDgzIDY0LjQwODkgNDguNDgzQzY2LjcxNzYgNDguNDgzIDY3LjA5MDMgNDkuNjQ5NCA2OC43MDAzIDQ5LjY0OTRDNzAuNTY1NCA0OS42NDk0IDcxLjgyNTMgNDguMTMzIDcxLjgyNTMgNDYuNTkzOEM3MS44MjUzIDQ1LjQ1MTUgNzEuMzEyMyA0NC41NjQzIDcwLjQ5NiA0My45NTkxVjQzLjk1NzhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik01MS4zNTAyIDQ2LjA4MDhWNjAuNjA5MUM1MS4zNTAyIDYyLjkxNzggNDkuOTk4MSA2NC43NjAzIDQ3LjU0OTEgNjQuNzYwM0M0Ni4xMjYyIDY0Ljc2MDMgNDQuNzk2OCA2NC4yMDA0IDQzLjU2MSA2MS43OTgyTDQwLjMxOTcgNTUuNTI1NEM0MC4wODU5IDU1LjA4MTggMzkuOTIyOSA1NC45NjU2IDM5LjY5MDQgNTQuOTY1NkMzOS4zNjQ0IDU0Ljk2NTYgMzkuMjAwMSA1NS4xOTk0IDM5LjIwMDEgNTUuNzM1MkwzOS4yMjI4IDYwLjgxODlDMzkuMjIyOCA2My4wMTEzIDM3Ljk2MjkgNjQuNzYwMyAzNS42MDg3IDY0Ljc2MDNDMzMuMjU0NiA2NC43NjAzIDMyLjAxNzQgNjMuMDExMyAzMi4wMTc0IDYwLjgxODlWNDYuMjkwNUMzMi4wMTc0IDQzLjk4MTggMzMuMzY5NSA0Mi4xMzk0IDM1LjgxODUgNDIuMTM5NEMzNy4yODgyIDQyLjEzOTQgMzguNTcwOCA0Mi42OTkyIDM5LjgwNjYgNDUuMTAxNEw0My4wNDc5IDUxLjM3NDJDNDMuMjgxNyA1MS44MTc4IDQzLjQ0NDcgNTEuOTM0MSA0My42NzcyIDUxLjkzNDFDNDQuMDAzMiA1MS45MzQxIDQ0LjE2NzUgNTEuNzAwMyA0NC4xNjc1IDUxLjE2NDVMNDQuMTQ0OCA0Ni4wODA4QzQ0LjE0NDggNDMuODg4MyA0NS40MDQ3IDQyLjEzOTQgNDcuNzU4OSA0Mi4xMzk0QzUwLjExMyA0Mi4xMzk0IDUxLjM1MDIgNDMuODg4MyA1MS4zNTAyIDQ2LjA4MDhaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik0yOS4zMTMyIDQ2LjU0NzFDMjkuMzEzMiA0NC4wOTgxIDI3Ljg5MDMgNDIuMTM5NCAyNS4yNzgzIDQyLjEzOTRDMjIuNjY2MyA0Mi4xMzk0IDIxLjI0MzQgNDQuMDk4MSAyMS4yNDM0IDQ2LjU0NzFWNjAuMzUyNkMyMS4yNDM0IDYyLjgwMTYgMjIuNjY2MyA2NC43NjAzIDI1LjI3ODMgNjQuNzYwM0MyNy44OTAzIDY0Ljc2MDMgMjkuMzEzMiA2Mi44MDE2IDI5LjMxMzIgNjAuMzUyNlY0Ni41NDcxWiIgZmlsbD0iI0Q2MjMwMCIvPgo8cGF0aCBkPSJNMzUuNzQ5IDM2LjcyODNDMzUuMzUyMiAzNi4yMzggMzQuMzcyOSAzNC45Nzk0IDM0LjE4NzIgMzQuMzI2MUMzNC4xMTc3IDM0LjA5MjMgMzQuMTQwNCAzMy45MjkzIDM0LjM1MDIgMzMuNzQzNkMzNS4wNzMgMzMuMDY3NSAzNS45MTIgMzIuMDE3NCAzNS45MTIgMzAuMTUyMkMzNS45MTIgMjYuOTU3NyAzMy40NjMgMjUuMzQ3OCAzMC41MDIzIDI1LjM0NzhIMjcuODY3NkMyNi4wMjUyIDI1LjM0NzggMjUuMTM5MyAyNi40MjA2IDI1LjEzOTMgMjcuODY2MlYzOC4yNjc1QzI1LjEzOTMgMzkuNjY2MyAyNS45NTU3IDQwLjc4NiAyNy40NDgxIDQwLjc4NkMyOC45NDA0IDQwLjc4NiAyOS43NTY4IDM5LjY2NjMgMjkuNzU2OCAzOC4yNjc1VjM1Ljk1ODhDMjkuNzU2OCAzNS42MDg3IDI5Ljg5NzEgMzUuMzUyMiAzMC4yNjk4IDM1LjM1MjJDMzAuNTk1OCAzNS4zNTIyIDMwLjczNjEgMzUuNjMxNCAzMC44MDU2IDM1Ljk1ODhDMzEuMDE1MyAzNi45ODQ5IDMxLjMxODYgMzguNTkzNSAzMS45NDc5IDM5LjQwOThDMzIuNzQwMiA0MC40NTg2IDMzLjQ4NzEgNDAuNzg2IDM0LjIzMzkgNDAuNzg2QzM1LjQ0NzEgNDAuNzg2IDM2LjQ5NTkgMzkuODI5MyAzNi40OTU5IDM4LjY0MDJDMzYuNDk1OSAzNy44NDggMzYuMTY5OSAzNy4yNjQxIDM1Ljc0OSAzNi43MjgzWk00LjY4NjkxIDM0LjIzMjZINS4zNDAyNEM2LjM4OTA1IDM0LjIzMjYgNi42OTIzMyAzNS4wMDIyIDYuNjkyMzMgMzUuNzAyMkM2LjY5MjMzIDM2LjQwMjMgNi4zODkwNSAzNy4xNzE5IDUuMzQwMjQgMzcuMTcxOUg0LjY4NjkxQzQuMjkwMSAzNy4xNzE5IDQuMTA0MzggMzYuOTM4MSA0LjEwNDM4IDM2LjYzNjJWMzQuNzcxQzQuMTA0MzggMzQuNDY3NyA0LjI5MTQzIDM0LjIzNTMgNC42ODY5MSAzNC4yMzUzVjM0LjIzMjZaTTQuNjg2OTEgMzEuNDgwM0M0LjI5MDEgMzEuNDgwMyA0LjEwNDM4IDMxLjI0NjUgNC4xMDQzOCAzMC45NDQ1VjI5LjM1ODZDNC4xMDQzOCAyOS4wNTUzIDQuMjkxNDMgMjguODIyOSA0LjY4NjkxIDI4LjgyMjlINS4yMjI2N0M2LjE1NTI0IDI4LjgyMjkgNi40MzU4MSAyOS40OTg5IDYuNDM1ODEgMzAuMTUyMkM2LjQzNTgxIDMwLjgwNTYgNi4xNTY1NyAzMS40ODE2IDUuMjIyNjcgMzEuNDgxNkg0LjY4NjkxVjMxLjQ4MDNaTTIuNzI4MjQgNDAuNjY4NEg2LjAxNjI5QzkuMTE3MjkgNDAuNjY4NCAxMS4wMDY1IDM4LjU5MzUgMTEuMDA2NSAzNi4wMDQyQzExLjAwNjUgMzMuOTk4OCA5Ljc3MDYyIDMzLjA4ODkgOS40OTAwNSAzMi44NTY0QzkuMzczODEgMzIuNzYyOSA5LjI1NjI0IDMyLjY2OTQgOS4yNTYyNCAzMi41NzcyQzkuMjU2MjQgMzIuNDYxIDkuMzAzIDMyLjQxNDIgOS40NDMyOSAzMi4yNzM5QzkuOTU2MzMgMzEuNzYwOSAxMC40NDY3IDMwLjg3NTEgMTAuNDQ2NyAyOS42MzkyQzEwLjQ0NjcgMjYuODQwMSA4LjQ0MTI0IDI1LjM0NzggNS41MDMyNCAyNS4zNDc4SDIuNzI4MjRDMC44ODU4MDkgMjUuMzQ3OCAwIDI2LjQyMDYgMCAyNy44NjYyVjM4LjE0OTlDMCAzOS41OTU1IDAuODg1ODA5IDQwLjY2ODQgMi43MjgyNCA0MC42Njg0Wk0zMC40MDg4IDMyLjI0OTlIMjkuODQ5QzI5LjQ1MjIgMzIuMjQ5OSAyOS4yNjY0IDMyLjAxNjEgMjkuMjY2NCAzMS43MTQxVjI5LjcwODdDMjkuMjY2NCAyOS40MDU0IDI5LjQ1MzUgMjkuMjE4MyAyOS44NDkgMjkuMjE4M0gzMC40MDg4QzMxLjU1MTEgMjkuMjE4MyAzMS45MDEyIDI5Ljk4NzkgMzEuOTAxMiAzMC43MTA3QzMxLjkwMTIgMzEuMzg2OCAzMS41NTExIDMyLjI0OTkgMzAuNDA4OCAzMi4yNDk5Wk01NS4yNDQ4IDM2LjEyMDRDNTUuMjQ0OCAzNi40MjM3IDU1LjQzMTkgMzYuNjU2MiA1NS44Mjc0IDM2LjY1NjJINTguMDg5M0M1OS4zMDI0IDM2LjY1NjIgNjAuMjU3NyAzNy4zNzkgNjAuMjU3NyAzOC42NjE2QzYwLjI1NzcgMzkuOTQ0MiA1OS4zMDExIDQwLjY2NzEgNTguMDg5MyA0MC42NjcxSDUzLjYzNDlDNTEuNzkyNCA0MC42NjcxIDUwLjkwNjYgMzkuNTk0MiA1MC45MDY2IDM4LjE0ODZWMjcuODY0OUM1MC45MDY2IDI2LjQxOTMgNTEuNzkyNCAyNS4zNDY0IDUzLjYzNDkgMjUuMzQ2NEg1OC4wODkzQzU5LjMwMjQgMjUuMzQ2NCA2MC4yNTc3IDI2LjA2OTIgNjAuMjU3NyAyNy4zNTE5QzYwLjI1NzcgMjguNjM0NSA1OS4zMDExIDI5LjM1NzMgNTguMDg5MyAyOS4zNTczSDU1LjgyNzRDNTUuNDMwNSAyOS4zNTczIDU1LjI0NDggMjkuNTkxMSA1NS4yNDQ4IDI5Ljg5MzFWMzAuNTY5MUM1NS4yNDQ4IDMwLjg3MjQgNTUuNDMxOSAzMS4xMDQ5IDU1LjgyNzQgMzEuMTA0OUg1Ny40MzZDNTguNTU1NiAzMS4xMDQ5IDU5LjQ0MTQgMzEuNzgwOSA1OS40NDE0IDMyLjk3QzU5LjQ0MTQgMzQuMTU5MSA1OC41NTU2IDM0LjgzNTEgNTcuNDM2IDM0LjgzNTFINTUuODI3NEM1NS40MzA1IDM0LjgzNTEgNTUuMjQ0OCAzNS4wNjkgNTUuMjQ0OCAzNS4zNzA5VjM2LjExNzhWMzYuMTIwNFpNNjYuNTc4NiAzMi4yNDk5SDY2LjAxODhDNjUuNjIyIDMyLjI0OTkgNjUuNDM2MyAzMi4wMTYxIDY1LjQzNjMgMzEuNzE0MVYyOS43MDg3QzY1LjQzNjMgMjkuNDA1NCA2NS42MjM0IDI5LjIxODMgNjYuMDE4OCAyOS4yMTgzSDY2LjU3ODZDNjcuNzIxIDI5LjIxODMgNjguMDcxIDI5Ljk4NzkgNjguMDcxIDMwLjcxMDdDNjguMDcxIDMxLjM4NjggNjcuNzIxIDMyLjI0OTkgNjYuNTc4NiAzMi4yNDk5Wk00OC4yNzE5IDI2LjM0OThDNDcuNzEyMSAyNS45MDYyIDQ2LjE3MyAyNS4yMDc1IDQzLjg2NDMgMjUuMjA3NUM0MC4yNTAyIDI1LjIwNzUgMzYuNzI4MyAyNy41ODU3IDM2LjcyODMgMzMuMDkwMkMzNi43MjgzIDM4LjU5NDggNDAuMjUwMiA0MC44MDg3IDQzLjcyNCA0MC44MDg3QzQ3LjM4NDggNDAuODA4NyA0OS42OTM1IDM4LjQ3NzIgNDkuNjkzNSAzNC45NzgxQzQ5LjY5MzUgMzIuODA5NyA0OC4zODgyIDMxLjMxNzMgNDUuNzc2MiAzMS4zMTczSDQ1LjAyOTNDNDMuNjUzMiAzMS4zMTczIDQyLjU4MDMgMzEuOTcwNiA0Mi41ODAzIDMzLjQzOUM0Mi41ODAzIDM0Ljc0NDMgNDMuNzIyNiAzNS4zNzQ5IDQ0LjY3OTIgMzUuMzc0OUM0NS4yODU4IDM1LjM3NDkgNDUuNjM1OSAzNS42NTQyIDQ1LjYzNTkgMzYuMDc1QzQ1LjYzNTkgMzYuNjM0OCA0NS4xNDU1IDM3LjAwNzYgNDQuMjU5NyAzNy4wMDc2QzQyLjQ0MTMgMzcuMDA3NiA0MS4zMjE3IDM1LjYwODcgNDEuMzIxNyAzMy4wOTAyQzQxLjMyMTcgMzAuNTcxOCA0Mi45NTQ0IDI5LjU5MjQgNDQuMjEzIDI5LjU5MjRDNDUuNzUyMSAyOS41OTI0IDQ2LjAwODYgMzAuMTc1IDQ3LjA4MTUgMzAuMTc1QzQ4LjMxNzMgMzAuMTc1IDQ5LjE1NjQgMjkuMTQ4OSA0OS4xNTY0IDI4LjA3NkM0OS4xNTY0IDI3LjI4MzcgNDguODA2MyAyNi43NzA3IDQ4LjI3MDYgMjYuMzQ5OEg0OC4yNzE5Wk02MS4zMDc5IDM4LjI2NjJDNjEuMzA3OSAzOS42NjUgNjIuMTI0MiA0MC43ODQ2IDYzLjYxNjYgNDAuNzg0NkM2NS4xMDkgNDAuNzg0NiA2NS45MjUzIDM5LjY2NSA2NS45MjUzIDM4LjI2NjJWMzUuOTU3NEM2NS45MjUzIDM1LjYwNzQgNjYuMDY1NiAzNS4zNTA5IDY2LjQzODQgMzUuMzUwOUM2Ni43NjQ0IDM1LjM1MDkgNjYuOTA0NiAzNS42MzAxIDY2Ljk3NDEgMzUuOTU3NEM2Ny4xNjEyIDM2Ljk4MzUgNjcuNDg3MiAzOC41OTIxIDY4LjExNjQgMzkuNDA4NUM2OC45MDg3IDQwLjQ1NzMgNjkuNjU1NiA0MC43ODQ2IDcwLjQwMjUgNDAuNzg0NkM3MS42MTU2IDQwLjc4NDYgNzIuNjY0NCAzOS44MjggNzIuNjY0NCAzOC42Mzg5QzcyLjY2NDQgMzcuODQ2NiA3Mi4zMzg0IDM3LjI2MjggNzEuOTE3NSAzNi43MjdDNzEuNTIwNyAzNi4yMzY3IDcwLjU0MTQgMzQuOTc4MSA3MC4zNTU3IDM0LjMyNDhDNzAuMjg2MiAzNC4wOTEgNzAuMzA4OSAzMy45MjggNzAuNTE4NyAzMy43NDIyQzcxLjI0MTUgMzMuMDY2MiA3Mi4wODA1IDMyLjAxNjEgNzIuMDgwNSAzMC4xNTA5QzcyLjA4MDUgMjYuOTU2NCA2OS42MzE1IDI1LjM0NjQgNjYuNjcwOCAyNS4zNDY0SDY0LjAzNjFDNjIuMTkzNyAyNS4zNDY0IDYxLjMwNzkgMjYuNDE5MyA2MS4zMDc5IDI3Ljg2NDlWMzguMjY2MlpNMTcuODYzMSA0MC43ODQ2QzE0LjA4NDggNDAuNzg0NiAxMi4xMDM0IDM4LjUyMjcgMTIuMTAzNCAzNS42NzgyVjI3LjgxOTVDMTIuMTAzNCAyNi40MjA2IDEyLjkxOTcgMjUuMzAxIDE0LjQxMjEgMjUuMzAxQzE1LjkwNDUgMjUuMzAxIDE2Ljc0MzUgMjYuNDIwNiAxNi43NDM1IDI3LjgxOTVWMzUuNDIxN0MxNi43NDM1IDM1Ljk4MTUgMTcuMDIyOCAzNi42MzQ4IDE3Ljg2MzEgMzYuNjM0OEMxOC43MDM1IDM2LjYzNDggMTkuMDI5NSAzNS45ODE1IDE5LjAyOTUgMzUuNDIxN1YyNy44MTk1QzE5LjAyOTUgMjYuNDIwNiAxOS44NDU5IDI1LjMwMSAyMS4zMzgyIDI1LjMwMUMyMi44MzA2IDI1LjMwMSAyMy42NDcgMjYuNDIwNiAyMy42NDcgMjcuODE5NVYzNS42NzgyQzIzLjY0NyAzOC41MjI3IDIxLjY0MTUgNDAuNzg0NiAxNy44NjMxIDQwLjc4NDZaIiBmaWxsPSIjRDYyMzAwIi8+CjxwYXRoIGQ9Ik03MC43MDU3IDIyLjU5NjhIMS45NTg2N0MwLjYwNjU3MiAyMi41OTY4IDAgMjEuODk2NyAwIDIwLjYzODFDMCAxMy4xNzYyIDExLjIxNjIgMCAzNi4zMzI5IDBDNjEuNDQ5NSAwIDcyLjY2NTcgMTMuMTc2MiA3Mi42NjU3IDIwLjYzODFDNzIuNjY1NyAyMS44OTgxIDcyLjA1OTEgMjIuNTk2OCA3MC43MDcxIDIyLjU5NjhINzAuNzA1N1oiIGZpbGw9IiNGRjg3MzIiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF83MDlfMjM3MzciPgo8cmVjdCB3aWR0aD0iNzkiIGhlaWdodD0iODAuMTc0NCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K
+  version: '1.0'
+  description: 'Operations tagged Menus across 2 of this provider''s published API definitions: channel-openapi.yml, menu-v2-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://sandbox-bk-partners.rbictg.com/api/v1
   description: Sandbox server (uses test data)
 - url: https://bk-partners.rbictg.com/api/v1
+  description: Production server
+- url: https://sandbox-bk-partners.rbictg.com/api/v2
+  description: Sandbox server (uses test data)
+- url: https://bk-partners.rbictg.com/api/v2
   description: Production server
 tags:
 - name: Menus
@@ -154,6 +123,11 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+    servers:
+    - url: https://sandbox-bk-partners.rbictg.com/api/v1
+      description: Sandbox server (uses test data)
+    - url: https://bk-partners.rbictg.com/api/v1
+      description: Production server
   /stores/{storeId}/menus:
     get:
       tags:
@@ -262,6 +236,11 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+    servers:
+    - url: https://sandbox-bk-partners.rbictg.com/api/v2
+      description: Sandbox server (uses test data)
+    - url: https://bk-partners.rbictg.com/api/v2
+      description: Production server
   /stores/menus:
     get:
       tags:
@@ -396,188 +375,197 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+    servers:
+    - url: https://sandbox-bk-partners.rbictg.com/api/v2
+      description: Sandbox server (uses test data)
+    - url: https://bk-partners.rbictg.com/api/v2
+      description: Production server
+webhooks:
+  menuUpdate:
+    post:
+      summary: Menu Updated Event
+      description: 'Menu updated events are dispatched when a store''s menu changes.
+
+
+        Menus can change for a variety of reasons. Some stores may update the
+
+        availability of an item to make it unavailable for orders ("stock out").
+
+        Operators also make frequent changes to menu prices throughout the day,
+
+        and at the brand-level menu entries are being added and removed
+
+        continuously.
+
+
+        When these `"MENU_UPDATED"` events are delivered, a request *must* be
+
+        made to the provided `callbackUrl` to fetch the latest store menu details.
+
+        '
+      tags:
+      - Menus
+      parameters:
+      - in: header
+        name: x-signature
+        description: A hex encoded HMAC signature
+        schema:
+          type: string
+      operationId: storeMenuUpdateEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand:
+                  $ref: '#/components/schemas/Brand'
+                callbackUrl:
+                  description: 'URL from which the updated menu contents may be retrieved
+
+                    '
+                  type: string
+                  format: url
+                  example: https://rbictg.com/api/v1/menus/41?servicemode=DELIVERY&version=1
+                eventTime:
+                  description: 'When the menu update occurred
+
+                    '
+                  $ref: '#/components/schemas/DateTime'
+                eventType:
+                  description: Webhook event type
+                  type: string
+                  enum:
+                  - MENU_UPDATED
+                region:
+                  $ref: '#/components/schemas/Region'
+                serviceMode:
+                  description: Menu service mode
+                  $ref: '#/components/schemas/ServiceMode'
+                storeId:
+                  $ref: '#/components/schemas/StoreId'
+                version:
+                  description: 'Unique ID for the menu iteration that triggered the update.
+
+
+                    Each store menu update for a store and service mode will include
+
+                    a unique version ID.
+
+                    '
+                  type: string
+              required:
+              - brand
+              - callbackUrl
+              - eventTime
+              - eventType
+              - serviceMode
+              - storeId
+              - version
+      responses:
+        2XX:
+          description: Event acknowledged
+        4XX:
+          description: Failed to acknowledge
+        5XX:
+          description: Failed to acknowledge
+    servers:
+    - url: https://sandbox-bk-partners.rbictg.com/api/v1
+      description: Sandbox server (uses test data)
+    - url: https://bk-partners.rbictg.com/api/v1
+      description: Production server
 components:
   schemas:
-    EntryPrice:
-      title: EntryPrice
-      description: Price information for a menu entry
-      type: object
-      properties:
-        delivery:
-          type: number
-          description: Price, in cents, for delivery
-          example: 1.0
-        pickup:
-          type: number
-          description: Price, in cents, for pickup
-          example: 1.0
-    DayPartSchedule:
-      type: object
-      description: Contains the detailed schedule for a specific daypart
-      properties:
-        friClose:
-          type: string
-          example: 1439
-        friOpen:
-          type: string
-          example: 00:00
-        monClose:
-          type: string
-          example: 1439
-        monOpen:
-          type: string
-          example: 00:00
-        satClose:
-          type: string
-          example: 1439
-        satOpen:
-          type: string
-          example: 00:00
-        sunClose:
-          type: string
-          example: 1439
-        sunOpen:
-          type: string
-          example: 00:00
-        thrClose:
-          type: string
-          example: 1439
-        thrOpen:
-          type: string
-          example: 00:00
-        tueClose:
-          type: string
-          example: 1439
-        tueOpen:
-          type: string
-          example: 00:00
-        wedClose:
-          type: string
-          example: 1439
-        wedOpen:
-          type: string
-          example: 00:00
-      required:
-      - friClose
-      - friOpen
-      - monClose
-      - monOpen
-      - satClose
-      - satOpen
-      - sunClose
-      - sunOpen
-      - thrClose
-      - thrOpen
-      - tueClose
-      - tueOpen
-      - wedClose
-      - wedOpen
-    Menu_2:
+    Region:
+      title: Region
+      description: 'Region
+
+        The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+        region code of the country or region of the address.
+
+        For example, the code for the United States is `US`.
+
+
+        For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+        '
+      example: US
+      type: string
+    Brand:
+      type: string
+      enum:
+      - BK
+      example: BK
+    Menu:
       title: Menu
-      description: BK Menu (v2)
+      description: 'Store menu
+
+        '
       type: object
-      required:
-      - configOfferEntries
-      - dayParts
-      - entries
-      - meta
-      - rewardEntries
-      - rootMenuEntryId
-      - systemWideOfferEntries
-      - paperCouponEntries
       properties:
-        configOfferEntries:
-          description: Config offer entries
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigOfferEntry_2'
-        dayParts:
-          description: Categories of menu availability by day and time
-          type: array
-          items:
-            $ref: '#/components/schemas/DayPart_2'
-        entries:
-          description: All valid menu entries
-          type: array
-          items:
-            $ref: '#/components/schemas/MenuEntry'
         meta:
           description: Metadata about the menu document
-          $ref: '#/components/schemas/Meta'
-        rewardEntries:
-          description: Reward entries
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardEntry_2'
-        rootMenuEntryId:
-          type: string
-          description: Reference to root menu entry
-          example: '500123'
-        systemWideOfferEntries:
-          description: Systemwide offer entries
-          type: array
-          items:
-            $ref: '#/components/schemas/SystemWideOfferEntry_2'
-        paperCouponEntries:
-          description: Paper coupon entries
-          type: array
-          items:
-            $ref: '#/components/schemas/PaperCouponEntry'
-    Option:
-      type: object
-      properties:
-        entryId:
-          type: string
-          description: Unique identifier for the option entry
-          example: '500123'
-        isMainItem:
-          type: boolean
-          description: Indicates if this is the main item (optional)
-          example: true
-        type:
-          type: string
-          description: 'Enum identifying the offer entry type.
-
-            Depending on this value, the referenced resource will be located on that specific Menu''s array:
-
-            | Value | Menu Path |
-
-            |-------|------------|
-
-            |CONFIG_OFFER|Menu.configOfferEntries|
-
-            |ENTRY|Menu.entries|
-
-            |SYSTEM_WIDE_OFFER|Menu.systemWideOfferEntries|
-
-            |REWARD|Menu.rewardEntries|
+          properties:
+            brand:
+              $ref: '#/components/schemas/Brand'
+            currency:
+              $ref: '#/components/schemas/Currency'
+            locale:
+              $ref: '#/components/schemas/Locale'
+            serviceMode:
+              type: string
+              enum:
+              - delivery
+              - pickup
+            version:
+              type: string
+              example: xyz1
+          example: example
+        dayParts:
+          description: 'Categories of menu availability by day and time
 
             '
-          enum:
-          - CONFIG_OFFER
-          - ENTRY
-          - SYSTEM_WIDE_OFFER
-          - REWARD
-          example: CONFIG_OFFER
+          type: array
+          items:
+            $ref: '#/components/schemas/DayPart'
+        rootMenuEntryId:
+          $ref: '#/components/schemas/EntryId'
+          description: Reference to root menu entry
+        entries:
+          description: 'All valid menu entries
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        systemWideOfferEntries:
+          description: 'All System-Wide Offer Entries
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemWideOfferEntry'
+        rewardEntries:
+          description: 'All Reward Entries
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardEntry'
+        configOfferEntries:
+          description: 'All Config Offer Entries
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigOfferEntry'
       required:
-      - entryId
-      - type
-    Meta:
-      title: Meta
-      description: Metadata about the menu document
-      type: object
-      required:
-      - imageBaseUrl
-      properties:
-        currency:
-          type: string
-          description: Currency code in ISO-4217 alpha format
-          pattern: ^[A-Z]{3}$
-          example: USD
-        imageBaseUrl:
-          type: string
-          description: Base URL for all images served by this menu
-          example: https://bk-partners.rbictg.com
+      - meta
+      - dayParts
+      - rootMenuEntryId
+      - entries
     LoyaltyBaseEntry:
       title: LoyaltyBaseEntry
       type: object
@@ -700,27 +688,58 @@ components:
           - id
           - type
           example: {}
-    Currency:
-      title: Currency Code
-      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
-      format: ISO-4217 alpha
-      type: string
-      example: USD
-    Nutrition:
-      title: NutritionalInfo
-      description: Nutrition Details
+    Allergen:
+      title: Allergen
+      description: Allergen (such as "Peanuts")
       type: object
       properties:
-        calories:
-          $ref: '#/components/schemas/Calories'
-        nutrients:
-          type: array
-          items:
-            $ref: '#/components/schemas/Nutrient'
-        allergens:
-          type: array
-          items:
-            $ref: '#/components/schemas/Allergen'
+        allergen:
+          type: string
+          enum:
+          - PEANUTS
+          example: PEANUTS
+        contains:
+          type: number
+          description: 3 = Contains; 2 = May Contain; 1 = Cooked in same equipment; 0 = Free From
+          format: integer
+          example: 1.0
+    Locale:
+      title: Locale
+      description: Locale details to help render localized text. Locales are composed of the [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code, separated by an underscore ("_").
+      format: ISO-639-1_ISO 3166-1 alpha-2
+      example: en_us
+      type: string
+    LocalizedText:
+      title: Localized Text
+      description: Text that has been translated to the correct locale for the current context
+      type: string
+    Calories:
+      title: Calories
+      description: Calories range
+      type: object
+      properties:
+        default:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        displayType:
+          type: string
+          enum:
+          - Range
+          - Lower
+          - Upper
+          example: Range
+        lowerRange:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        upperRange:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
     Error:
       title: Error
       type: object
@@ -777,111 +796,114 @@ components:
       - code
       - message
       - errors
-    Image_2:
-      title: Image
-      description: Image resource with optional localized alt text
+    SystemWideOfferEntry:
+      title: SystemWideOfferEntry
+      type: object
+      description: 'These represent System-wide Offers available for this menu.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyBaseEntry'
+      - properties:
+          id:
+            example: foo-offer-entity-id
+          type:
+            enum:
+            - SYSTEM_WIDE_OFFER
+            example: SYSTEM_WIDE_OFFER
+          name:
+            example: $5 Double Whopper and Small Fries
+          description:
+            example: 1 Double Whopper and 1 Small Fries
+    ServiceMode:
+      title: Service Mode
+      description: 'How a customer would like their order served.
+
+
+        Note that not all service modes will be available at all restaurants.
+
+        '
+      type: string
+      example: TAKEOUT
+      enum:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+    EntryRef:
+      title: Entry Reference
+      description: Reference to entry and optional the price of this entry
       type: object
       properties:
-        altText:
-          $ref: '#/components/schemas/LocalizedString'
-        resource:
-          type: string
-          description: 'URI or path to the image resource  Image resource with optional localized alt text.
-
-            This is only the resource part of the url, which needs to be concatenated to the baseUrl listed in the Menu metadata object
-
-            '
-          example: example
-    Menu:
-      title: Menu
-      description: 'Store menu
+        amount:
+          title: Amount
+          description: Amount in the specified currency
+          type: number
+          format: integer
+          minimum: 0
+          example: 599
+        entryId:
+          $ref: '#/components/schemas/EntryId'
+    PriceRange:
+      title: PriceRange
+      description: 'Default, minimum, and maximum prices.
 
         '
       type: object
       properties:
-        meta:
-          description: Metadata about the menu document
-          properties:
-            brand:
-              $ref: '#/components/schemas/Brand'
-            currency:
-              $ref: '#/components/schemas/Currency'
-            locale:
-              $ref: '#/components/schemas/Locale'
-            serviceMode:
-              type: string
-              enum:
-              - delivery
-              - pickup
-            version:
-              type: string
-              example: xyz1
-          example: example
-        dayParts:
-          description: 'Categories of menu availability by day and time
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/DayPart'
-        rootMenuEntryId:
-          $ref: '#/components/schemas/EntryId'
-          description: Reference to root menu entry
-        entries:
-          description: 'All valid menu entries
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/Entry'
-        systemWideOfferEntries:
-          description: 'All System-Wide Offer Entries
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/SystemWideOfferEntry'
-        rewardEntries:
-          description: 'All Reward Entries
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardEntry'
-        configOfferEntries:
-          description: 'All Config Offer Entries
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigOfferEntry'
-      required:
-      - meta
-      - dayParts
-      - rootMenuEntryId
-      - entries
-    EntryOptions:
-      title: EntryOptions
-      description: Options configuration for a menu entry
+        default:
+          title: Default
+          description: Default price in cents
+          type: number
+          format: integer
+          example: 1.0
+        max:
+          title: Max
+          description: Max price in cents
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+        min:
+          title: Min
+          description: Min price in cents
+          type: number
+          format: integer
+          minimum: 0
+          example: 1.0
+    DateTime:
+      type: string
+      format: ISO 8601 Date Time
+      example: '1991-02-11T20:30:19Z'
+    StoreId:
+      title: StoreId
+      description: Unique Store ID
+      example: '42'
+      pattern: ^\d+$
+      type: string
+    RewardEntry:
+      title: RewardEntry
       type: object
-      properties:
-        defaults:
-          type: array
-          description: Options which should be selected by default
-          items:
-            type: string
-          example: []
-        entries:
-          type: array
-          description: Collection of references to the item's options
-          items:
-            $ref: '#/components/schemas/EntryOptions'
-        injectDefault:
-          type: boolean
-          description: Whether or not to inject the default options
-          example: true
-        quantity:
-          $ref: '#/components/schemas/Quantity'
+      description: 'These represent Reward Offers available for this menu.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyBaseEntry'
+      - properties:
+          id:
+            example: foo-reward-entity-id
+          type:
+            enum:
+            - REWARD
+            example: REWARD
+          name:
+            example: 4pc Nuggets
+          description:
+            example: 4pc Nuggets
+          loyaltyPoints:
+            example: '250'
     DayPart:
       title: Menu availability
       type: object
@@ -923,533 +945,38 @@ components:
           type: string
           format: hh:mm:ss
           example: 79200
-    ConfigOfferEntry:
-      title: ConfigOfferEntry
+    QuantityConstraints:
+      title: QuantityConstraints
       type: object
-      description: null
-      allOf:
-      - $ref: '#/components/schemas/LoyaltyBaseEntry'
-      - properties:
-          type:
-            enum:
-            - CONFIG_OFFER
-            example: CONFIG_OFFER
-          loyaltyPoints:
-            example: '250'
-    ConfigOfferEntry_2:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/LoyaltyEntry'
-      - type: object
-        properties:
-          options:
-            description: Optional list of options
-            type: array
-            items:
-              $ref: '#/components/schemas/Option'
-          type:
-            description: Enum that identify a config offer
-            type: string
-            enum:
-            - CONFIG_OFFER
-        required:
-        - type
-    Nutrition_2:
-      title: Nutrition
-      type: object
-      properties:
-        allergens:
-          description: List of allergens
-          $ref: '#/components/schemas/Allergen_2'
-        calories:
-          description: Calories details
-          $ref: '#/components/schemas/Calories_2'
-        nutrients:
-          description: List of nutrients
-          $ref: '#/components/schemas/Nutrient_2'
-    PaperCouponEntry:
-      type: object
-      allOf:
-      - type: object
-        properties:
-          availability:
-            description: Availability override for the paper coupon
-            $ref: '#/components/schemas/Availability'
-          id:
-            type: string
-            description: Unique id of the paper coupon
-            example: paperCoupon_123
-          loyaltyEngineId:
-            type: string
-            description: Unique id generated by the loyalty engine
-            example: 123e4567-e89b-12d3-a456-426614174000
-          name:
-            $ref: '#/components/schemas/LocalizedString'
-            description: Name of the paper coupon
-            example: Paper Coupon
-          options:
-            type: array
-            items:
-              $ref: '#/components/schemas/Option'
-            description: Optional list of options
-          quantity:
-            $ref: '#/components/schemas/Quantity'
-            description: Quantity of the paper coupon
-          shortCode:
-            type: string
-            description: 'Shortcode for the paper coupon
+      description: 'Quantity constraints on selection. Can apply either to items or selections
 
-              '
-            example: '123456'
-          type:
-            type: string
-            description: Unique identifier for a reward entry
-            enum:
-            - PAPER_COUPON
-        required:
-        - id
-        - type
-    DayPartId:
-      title: DayPartId
-      description: Unique identifier for a day part
-      type: string
-      example: breakfast
-    MenuEntry:
-      title: MenuEntry
-      description: Represents a single menu entry
-      type: object
-      required:
-      - id
-      - type
-      properties:
-        availability:
-          $ref: '#/components/schemas/Availability'
-          description: Whether or not the entry is available.
-        dayParts:
-          type: array
-          items:
-            type: string
-          description: 'Collection of references to the item''s day parts. The item should only be available during the associated day parts.
+        with an options group.
 
-            '
-          example: []
-        description:
-          $ref: '#/components/schemas/LocalizedString'
-          description: Text that has been translated to the correct locale for the current context
-        displayGroup:
-          type: string
-          description: Display group id
-          example: example
-        id:
-          type: string
-          description: Unique identifier for a menu entry
-          example: '500123'
-        image:
-          $ref: '#/components/schemas/Image_2'
-        name:
-          $ref: '#/components/schemas/LocalizedString'
-          description: Text that has been translated to the correct locale for the current context
-        nutrition:
-          $ref: '#/components/schemas/Nutrition_2'
-          description: Nutrition Details
-        options:
-          $ref: '#/components/schemas/EntryOptions'
-        price:
-          $ref: '#/components/schemas/EntryPrice'
-          description: Base prices for this entry
-        productType:
-          type: array
-          items:
-            type: string
-            enum:
-            - DRINKS
-            - DESSERTS
-            - FROZEN_DRINKS
-            - JUICES
-            - SHAKES
-            - SIDES
-            - SIDES_OR_DRINKS
-            - SOFT_DRINKS
-            - CONDIMENTS
-          description: Product type enum values
-          example: []
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-          description: Quantity constraints (min, max, default) for ordering this entry. The max value represents the maximum amount of this specific entry that can be included in a single order.
-        type:
-          type: string
-          enum:
-          - ITEM
-          - ASPECT_OPTION
-          - COMBO
-          - COMBO_SLOT
-          - MENU
-          - MODIFIER_GROUP
-          - PICKER
-          - PICKER_ASPECT
-          - SECTION
-          - MODIFIER
-          description: Entry type enum values
-          example: ITEM
-    Nutrient_2:
-      title: Nutrient
-      type: object
-      properties:
-        carbohydrates:
-          type: number
-          description: Amount of carbohydrates
-          example: 1.0
-        cholesterol:
-          type: number
-          description: Amount of cholesterol
-          example: 1.0
-        energyKJ:
-          type: number
-          description: Energy in kilojoules
-          example: 1.0
-        fat:
-          type: number
-          description: Amount of fat
-          example: '2026-06-03T12:00:00Z'
-        fiber:
-          type: number
-          description: Amount of fiber
-          example: 1.0
-        proteins:
-          type: number
-          description: Amount of proteins
-          example: 1.0
-        salt:
-          type: number
-          description: Amount of salt
-          example: 1.0
-        saturatedFat:
-          type: number
-          description: Amount of saturated fat
-          example: '2026-06-03T12:00:00Z'
-        sodium:
-          type: number
-          description: Amount of sodium
-          example: 1.0
-        sugar:
-          type: number
-          description: Amount of sugar
-          example: 1.0
-        transFat:
-          type: number
-          description: Amount of trans fat
-          example: '2026-06-03T12:00:00Z'
-        weight:
-          type: number
-          description: Total weight of the item
-          example: 1.0
-    Allergen:
-      title: Allergen
-      description: Allergen (such as "Peanuts")
-      type: object
-      properties:
-        allergen:
-          type: string
-          enum:
-          - PEANUTS
-          example: PEANUTS
-        contains:
-          type: number
-          description: 3 = Contains; 2 = May Contain; 1 = Cooked in same equipment; 0 = Free From
-          format: integer
-          example: 1.0
-    Locale:
-      title: Locale
-      description: Locale details to help render localized text. Locales are composed of the [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code, separated by an underscore ("_").
-      format: ISO-639-1_ISO 3166-1 alpha-2
-      example: en_us
-      type: string
-    SystemWideOfferEntry:
-      title: SystemWideOfferEntry
-      type: object
-      description: 'These represent System-wide Offers available for this menu.
+
+        Note\: We use a `minAmount` of 1 with a `maxAmount` of 1 to indicate
+
+        selection is required
 
         '
-      allOf:
-      - $ref: '#/components/schemas/LoyaltyBaseEntry'
-      - properties:
-          id:
-            example: foo-offer-entity-id
-          type:
-            enum:
-            - SYSTEM_WIDE_OFFER
-            example: SYSTEM_WIDE_OFFER
-          name:
-            example: $5 Double Whopper and Small Fries
-          description:
-            example: 1 Double Whopper and 1 Small Fries
-    Calories:
-      title: Calories
-      description: Calories range
-      type: object
       properties:
-        default:
+        defaultAmount:
+          description: (Optional) Default amount that can be select
           type: number
           format: integer
           minimum: 0
-          example: 1.0
-        displayType:
-          type: string
-          enum:
-          - Range
-          - Lower
-          - Upper
-          example: Range
-        lowerRange:
+          example: 599
+        minAmount:
+          description: (Optional) Minimum amount that must be select
           type: number
           format: integer
           minimum: 0
-          example: 1.0
-        upperRange:
+          example: 599
+        maxAmount:
+          description: (Optional) Maximum amount that can be select
           type: number
           format: integer
           minimum: 0
-          example: 1.0
-    StoreId:
-      title: StoreId
-      description: Unique Store ID
-      example: '42'
-      pattern: ^\d+$
-      type: string
-    Quantity:
-      title: Quantity
-      description: Quantity constraints for a menu entry
-      type: object
-      properties:
-        def:
-          type: integer
-          description: Default quantity
-          minimum: 1
-          example: 1
-        max:
-          type: integer
-          description: Maximum allowed quantity
-          minimum: 1
-          example: 1
-        min:
-          type: integer
-          description: Minimum required quantity
-          minimum: 1
-          example: 1
-    PriceRange:
-      title: PriceRange
-      description: 'Default, minimum, and maximum prices.
-
-        '
-      type: object
-      properties:
-        default:
-          title: Default
-          description: Default price in cents
-          type: number
-          format: integer
-          example: 1.0
-        max:
-          title: Max
-          description: Max price in cents
-          type: number
-          format: integer
-          minimum: 0
-          example: 1.0
-        min:
-          title: Min
-          description: Min price in cents
-          type: number
-          format: integer
-          minimum: 0
-          example: 1.0
-    Image:
-      type: object
-      properties:
-        url:
-          type: string
-          example: https://bk-partners.rbictg.com
-        altText:
-          $ref: '#/components/schemas/LocalizedText'
-    LoyaltyEntry:
-      type: object
-      properties:
-        availability:
-          $ref: '#/components/schemas/Availability'
-        description:
-          $ref: '#/components/schemas/LocalizedString'
-        discountType:
-          type: string
-          description: Provides if the discount should be calculated as a percentage or an amount
-          example: 1
-        discountValue:
-          type: number
-          description: Amount that should be discounted
-          example: 1
-        id:
-          type: string
-          description: Unique identifier for a reward entry
-          example: '500123'
-        image:
-          $ref: '#/components/schemas/Image_2'
-        loyaltyEngineId:
-          type: string
-          example: '500123'
-        loyaltyPoints:
-          type: number
-          description: Amount of Loyalty Points required to redeem this offer
-          example: 1.0
-        name:
-          $ref: '#/components/schemas/LocalizedString'
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/Option'
-        price:
-          $ref: '#/components/schemas/EntryPrice'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        type:
-          type: string
-          description: Unique identifier for a reward entry
-          enum:
-          - CONFIG_OFFER
-          - SYSTEM_WIDE_OFFER
-          - ENTRY
-          - REWARD
-          example: CONFIG_OFFER
-      required:
-      - id
-      - type
-    Allergen_2:
-      type: object
-      properties:
-        celery:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for celery | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        eggs:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for eggs | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        fish:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for fish | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        gluten:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for gluten | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        lupin:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for lupin | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        milk:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for milk | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        mustard:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for mustard | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        peanuts:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for peanuts | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        sesame:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for sesame | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        shellfish:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for shellfish | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        soy:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for soy | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        sulphurDioxide:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for sulphur dioxide | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        treeNuts:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for tree nuts | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
-        wheat:
-          type: string
-          enum:
-          - _0
-          - _1
-          - _2
-          - _3
-          description: Optional allergen info for wheat | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
-          example: _0
+          example: 599
     Entry:
       title: Entry
       type: object
@@ -1597,107 +1124,6 @@ components:
       required:
       - id
       - type
-    SystemWideOfferEntry_2:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/LoyaltyEntry'
-      - type: object
-        properties:
-          options:
-            type: array
-            items:
-              $ref: '#/components/schemas/Option'
-            description: Optional list of options
-          type:
-            description: Unique identifier for a reward entry
-            enum:
-            - SYSTEM_WIDE_OFFER
-            type: string
-        required:
-        - type
-    LocalizedText:
-      title: Localized Text
-      description: Text that has been translated to the correct locale for the current context
-      type: string
-    Brand:
-      type: string
-      enum:
-      - BK
-      example: BK
-    RewardEntry:
-      title: RewardEntry
-      type: object
-      description: 'These represent Reward Offers available for this menu.
-
-        '
-      allOf:
-      - $ref: '#/components/schemas/LoyaltyBaseEntry'
-      - properties:
-          id:
-            example: foo-reward-entity-id
-          type:
-            enum:
-            - REWARD
-            example: REWARD
-          name:
-            example: 4pc Nuggets
-          description:
-            example: 4pc Nuggets
-          loyaltyPoints:
-            example: '250'
-    ServiceMode:
-      title: Service Mode
-      description: 'How a customer would like their order served.
-
-
-        Note that not all service modes will be available at all restaurants.
-
-        '
-      type: string
-      example: TAKEOUT
-      enum:
-      - CURBSIDE
-      - DELIVERY
-      - DRIVE_THRU
-      - EAT_IN
-      - TABLE_SERVICE
-      - TAKEOUT
-    EntryRef:
-      title: Entry Reference
-      description: Reference to entry and optional the price of this entry
-      type: object
-      properties:
-        amount:
-          title: Amount
-          description: Amount in the specified currency
-          type: number
-          format: integer
-          minimum: 0
-          example: 599
-        entryId:
-          $ref: '#/components/schemas/EntryId'
-    EntryId:
-      title: EntryId
-      description: Unique identifier for a menu entity
-      type: string
-      example: entry-id
-    RewardEntry_2:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/LoyaltyEntry'
-      - type: object
-        properties:
-          options:
-            type: array
-            items:
-              $ref: '#/components/schemas/Option'
-          type:
-            description: Unique identifier for a reward entry
-            enum:
-            - REWARD
-            type: string
-        required:
-        - type
     Nutrient:
       title: Nutrient
       description: Details for an individual nutrient
@@ -1719,83 +1145,74 @@ components:
           - G
           - KJ
           example: G
-    LocalizedString:
-      title: LocalizedString
-      description: Translated text for different locales
+    Image:
       type: object
       properties:
-        en:
+        url:
           type: string
-          description: English translation
-          example: example
-        fr:
-          type: string
-          description: French translation, if any
-          example: example
-    Calories_2:
-      title: Calories
+          example: https://bk-partners.rbictg.com
+        altText:
+          $ref: '#/components/schemas/LocalizedText'
+    ConfigOfferEntry:
+      title: ConfigOfferEntry
+      type: object
+      description: null
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyBaseEntry'
+      - properties:
+          type:
+            enum:
+            - CONFIG_OFFER
+            example: CONFIG_OFFER
+          loyaltyPoints:
+            example: '250'
+    Currency:
+      title: Currency Code
+      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
+      format: ISO-4217 alpha
+      type: string
+      example: USD
+    DayPartId:
+      title: DayPartId
+      description: Unique identifier for a day part
+      type: string
+      example: breakfast
+    EntryId:
+      title: EntryId
+      description: Unique identifier for a menu entity
+      type: string
+      example: entry-id
+    Nutrition:
+      title: NutritionalInfo
+      description: Nutrition Details
       type: object
       properties:
-        def:
-          type: number
-          format: integer
-          description: Default calorie value
-          example: 1.0
-        max:
-          type: number
-          format: integer
-          description: Maximum calorie value
-          example: 1.0
-        min:
-          type: number
-          format: integer
-          description: Minimum calorie value
-          example: 1.0
-    DayPart_2:
+        calories:
+          $ref: '#/components/schemas/Calories'
+        nutrients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nutrient'
+        allergens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Allergen'
+    Meta:
+      title: Meta
+      description: Metadata about the menu document
       type: object
-      properties:
-        id:
-          type: string
-          example: Breakfast
-          description: Unique identifier for the day part
-        schedule:
-          $ref: '#/components/schemas/DayPartSchedule'
-          description: Schedule details for the day part
       required:
-      - id
-      - schedule
-    QuantityConstraints:
-      title: QuantityConstraints
-      type: object
-      description: 'Quantity constraints on selection. Can apply either to items or selections
-
-        with an options group.
-
-
-        Note\: We use a `minAmount` of 1 with a `maxAmount` of 1 to indicate
-
-        selection is required
-
-        '
+      - imageBaseUrl
       properties:
-        defaultAmount:
-          description: (Optional) Default amount that can be select
-          type: number
-          format: integer
-          minimum: 0
-          example: 599
-        minAmount:
-          description: (Optional) Minimum amount that must be select
-          type: number
-          format: integer
-          minimum: 0
-          example: 599
-        maxAmount:
-          description: (Optional) Maximum amount that can be select
-          type: number
-          format: integer
-          minimum: 0
-          example: 599
+        currency:
+          type: string
+          description: Currency code in ISO-4217 alpha format
+          pattern: ^[A-Z]{3}$
+          example: USD
+        imageBaseUrl:
+          type: string
+          description: Base URL for all images served by this menu
+          example: https://bk-partners.rbictg.com
     Availability:
       title: Availability
       description: 'Availability options for delivery and pickup.
@@ -1815,6 +1232,688 @@ components:
           type: boolean
           description: Whether the entry is available for pickup
           example: true
+    Menu_2:
+      title: Menu
+      description: BK Menu (v2)
+      type: object
+      required:
+      - configOfferEntries
+      - dayParts
+      - entries
+      - meta
+      - rewardEntries
+      - rootMenuEntryId
+      - systemWideOfferEntries
+      - paperCouponEntries
+      properties:
+        configOfferEntries:
+          description: Config offer entries
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigOfferEntry_2'
+        dayParts:
+          description: Categories of menu availability by day and time
+          type: array
+          items:
+            $ref: '#/components/schemas/DayPart_2'
+        entries:
+          description: All valid menu entries
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuEntry'
+        meta:
+          description: Metadata about the menu document
+          $ref: '#/components/schemas/Meta'
+        rewardEntries:
+          description: Reward entries
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardEntry_2'
+        rootMenuEntryId:
+          type: string
+          description: Reference to root menu entry
+          example: '500123'
+        systemWideOfferEntries:
+          description: Systemwide offer entries
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemWideOfferEntry_2'
+        paperCouponEntries:
+          description: Paper coupon entries
+          type: array
+          items:
+            $ref: '#/components/schemas/PaperCouponEntry'
+    PaperCouponEntry:
+      type: object
+      allOf:
+      - type: object
+        properties:
+          availability:
+            description: Availability override for the paper coupon
+            $ref: '#/components/schemas/Availability'
+          id:
+            type: string
+            description: Unique id of the paper coupon
+            example: paperCoupon_123
+          loyaltyEngineId:
+            type: string
+            description: Unique id generated by the loyalty engine
+            example: 123e4567-e89b-12d3-a456-426614174000
+          name:
+            $ref: '#/components/schemas/LocalizedString'
+            description: Name of the paper coupon
+            example: Paper Coupon
+          options:
+            type: array
+            items:
+              $ref: '#/components/schemas/Option'
+            description: Optional list of options
+          quantity:
+            $ref: '#/components/schemas/Quantity'
+            description: Quantity of the paper coupon
+          shortCode:
+            type: string
+            description: 'Shortcode for the paper coupon
+
+              '
+            example: '123456'
+          type:
+            type: string
+            description: Unique identifier for a reward entry
+            enum:
+            - PAPER_COUPON
+        required:
+        - id
+        - type
+    Allergen_2:
+      type: object
+      properties:
+        celery:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for celery | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        eggs:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for eggs | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        fish:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for fish | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        gluten:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for gluten | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        lupin:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for lupin | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        milk:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for milk | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        mustard:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for mustard | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        peanuts:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for peanuts | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        sesame:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for sesame | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        shellfish:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for shellfish | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        soy:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for soy | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        sulphurDioxide:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for sulphur dioxide | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        treeNuts:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for tree nuts | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+        wheat:
+          type: string
+          enum:
+          - _0
+          - _1
+          - _2
+          - _3
+          description: Optional allergen info for wheat | 3 = Contains 2 = May Contain 1 = Cooked in same equipment 0 = Free From
+          example: _0
+    EntryOptions:
+      title: EntryOptions
+      description: Options configuration for a menu entry
+      type: object
+      properties:
+        defaults:
+          type: array
+          description: Options which should be selected by default
+          items:
+            type: string
+          example: []
+        entries:
+          type: array
+          description: Collection of references to the item's options
+          items:
+            $ref: '#/components/schemas/EntryOptions'
+        injectDefault:
+          type: boolean
+          description: Whether or not to inject the default options
+          example: true
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+    LocalizedString:
+      title: LocalizedString
+      description: Translated text for different locales
+      type: object
+      properties:
+        en:
+          type: string
+          description: English translation
+          example: example
+        fr:
+          type: string
+          description: French translation, if any
+          example: example
+    Quantity:
+      title: Quantity
+      description: Quantity constraints for a menu entry
+      type: object
+      properties:
+        def:
+          type: integer
+          description: Default quantity
+          minimum: 1
+          example: 1
+        max:
+          type: integer
+          description: Maximum allowed quantity
+          minimum: 1
+          example: 1
+        min:
+          type: integer
+          description: Minimum required quantity
+          minimum: 1
+          example: 1
+    Calories_2:
+      title: Calories
+      type: object
+      properties:
+        def:
+          type: number
+          format: integer
+          description: Default calorie value
+          example: 1.0
+        max:
+          type: number
+          format: integer
+          description: Maximum calorie value
+          example: 1.0
+        min:
+          type: number
+          format: integer
+          description: Minimum calorie value
+          example: 1.0
+    LoyaltyEntry:
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/Availability'
+        description:
+          $ref: '#/components/schemas/LocalizedString'
+        discountType:
+          type: string
+          description: Provides if the discount should be calculated as a percentage or an amount
+          example: 1
+        discountValue:
+          type: number
+          description: Amount that should be discounted
+          example: 1
+        id:
+          type: string
+          description: Unique identifier for a reward entry
+          example: '500123'
+        image:
+          $ref: '#/components/schemas/Image_2'
+        loyaltyEngineId:
+          type: string
+          example: '500123'
+        loyaltyPoints:
+          type: number
+          description: Amount of Loyalty Points required to redeem this offer
+          example: 1.0
+        name:
+          $ref: '#/components/schemas/LocalizedString'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+        price:
+          $ref: '#/components/schemas/EntryPrice'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        type:
+          type: string
+          description: Unique identifier for a reward entry
+          enum:
+          - CONFIG_OFFER
+          - SYSTEM_WIDE_OFFER
+          - ENTRY
+          - REWARD
+          example: CONFIG_OFFER
+      required:
+      - id
+      - type
+    SystemWideOfferEntry_2:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyEntry'
+      - type: object
+        properties:
+          options:
+            type: array
+            items:
+              $ref: '#/components/schemas/Option'
+            description: Optional list of options
+          type:
+            description: Unique identifier for a reward entry
+            enum:
+            - SYSTEM_WIDE_OFFER
+            type: string
+        required:
+        - type
+    RewardEntry_2:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyEntry'
+      - type: object
+        properties:
+          options:
+            type: array
+            items:
+              $ref: '#/components/schemas/Option'
+          type:
+            description: Unique identifier for a reward entry
+            enum:
+            - REWARD
+            type: string
+        required:
+        - type
+    DayPart_2:
+      type: object
+      properties:
+        id:
+          type: string
+          example: Breakfast
+          description: Unique identifier for the day part
+        schedule:
+          $ref: '#/components/schemas/DayPartSchedule'
+          description: Schedule details for the day part
+      required:
+      - id
+      - schedule
+    MenuEntry:
+      title: MenuEntry
+      description: Represents a single menu entry
+      type: object
+      required:
+      - id
+      - type
+      properties:
+        availability:
+          $ref: '#/components/schemas/Availability'
+          description: Whether or not the entry is available.
+        dayParts:
+          type: array
+          items:
+            type: string
+          description: 'Collection of references to the item''s day parts. The item should only be available during the associated day parts.
+
+            '
+          example: []
+        description:
+          $ref: '#/components/schemas/LocalizedString'
+          description: Text that has been translated to the correct locale for the current context
+        displayGroup:
+          type: string
+          description: Display group id
+          example: example
+        id:
+          type: string
+          description: Unique identifier for a menu entry
+          example: '500123'
+        image:
+          $ref: '#/components/schemas/Image_2'
+        name:
+          $ref: '#/components/schemas/LocalizedString'
+          description: Text that has been translated to the correct locale for the current context
+        nutrition:
+          $ref: '#/components/schemas/Nutrition_2'
+          description: Nutrition Details
+        options:
+          $ref: '#/components/schemas/EntryOptions'
+        price:
+          $ref: '#/components/schemas/EntryPrice'
+          description: Base prices for this entry
+        productType:
+          type: array
+          items:
+            type: string
+            enum:
+            - DRINKS
+            - DESSERTS
+            - FROZEN_DRINKS
+            - JUICES
+            - SHAKES
+            - SIDES
+            - SIDES_OR_DRINKS
+            - SOFT_DRINKS
+            - CONDIMENTS
+          description: Product type enum values
+          example: []
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+          description: Quantity constraints (min, max, default) for ordering this entry. The max value represents the maximum amount of this specific entry that can be included in a single order.
+        type:
+          type: string
+          enum:
+          - ITEM
+          - ASPECT_OPTION
+          - COMBO
+          - COMBO_SLOT
+          - MENU
+          - MODIFIER_GROUP
+          - PICKER
+          - PICKER_ASPECT
+          - SECTION
+          - MODIFIER
+          description: Entry type enum values
+          example: ITEM
+    EntryPrice:
+      title: EntryPrice
+      description: Price information for a menu entry
+      type: object
+      properties:
+        delivery:
+          type: number
+          description: Price, in cents, for delivery
+          example: 1.0
+        pickup:
+          type: number
+          description: Price, in cents, for pickup
+          example: 1.0
+    Option:
+      type: object
+      properties:
+        entryId:
+          type: string
+          description: Unique identifier for the option entry
+          example: '500123'
+        isMainItem:
+          type: boolean
+          description: Indicates if this is the main item (optional)
+          example: true
+        type:
+          type: string
+          description: 'Enum identifying the offer entry type.
+
+            Depending on this value, the referenced resource will be located on that specific Menu''s array:
+
+            | Value | Menu Path |
+
+            |-------|------------|
+
+            |CONFIG_OFFER|Menu.configOfferEntries|
+
+            |ENTRY|Menu.entries|
+
+            |SYSTEM_WIDE_OFFER|Menu.systemWideOfferEntries|
+
+            |REWARD|Menu.rewardEntries|
+
+            '
+          enum:
+          - CONFIG_OFFER
+          - ENTRY
+          - SYSTEM_WIDE_OFFER
+          - REWARD
+          example: CONFIG_OFFER
+      required:
+      - entryId
+      - type
+    DayPartSchedule:
+      type: object
+      description: Contains the detailed schedule for a specific daypart
+      properties:
+        friClose:
+          type: string
+          example: 1439
+        friOpen:
+          type: string
+          example: 00:00
+        monClose:
+          type: string
+          example: 1439
+        monOpen:
+          type: string
+          example: 00:00
+        satClose:
+          type: string
+          example: 1439
+        satOpen:
+          type: string
+          example: 00:00
+        sunClose:
+          type: string
+          example: 1439
+        sunOpen:
+          type: string
+          example: 00:00
+        thrClose:
+          type: string
+          example: 1439
+        thrOpen:
+          type: string
+          example: 00:00
+        tueClose:
+          type: string
+          example: 1439
+        tueOpen:
+          type: string
+          example: 00:00
+        wedClose:
+          type: string
+          example: 1439
+        wedOpen:
+          type: string
+          example: 00:00
+      required:
+      - friClose
+      - friOpen
+      - monClose
+      - monOpen
+      - satClose
+      - satOpen
+      - sunClose
+      - sunOpen
+      - thrClose
+      - thrOpen
+      - tueClose
+      - tueOpen
+      - wedClose
+      - wedOpen
+    Image_2:
+      title: Image
+      description: Image resource with optional localized alt text
+      type: object
+      properties:
+        altText:
+          $ref: '#/components/schemas/LocalizedString'
+        resource:
+          type: string
+          description: 'URI or path to the image resource  Image resource with optional localized alt text.
+
+            This is only the resource part of the url, which needs to be concatenated to the baseUrl listed in the Menu metadata object
+
+            '
+          example: example
+    Nutrient_2:
+      title: Nutrient
+      type: object
+      properties:
+        carbohydrates:
+          type: number
+          description: Amount of carbohydrates
+          example: 1.0
+        cholesterol:
+          type: number
+          description: Amount of cholesterol
+          example: 1.0
+        energyKJ:
+          type: number
+          description: Energy in kilojoules
+          example: 1.0
+        fat:
+          type: number
+          description: Amount of fat
+          example: '2026-06-03T12:00:00Z'
+        fiber:
+          type: number
+          description: Amount of fiber
+          example: 1.0
+        proteins:
+          type: number
+          description: Amount of proteins
+          example: 1.0
+        salt:
+          type: number
+          description: Amount of salt
+          example: 1.0
+        saturatedFat:
+          type: number
+          description: Amount of saturated fat
+          example: '2026-06-03T12:00:00Z'
+        sodium:
+          type: number
+          description: Amount of sodium
+          example: 1.0
+        sugar:
+          type: number
+          description: Amount of sugar
+          example: 1.0
+        transFat:
+          type: number
+          description: Amount of trans fat
+          example: '2026-06-03T12:00:00Z'
+        weight:
+          type: number
+          description: Total weight of the item
+          example: 1.0
+    ConfigOfferEntry_2:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/LoyaltyEntry'
+      - type: object
+        properties:
+          options:
+            description: Optional list of options
+            type: array
+            items:
+              $ref: '#/components/schemas/Option'
+          type:
+            description: Enum that identify a config offer
+            type: string
+            enum:
+            - CONFIG_OFFER
+        required:
+        - type
+    Nutrition_2:
+      title: Nutrition
+      type: object
+      properties:
+        allergens:
+          description: List of allergens
+          $ref: '#/components/schemas/Allergen_2'
+        calories:
+          description: Calories details
+          $ref: '#/components/schemas/Calories_2'
+        nutrients:
+          description: List of nutrients
+          $ref: '#/components/schemas/Nutrient_2'
   parameters:
     region:
       description: 'The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
@@ -1830,13 +1929,6 @@ components:
       example: US
       schema:
         type: string
-    store-id_2:
-      description: Unique Store ID
-      name: storeId
-      in: path
-      schema:
-        $ref: '#/components/schemas/StoreId'
-      example: '500123'
     store-id:
       description: Unique Store ID
       name: storeId
@@ -1845,11 +1937,21 @@ components:
       schema:
         $ref: '#/components/schemas/StoreId'
       example: '500123'
+    store-id_2:
+      description: Unique Store ID
+      name: storeId
+      in: path
+      schema:
+        $ref: '#/components/schemas/StoreId'
+      example: '500123'
   securitySchemes:
     bearer:
       scheme: bearer
       bearerFormat: JWT
       type: http
+x-refined-from:
+- channel-openapi.yml
+- menu-v2-openapi.yml
 x-tagGroups:
 - name: API
   tags:

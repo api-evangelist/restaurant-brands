@@ -1,10 +1,8 @@
 {
   "provider": "restaurant-brands",
   "sources": [
-    "restaurant-brands-loyalty-api-openapi.yml",
-    "restaurant-brands-menus-api-openapi.yml",
-    "restaurant-brands-orders-api-openapi.yml",
-    "restaurant-brands-stores-api-openapi.yml"
+    "_original/channel-openapi.yml",
+    "_original/menu-v2-openapi.yml"
   ],
   "outputs": [
     "restaurant-brands-loyalty-api-openapi.yml",
@@ -15,6 +13,21 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "channel-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "channel-openapi.yml: declared missing tag: Loyalty",
+    "channel-openapi.yml: declared missing tag: Menus",
+    "channel-openapi.yml: declared missing tag: Orders",
+    "channel-openapi.yml: declared missing tag: Stores",
+    "menu-v2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "menu-v2-openapi.yml: declared missing tag: Menus",
+    "tag 'Menus' spans 2 source specs (channel-openapi.yml, menu-v2-openapi.yml): per-path servers applied"
+  ],
+  "skipped": [
+    "restaurant-brands-loyalty-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "restaurant-brands-menus-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "restaurant-brands-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "restaurant-brands-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
