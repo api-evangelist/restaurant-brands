@@ -1,0 +1,27 @@
+slug: restaurant-brands
+provider: Restaurant Brands International
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Travel & Hospitality
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Loyalty
+  spec_file: restaurant-brands-loyalty-api-openapi.yml
+  capability_id: BC-420.40
+  capability_id_l1: BC-420
+  capability_name: Loyalty & Retention Management
+  confidence: 0.7
+  evidence: 'POST /loyalty/identify  identify  Identify; schemas: Balance, LoyaltyTransactionId, IdentifyLoyalty'
+  reason: The single operation identifies a loyalty member (by phone/identifier) and returns loyalty balance
+    data for a transaction at a restaurant POS/ordering channel — i.e. operation of a customer loyalty
+    programme. Travel loyalty (BC-4050) is the wrong industry frame for a QSR ordering integration, so
+    the cross-industry Loyalty & Retention capability is the honest mapping. Confidence limited because
+    only one thin operation is exposed.

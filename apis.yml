@@ -161,6 +161,9 @@ apis:
   - type: JSONLD
     url: json-ld/restaurant-brands-menu-v2-context.jsonld
 common:
+  - type: CapabilityMap
+    url: capabilities/restaurant-brands-capability-edges.yml
+    name: Restaurant Brands International Business Capability Map
   - type: AgenticAccess
     url: agentic-access/restaurant-brands-agentic-access.yml
   - type: DomainSecurity
