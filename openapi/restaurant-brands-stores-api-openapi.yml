@@ -422,43 +422,6 @@ webhooks:
           description: Failed to acknowledge
 components:
   schemas:
-    cursor:
-      title: Cursor
-      description: Pagination cursor
-      example: cursor-id
-      type: string
-    PosVendor:
-      title: posVendor
-      description: The posVendor that is processing the order
-      type: string
-      enum:
-      - BRINK
-      - CARROLS
-      - NCR
-      - QDI
-      - SICOM
-    StoreId:
-      title: StoreId
-      description: Unique Store ID
-      example: '42'
-      pattern: ^\d+$
-      type: string
-    StoreStatusChanged:
-      title: StoreStatusChanged
-      type: object
-      properties:
-        reason:
-          $ref: '#/components/schemas/Reason'
-        region:
-          $ref: '#/components/schemas/Region'
-        storeStatus:
-          $ref: '#/components/schemas/StoreStatus'
-        updatedAt:
-          $ref: '#/components/schemas/DateTime'
-      required:
-      - storeStatus
-      - region
-      - updatedAt
     Error:
       title: Error
       type: object
@@ -515,72 +478,6 @@ components:
       - code
       - message
       - errors
-    Region:
-      title: Region
-      description: 'Region
-
-        The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
-
-        region code of the country or region of the address.
-
-        For example, the code for the United States is `US`.
-
-
-        For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
-
-        '
-      example: US
-      type: string
-    Brand:
-      type: string
-      enum:
-      - BK
-      example: BK
-    TimeSlot:
-      title: TimeSlot
-      description: 'Contains information about the store service hours for a range of 15 consecutive days,
-
-        starting from the day before the request is made.
-
-        '
-      type: object
-      properties:
-        closes:
-          description: Store close time.
-          example: '1991-02-11 23:59:00'
-          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
-          type: string
-        date:
-          description: Calendar day that this time slot reflects
-          example: '1991-02-11'
-          format: ISO 8601 Date (YYYY-MM-DD)
-          type: string
-        isClosed:
-          description: 'Flag that determines if the store is closed.
-
-
-            If the store is open, this property won''t be returned.
-
-            '
-          type: boolean
-          example: true
-        opens:
-          description: Store open time.
-          example: '1991-02-11 00:00:00'
-          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
-          type: string
-      required:
-      - opens
-      - date
-      - closes
-    limit:
-      title: Limit
-      description: Amount of results to fetch
-      example: 10
-      type: integer
-      minimum: 1
-      default: 20
-      maximum: 100
     ServiceMode:
       title: Service Mode
       description: 'How a customer would like their order served.
@@ -598,47 +495,38 @@ components:
       - EAT_IN
       - TABLE_SERVICE
       - TAKEOUT
-    DateTime:
+    Reason:
+      title: reason
+      description: Reason for the change in store status
+      example: store was deactivated due to high error rate
       type: string
-      format: ISO 8601 Date Time
-      example: '1991-02-11T20:30:19Z'
-    Store:
-      title: Store
-      description: Information about a store
+    StoreId:
+      title: StoreId
+      description: Unique Store ID
+      example: '42'
+      pattern: ^\d+$
+      type: string
+    StoreStatusChanged:
+      title: StoreStatusChanged
       type: object
       properties:
-        availability:
-          $ref: '#/components/schemas/Available'
-          description: True if the store is available for ordering.
-        franchiseGroupName:
-          description: Store franchise group name.
-          type: string
-          example: Acme Group
-        location:
-          $ref: '#/components/schemas/Location'
-        name:
-          description: Store name
-          type: string
-          example: Example test lab
-        posVendor:
-          $ref: '#/components/schemas/PosVendor'
-        serviceHour:
-          description: Store operating hours by serviceMode
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceHour'
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-        timezone:
-          $ref: '#/components/schemas/Timezone'
+        reason:
+          $ref: '#/components/schemas/Reason'
+        region:
+          $ref: '#/components/schemas/Region'
+        storeStatus:
+          $ref: '#/components/schemas/StoreStatus'
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
       required:
-      - availability
-      - name
-      - storeId
-      - timezone
-      - posVendor
-      - location
-      - serviceHour
+      - storeStatus
+      - region
+      - updatedAt
+    Brand:
+      type: string
+      enum:
+      - BK
+      example: BK
     Location:
       title: Location
       description: Information about a store location.
@@ -683,23 +571,161 @@ components:
           description: Store route.
           type: string
           example: 5701 BLUE LAGOON DR
-    WeekdayHours:
-      title: WeekDayHours
-      description: 'Human-readable view of a store''s weekly operating hours.
+    Available:
+      title: Available
+      description: Information about store availability
+      type: object
+      properties:
+        isEnabled:
+          description: Detailed availability per service mode.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/ServiceMode'
+              value:
+                type: boolean
+                description: "Returns true if the store is Operating Available.\n\n\"Operating Available\" considers the current date and time to calculate the current availability for the \nservice mode.\n"
+        isOpen:
+          description: True if the store is available for ordering.
+          type: boolean
+          example: true
+      required:
+      - isOpen
+    limit:
+      title: Limit
+      description: Amount of results to fetch
+      example: 10
+      type: integer
+      minimum: 1
+      default: 20
+      maximum: 100
+    cursor:
+      title: Cursor
+      description: Pagination cursor
+      example: cursor-id
+      type: string
+    Region:
+      title: Region
+      description: 'Region
+
+        The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+        region code of the country or region of the address.
+
+        For example, the code for the United States is `US`.
 
 
-        **Note**: This information is intended for display purposes only.
+        For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
 
-        If you need to perform calculations based on the service hours, use the `timeSlots` property instead.
+        '
+      example: US
+      type: string
+    DateTime:
+      type: string
+      format: ISO 8601 Date Time
+      example: '1991-02-11T20:30:19Z'
+    Store:
+      title: Store
+      description: Information about a store
+      type: object
+      properties:
+        availability:
+          $ref: '#/components/schemas/Available'
+          description: True if the store is available for ordering.
+        franchiseGroupName:
+          description: Store franchise group name.
+          type: string
+          example: Acme Group
+        location:
+          $ref: '#/components/schemas/Location'
+        name:
+          description: Store name
+          type: string
+          example: Example test lab
+        posVendor:
+          $ref: '#/components/schemas/PosVendor'
+        serviceHour:
+          description: Store operating hours by serviceMode
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHour'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        timezone:
+          $ref: '#/components/schemas/Timezone'
+      required:
+      - availability
+      - name
+      - storeId
+      - timezone
+      - posVendor
+      - location
+      - serviceHour
+    TimeSlot:
+      title: TimeSlot
+      description: 'Contains information about the store service hours for a range of 15 consecutive days,
+
+        starting from the day before the request is made.
 
         '
       type: object
       properties:
-        text:
-          description: "Human-readable days of operation.\n\nThe \"Time range\" looks like:\n- For days that the store is open:  \n  `Weekday: hh:mm A - hh:mm A` (`Sunday: 12:00 AM - 11:59 PM`)\n- For days that the store is closed:  \n  `Weekday: closed` (`Sunday: closed`)\n"
+        closes:
+          description: Store close time.
+          example: '1991-02-11 23:59:00'
+          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
           type: string
-          format: 'Weekday: Time range'
-          example: 'Sunday: 12:00 AM - 11:59 PM'
+        date:
+          description: Calendar day that this time slot reflects
+          example: '1991-02-11'
+          format: ISO 8601 Date (YYYY-MM-DD)
+          type: string
+        isClosed:
+          description: 'Flag that determines if the store is closed.
+
+
+            If the store is open, this property won''t be returned.
+
+            '
+          type: boolean
+          example: true
+        opens:
+          description: Store open time.
+          example: '1991-02-11 00:00:00'
+          format: ISO 8601 Date Time (YYYY-MM-DD hh:mm:ss)
+          type: string
+      required:
+      - opens
+      - date
+      - closes
+    StoreStatus:
+      title: storeStatus
+      description: The current marketplace status of the store
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    Timezone:
+      title: Timezone
+      description: 'Timezone from the IANA
+
+        [tz database](https://en.wikipedia.org/wiki/Tz_database)
+
+        '
+      example: America/New_York
+      type: string
+    PosVendor:
+      title: posVendor
+      description: The posVendor that is processing the order
+      type: string
+      enum:
+      - BRINK
+      - CARROLS
+      - NCR
+      - QDI
+      - SICOM
     ServiceHour:
       title: ServiceHour
       description: Store operating hours by serviceMode
@@ -731,11 +757,6 @@ components:
       required:
       - serviceMode
       - timeSlots
-    Reason:
-      title: reason
-      description: Reason for the change in store status
-      example: store was deactivated due to high error rate
-      type: string
     GeoPoint:
       title: GeoPoint
       description: The coordinates (latitude and longitude) for a given address.
@@ -752,52 +773,31 @@ components:
           description: Latitude
           type: number
           example: -80.289207
-    Available:
-      title: Available
-      description: Information about store availability
-      type: object
-      properties:
-        isEnabled:
-          description: Detailed availability per service mode.
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/ServiceMode'
-              value:
-                type: boolean
-                description: "Returns true if the store is Operating Available.\n\n\"Operating Available\" considers the current date and time to calculate the current availability for the \nservice mode.\n"
-        isOpen:
-          description: True if the store is available for ordering.
-          type: boolean
-          example: true
-      required:
-      - isOpen
-    Timezone:
-      title: Timezone
-      description: 'Timezone from the IANA
+    WeekdayHours:
+      title: WeekDayHours
+      description: 'Human-readable view of a store''s weekly operating hours.
 
-        [tz database](https://en.wikipedia.org/wiki/Tz_database)
+
+        **Note**: This information is intended for display purposes only.
+
+        If you need to perform calculations based on the service hours, use the `timeSlots` property instead.
 
         '
-      example: America/New_York
-      type: string
-    StoreStatus:
-      title: storeStatus
-      description: The current marketplace status of the store
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
+      type: object
+      properties:
+        text:
+          description: "Human-readable days of operation.\n\nThe \"Time range\" looks like:\n- For days that the store is open:  \n  `Weekday: hh:mm A - hh:mm A` (`Sunday: 12:00 AM - 11:59 PM`)\n- For days that the store is closed:  \n  `Weekday: closed` (`Sunday: closed`)\n"
+          type: string
+          format: 'Weekday: Time range'
+          example: 'Sunday: 12:00 AM - 11:59 PM'
   parameters:
-    cursor:
-      description: Pagination cursor
-      name: cursor
+    limit:
+      description: Number of results to fetch
+      name: limit
       in: query
       required: false
       schema:
-        $ref: '#/components/schemas/cursor'
+        $ref: '#/components/schemas/limit'
       example: example
     region:
       description: 'The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
@@ -813,13 +813,13 @@ components:
       example: US
       schema:
         type: string
-    limit:
-      description: Number of results to fetch
-      name: limit
+    cursor:
+      description: Pagination cursor
+      name: cursor
       in: query
       required: false
       schema:
-        $ref: '#/components/schemas/limit'
+        $ref: '#/components/schemas/cursor'
       example: example
   securitySchemes:
     bearer:

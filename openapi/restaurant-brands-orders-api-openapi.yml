@@ -1057,6 +1057,624 @@ webhooks:
           description: Failed to acknowledge
 components:
   schemas:
+    Discounts:
+      title: Discounts
+      description: Any discounts which ought to be applied to the order
+      type: array
+      items:
+        $ref: '#/components/schemas/Discount'
+    Error:
+      title: Error
+      type: object
+      description: Standard error format for all errors returned by the API
+      properties:
+        status:
+          description: HTTP status code
+          type: number
+          example: 400
+        code:
+          description: Unique error code. Same as errors[0].code
+          type: string
+          example: ValidationError
+        message:
+          description: Human readable error mesage. Same as errors[0].message
+          type: string
+          example: isAvailable must be a boolean value
+        errors:
+          description: All errors
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: Unique error code
+                type: string
+                example: ValidationError
+              details:
+                description: Detailed error information
+                type: string
+              message:
+                description: Human readable error mesage
+                type: string
+              domain:
+                type: string
+              location:
+                type: string
+                description: Location the error occurred. Interpreation depends on `locationType`
+                example: isAvailable
+              locationType:
+                type: string
+                description: How to interpret the location property
+                example: requestBody
+              sendReport:
+                description: URL to report this error
+                type: string
+              extendedHelp:
+                description: URL with additional information about the error type
+                type: string
+            required:
+            - code
+            - message
+      required:
+      - code
+      - message
+      - errors
+    MenuSelectionPriced:
+      title: Priced Menu Selection
+      description: Priced menu selection in the cart
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MenuSelection'
+      required:
+      - id
+      - price
+      - quantity
+    Discount:
+      title: Discount
+      description: A discount which ought to be applied to an order
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of discount.
+
+
+            |Discount Type|Description                  |
+
+            |--------|-----------------------------|
+
+            |DISCOUNT | Generic type for any discount |
+
+            '
+          enum:
+          - DISCOUNT
+          example: DISCOUNT
+        total:
+          $ref: '#/components/schemas/Money'
+          description: Amount to be discounted
+    CartPriced:
+      title: Priced Cart
+      description: Cart containing a customer's selections from the menu with prices
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuSelectionPriced'
+        feedback:
+          $ref: '#/components/schemas/Feedbacks'
+      required:
+      - menuSelections
+    ServiceMode:
+      title: Service Mode
+      description: 'How a customer would like their order served.
+
+
+        Note that not all service modes will be available at all restaurants.
+
+        '
+      type: string
+      example: TAKEOUT
+      enum:
+      - CURBSIDE
+      - DELIVERY
+      - DRIVE_THRU
+      - EAT_IN
+      - TABLE_SERVICE
+      - TAKEOUT
+    StoreId:
+      title: StoreId
+      description: Unique Store ID
+      example: '42'
+      pattern: ^\d+$
+      type: string
+    PlaceOrder:
+      title: PlaceOrder
+      type: object
+      properties:
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+      required:
+      - storeId
+      - serviceMode
+      - cart
+      - customer
+      - paymentMethod
+      - fireOrderInSeconds
+    Brand:
+      type: string
+      enum:
+      - BK
+      example: BK
+    MpfOrderId:
+      title: mpfOrderId
+      description: "External References for the order.\n\nYou can use this field to provide additional identifiers or any other string data to the order to be injected. \nA common use for this is to hold additional external order numbers, like receipt number or third party short order ID.\n"
+      example: '123456789'
+      type: string
+    POSOrderError:
+      title: Order Error
+      description: Generic error object for order processing
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human readable error message
+          example: TERMINAL UPDATE IN PROGRESS
+        code:
+          type: string
+          description: Error code
+          example: STORE
+          enum:
+          - MENU
+          - STORE
+          - TIMEOUT
+          - UNKNOWN
+      required:
+      - message
+      - code
+    OrderId:
+      title: OrderId
+      description: Unique identifier for an order
+      type: string
+      example: example-unique-id
+    Cart:
+      title: Cart
+      description: Cart representing a customer's selections from the menu
+      type: object
+      properties:
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - menuSelections
+    PriceOrder:
+      title: PriceOrder
+      type: object
+      properties:
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        cart:
+          $ref: '#/components/schemas/Cart'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        loyalty:
+          $ref: '#/components/schemas/Loyalty'
+      required:
+      - storeId
+      - serviceMode
+      - cart
+      - customer
+    MenuSelection:
+      title: Menu Selection
+      description: Menu selection in the cart
+      type: object
+      properties:
+        id:
+          type: string
+          description: Menu item identifier
+          example: item_42
+        referenceId:
+          type: string
+          description: 'Secondary menu item identifier.
+
+
+            ⚠️ This `referenceId` must be included along with the `id` when the value is present in the menu
+
+            '
+          example: item_603
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        quantity:
+          type: number
+          format: integer
+          minimum: 0
+          example: 1
+        price:
+          $ref: '#/components/schemas/Money'
+        menuSelections:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MenuSelection'
+      required:
+      - id
+      - quantity
+    ReadyInSeconds:
+      title: Ready in seconds
+      description: "Time in seconds when the order will be ready.\n\nThis value incorporates the order `preparationTimeInSeconds` plus the \nvalue of `fireOrderInSeconds`. When `fireOrderInSeconds=0`, then `readyInSeconds`\nwill match the value of `preparationTimeInSeconds`, and when \n`fireOrderInSeconds=null`, then `readyInSeconds=null` as well.\n"
+      example: 600
+      type:
+      - integer
+      - 'null'
+      minimum: 0
+    MFTaxes:
+      title: Market Place Facilitator Taxes
+      description: 'Representation of taxes calculated by the partner.
+
+        '
+      type: object
+      properties:
+        taxRemittedByMpf:
+          title: Tax Amount Remitted By Marketplace Facilitator
+          description: The subtotal taxes from the market place facilitator
+          $ref: '#/components/schemas/Money'
+        isTaxRemittedByMpf:
+          title: The taxes calculation is handled by the Marketplace Facilitator
+          description: Boolean which represents if the taxes are calculated from the Partner
+          type: boolean
+          example: true
+      required:
+      - taxRemittedByMpf
+      - isTaxRemittedByMpf
+    Phone:
+      title: Phone
+      description: 'Phone number. Should always begin with the international country code (e.g., "+1")
+
+        '
+      type: string
+      example: '+12223334444'
+    Fees:
+      title: Fees
+      description: All applicable fees for an order
+      type: array
+      items:
+        $ref: '#/components/schemas/Fee'
+    Order:
+      title: Order
+      description: Representation of an order placed by a customer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+          description: Internal order ID
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+          description: Internal store ID
+        cart:
+          $ref: '#/components/schemas/CartPriced'
+        serviceMode:
+          $ref: '#/components/schemas/ServiceMode'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        charges:
+          $ref: '#/components/schemas/Charges'
+        discounts:
+          $ref: '#/components/schemas/Discounts'
+        payment:
+          $ref: '#/components/schemas/Payment'
+        posVendor:
+          $ref: '#/components/schemas/PosVendor'
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+          description: Where the order will be delivered (only delivery orders)
+        loyaltyPointsEarned:
+          type: integer
+          description: Amount of Loyalty Points earned on this order
+          minimum: 0
+          example: 15
+        errors:
+          description: Any errors which occurred during order processing
+          type: array
+          items:
+            $ref: '#/components/schemas/POSOrderError'
+        createdAt:
+          $ref: '#/components/schemas/DateTime'
+          description: When the order was first created
+        updatedAt:
+          $ref: '#/components/schemas/DateTime'
+          description: When the order was last updated
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        preparationTimeInSeconds:
+          type: integer
+          description: Estimated time it takes to prepare an order
+          minimum: 0
+          example: 300
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+      required:
+      - id
+      - cart
+      - customer
+      - storeId
+      - charges
+      - status
+      - channel
+      - serviceMode
+      - createdAt
+      - updatedAt
+      - posVendor
+      - fireOrderInSeconds
+      - preparationTimeInSeconds
+      - readyInSeconds
+    EntryId:
+      title: EntryId
+      description: Unique identifier for a menu entity
+      type: string
+      example: entry-id
+    Region:
+      title: Region
+      description: 'Region
+
+        The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
+
+        region code of the country or region of the address.
+
+        For example, the code for the United States is `US`.
+
+
+        For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
+
+        '
+      example: US
+      type: string
+    LoyaltyId:
+      title: Loyalty Id
+      description: The loyalty user id
+      example: a73ea594-202c-52b4-00a0-1f6b518ef54d
+      type: string
+    DateTime:
+      type: string
+      format: ISO 8601 Date Time
+      example: '1991-02-11T20:30:19Z'
+    Money:
+      title: Money
+      description: 'Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 "cents" or 1 USD).
+
+        '
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        amount:
+          title: Amount
+          description: Amount in the specified currency
+          type: number
+          example: 100
+          format: integer
+      required:
+      - currency
+      - amount
+    OrderPlaced:
+      title: Order Placed
+      description: Representation of an order placed by a customer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+          description: Internal order ID
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+          description: Partner's order ID
+        callbackUrl:
+          type: string
+          description: URL to order details.
+          example: https://bk-partners.rbictg.com
+      required:
+      - id
+      - callbackUrl
+    Currency:
+      title: Currency Code
+      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
+      format: ISO-4217 alpha
+      type: string
+      example: USD
+    LoyaltyTransactionId:
+      title: Loyalty Transaction Id
+      description: The loyalty transaction id created for the identify request
+      example: a73ea594-202c-52b4-80af-1f6b518ef54d
+      type: string
+    Fee:
+      title: Fee
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of fee.
+
+
+            |Fee Type|Description                  |
+
+            |--------|-----------------------------|
+
+            |BAG_FEE |A fee for bags, as present in some municipalities for single use plastic bags               |
+
+            |CUP_FEE |A fee for cups, as present in some municipalities for single use cups               |
+
+            |DELIVERY_FEE|A fee for delivery, as often charged by delivery fulfillment providers           |
+
+            |SERVICE_FEE|A generic service fee. An example might be California''s "driver benefits" fee (Proposition 22)        |
+
+            '
+          enum:
+          - BAG_FEE
+          - CUP_FEE
+          - DELIVERY_FEE
+          - SERVICE_FEE
+          example: BAG_FEE
+        total:
+          $ref: '#/components/schemas/Money'
+          description: Total amount to charge for the fee
+    Payment:
+      title: Payment
+      type: object
+      properties:
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+    PaymentMethod:
+      title: Payment Method
+      description: How the customer has paid or will pay
+      type: string
+      enum:
+      - APPLE_PAY
+      - CASH
+      - CREDIT_CARD
+      - GIFTCARD
+      - GOOGLE_PAY
+      - PAYPAL
+      - UNPAID
+      - VENMO
+    Customer:
+      title: Customer
+      description: Customer personal details
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal user ID
+          example: '500123'
+        externalReferenceId:
+          $ref: '#/components/schemas/ExternalReferenceId'
+        name:
+          type: string
+          description: 'Customers''s name. Format will depend on the context (full name, first name and initials, etc)
+
+            '
+          example: Whopper
+        username:
+          type: string
+          description: Customer's username in the given context
+          example: example
+        phone:
+          $ref: '#/components/schemas/Phone'
+        email:
+          type: string
+          description: Customer's email
+          format: email
+          example: guest@example.com
+      required:
+      - name
+      - email
+    PosVendor:
+      title: posVendor
+      description: The posVendor that is processing the order
+      type: string
+      enum:
+      - BRINK
+      - CARROLS
+      - NCR
+      - QDI
+      - SICOM
+    FireOrderInSeconds:
+      title: Fire order in seconds
+      description: "Lead time in seconds before an injected order should be fired to the\nkitchen for preparation.\n- `fireOrderInSeconds=0` fire the order immediately to the kitchen.\n- `fireOrderInSeconds=null` hold the order in the POS without firing,\n  requiring an explicit [Fire Order](#operation/fireOrder) call.\n"
+      example: 600
+      type:
+      - integer
+      - 'null'
+      minimum: 0
+      maximum: 100000
+    Feedbacks:
+      title: Feedback
+      description: 'Feedback on cart prices and availability for cart menu selections. Cart
+
+        feedback will only be provided for adjusted entries.
+
+        '
+      type: array
+      items:
+        $ref: '#/components/schemas/Feedback'
+    GeoPoint:
+      title: GeoPoint
+      description: The coordinates (latitude and longitude) for a given address.
+      type: object
+      required:
+      - latitude
+      - longitude
+      properties:
+        latitude:
+          description: Latitude
+          type: number
+          example: 25.782379
+        longitude:
+          description: Latitude
+          type: number
+          example: -80.289207
+    Loyalty:
+      title: Loyalty information
+      description: User and transaction information regarding loyalty
+      type: object
+      properties:
+        loyaltyId:
+          $ref: '#/components/schemas/LoyaltyId'
+        transactionId:
+          $ref: '#/components/schemas/LoyaltyTransactionId'
+      required:
+      - loyaltyId
+      - transactionId
+    CommitOrder:
+      title: CommitOrder
+      type: object
+      properties:
+        charges:
+          $ref: '#/components/schemas/Charges'
+        mpfOrderId:
+          $ref: '#/components/schemas/MpfOrderId'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethod'
+        fireOrderInSeconds:
+          $ref: '#/components/schemas/FireOrderInSeconds'
+        readyInSeconds:
+          $ref: '#/components/schemas/ReadyInSeconds'
+      required:
+      - paymentMethod
+      - fireOrderInSeconds
     Address:
       title: Address
       description: Standardized representation of a physical address
@@ -1153,16 +1771,6 @@ components:
       - regionCode
       - route
       - streetNumber
-    PosVendor:
-      title: posVendor
-      description: The posVendor that is processing the order
-      type: string
-      enum:
-      - BRINK
-      - CARROLS
-      - NCR
-      - QDI
-      - SICOM
     Charges:
       title: Charges
       description: Order pricing details
@@ -1182,83 +1790,38 @@ components:
           description: The total amount the customer must pay
         fees:
           $ref: '#/components/schemas/Fees'
-    Feedbacks:
-      title: Feedback
-      description: 'Feedback on cart prices and availability for cart menu selections. Cart
-
-        feedback will only be provided for adjusted entries.
+    ExternalReferenceId:
+      title: External Reference Id
+      description: External reference ID. An example might be the external menu selection ID, customer ID or order ID.
+      type: string
+    Feedback:
+      title: Menu Entry Feedback
+      description: 'Line item feedback for a cart entry.
 
         '
-      type: array
-      items:
-        $ref: '#/components/schemas/Feedback'
-    OrderId:
-      title: OrderId
-      description: Unique identifier for an order
-      type: string
-      example: example-unique-id
-    StoreId:
-      title: StoreId
-      description: Unique Store ID
-      example: '42'
-      pattern: ^\d+$
-      type: string
-    MenuSelection:
-      title: Menu Selection
-      description: Menu selection in the cart
       type: object
+      required:
+      - entryId
       properties:
-        id:
-          type: string
-          description: Menu item identifier
-          example: item_42
-        referenceId:
-          type: string
-          description: 'Secondary menu item identifier.
+        entryId:
+          $ref: '#/components/schemas/EntryId'
+        isAvailable:
+          type: boolean
+          description: 'Up to date availability for the entry.
 
 
-            ⚠️ This `referenceId` must be included along with the `id` when the value is present in the menu
+            If omitted, entry will be assumed to be available.
 
             '
-          example: item_603
-        externalReferenceId:
-          $ref: '#/components/schemas/ExternalReferenceId'
-        quantity:
-          type: number
-          format: integer
-          minimum: 0
-          example: 1
+          example: true
         price:
           $ref: '#/components/schemas/Money'
-        menuSelections:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/MenuSelection'
-      required:
-      - id
-      - quantity
-    POSOrderError:
-      title: Order Error
-      description: Generic error object for order processing
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human readable error message
-          example: TERMINAL UPDATE IN PROGRESS
-        code:
-          type: string
-          description: Error code
-          example: STORE
-          enum:
-          - MENU
-          - STORE
-          - TIMEOUT
-          - UNKNOWN
-      required:
-      - message
-      - code
+          description: 'Up to date price for the entry.
+
+
+            If omitted, entry will be assumed to have correct price.
+
+            '
     OrderStatus:
       title: Order Status
       description: 'Order status, representing current state of order in its lifecycle.
@@ -1298,447 +1861,6 @@ components:
       - DONE
       - CANCELED
       - ERROR
-    Cart:
-      title: Cart
-      description: Cart representing a customer's selections from the menu
-      type: object
-      properties:
-        menuSelections:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/MenuSelection'
-      required:
-      - menuSelections
-    Error:
-      title: Error
-      type: object
-      description: Standard error format for all errors returned by the API
-      properties:
-        status:
-          description: HTTP status code
-          type: number
-          example: 400
-        code:
-          description: Unique error code. Same as errors[0].code
-          type: string
-          example: ValidationError
-        message:
-          description: Human readable error mesage. Same as errors[0].message
-          type: string
-          example: isAvailable must be a boolean value
-        errors:
-          description: All errors
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                description: Unique error code
-                type: string
-                example: ValidationError
-              details:
-                description: Detailed error information
-                type: string
-              message:
-                description: Human readable error mesage
-                type: string
-              domain:
-                type: string
-              location:
-                type: string
-                description: Location the error occurred. Interpreation depends on `locationType`
-                example: isAvailable
-              locationType:
-                type: string
-                description: How to interpret the location property
-                example: requestBody
-              sendReport:
-                description: URL to report this error
-                type: string
-              extendedHelp:
-                description: URL with additional information about the error type
-                type: string
-            required:
-            - code
-            - message
-      required:
-      - code
-      - message
-      - errors
-    Fees:
-      title: Fees
-      description: All applicable fees for an order
-      type: array
-      items:
-        $ref: '#/components/schemas/Fee'
-    EntryId:
-      title: EntryId
-      description: Unique identifier for a menu entity
-      type: string
-      example: entry-id
-    OrderPlaced:
-      title: Order Placed
-      description: Representation of an order placed by a customer
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/OrderId'
-          description: Internal order ID
-        externalReferenceId:
-          $ref: '#/components/schemas/ExternalReferenceId'
-          description: Partner's order ID
-        callbackUrl:
-          type: string
-          description: URL to order details.
-          example: https://bk-partners.rbictg.com
-      required:
-      - id
-      - callbackUrl
-    ExternalReferenceId:
-      title: External Reference Id
-      description: External reference ID. An example might be the external menu selection ID, customer ID or order ID.
-      type: string
-    LoyaltyId:
-      title: Loyalty Id
-      description: The loyalty user id
-      example: a73ea594-202c-52b4-00a0-1f6b518ef54d
-      type: string
-    MpfOrderId:
-      title: mpfOrderId
-      description: "External References for the order.\n\nYou can use this field to provide additional identifiers or any other string data to the order to be injected. \nA common use for this is to hold additional external order numbers, like receipt number or third party short order ID.\n"
-      example: '123456789'
-      type: string
-    ReadyInSeconds:
-      title: Ready in seconds
-      description: "Time in seconds when the order will be ready.\n\nThis value incorporates the order `preparationTimeInSeconds` plus the \nvalue of `fireOrderInSeconds`. When `fireOrderInSeconds=0`, then `readyInSeconds`\nwill match the value of `preparationTimeInSeconds`, and when \n`fireOrderInSeconds=null`, then `readyInSeconds=null` as well.\n"
-      example: 600
-      type:
-      - integer
-      - 'null'
-      minimum: 0
-    Region:
-      title: Region
-      description: 'Region
-
-        The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
-
-        region code of the country or region of the address.
-
-        For example, the code for the United States is `US`.
-
-
-        For the full list of codes, refer to the [CLDR Chart](http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html).
-
-        '
-      example: US
-      type: string
-    Order:
-      title: Order
-      description: Representation of an order placed by a customer
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/OrderId'
-          description: Internal order ID
-        externalReferenceId:
-          $ref: '#/components/schemas/ExternalReferenceId'
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-          description: Internal store ID
-        cart:
-          $ref: '#/components/schemas/CartPriced'
-        serviceMode:
-          $ref: '#/components/schemas/ServiceMode'
-        customer:
-          $ref: '#/components/schemas/Customer'
-        charges:
-          $ref: '#/components/schemas/Charges'
-        discounts:
-          $ref: '#/components/schemas/Discounts'
-        payment:
-          $ref: '#/components/schemas/Payment'
-        posVendor:
-          $ref: '#/components/schemas/PosVendor'
-        status:
-          $ref: '#/components/schemas/OrderStatus'
-        deliveryAddress:
-          $ref: '#/components/schemas/Address'
-          description: Where the order will be delivered (only delivery orders)
-        loyaltyPointsEarned:
-          type: integer
-          description: Amount of Loyalty Points earned on this order
-          minimum: 0
-          example: 15
-        errors:
-          description: Any errors which occurred during order processing
-          type: array
-          items:
-            $ref: '#/components/schemas/POSOrderError'
-        createdAt:
-          $ref: '#/components/schemas/DateTime'
-          description: When the order was first created
-        updatedAt:
-          $ref: '#/components/schemas/DateTime'
-          description: When the order was last updated
-        fireOrderInSeconds:
-          $ref: '#/components/schemas/FireOrderInSeconds'
-        preparationTimeInSeconds:
-          type: integer
-          description: Estimated time it takes to prepare an order
-          minimum: 0
-          example: 300
-        readyInSeconds:
-          $ref: '#/components/schemas/ReadyInSeconds'
-      required:
-      - id
-      - cart
-      - customer
-      - storeId
-      - charges
-      - status
-      - channel
-      - serviceMode
-      - createdAt
-      - updatedAt
-      - posVendor
-      - fireOrderInSeconds
-      - preparationTimeInSeconds
-      - readyInSeconds
-    CartPriced:
-      title: Priced Cart
-      description: Cart containing a customer's selections from the menu with prices
-      type: object
-      properties:
-        menuSelections:
-          type: array
-          items:
-            $ref: '#/components/schemas/MenuSelectionPriced'
-        feedback:
-          $ref: '#/components/schemas/Feedbacks'
-      required:
-      - menuSelections
-    PlaceOrder:
-      title: PlaceOrder
-      type: object
-      properties:
-        externalReferenceId:
-          $ref: '#/components/schemas/ExternalReferenceId'
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-        serviceMode:
-          $ref: '#/components/schemas/ServiceMode'
-        cart:
-          $ref: '#/components/schemas/Cart'
-        customer:
-          $ref: '#/components/schemas/Customer'
-        charges:
-          $ref: '#/components/schemas/Charges'
-        deliveryAddress:
-          $ref: '#/components/schemas/Address'
-        paymentMethod:
-          $ref: '#/components/schemas/PaymentMethod'
-        fireOrderInSeconds:
-          $ref: '#/components/schemas/FireOrderInSeconds'
-        readyInSeconds:
-          $ref: '#/components/schemas/ReadyInSeconds'
-        mpfOrderId:
-          $ref: '#/components/schemas/MpfOrderId'
-      required:
-      - storeId
-      - serviceMode
-      - cart
-      - customer
-      - paymentMethod
-      - fireOrderInSeconds
-    Brand:
-      type: string
-      enum:
-      - BK
-      example: BK
-    Discount:
-      title: Discount
-      description: A discount which ought to be applied to an order
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'Type of discount.
-
-
-            |Discount Type|Description                  |
-
-            |--------|-----------------------------|
-
-            |DISCOUNT | Generic type for any discount |
-
-            '
-          enum:
-          - DISCOUNT
-          example: DISCOUNT
-        total:
-          $ref: '#/components/schemas/Money'
-          description: Amount to be discounted
-    Phone:
-      title: Phone
-      description: 'Phone number. Should always begin with the international country code (e.g., "+1")
-
-        '
-      type: string
-      example: '+12223334444'
-    ServiceMode:
-      title: Service Mode
-      description: 'How a customer would like their order served.
-
-
-        Note that not all service modes will be available at all restaurants.
-
-        '
-      type: string
-      example: TAKEOUT
-      enum:
-      - CURBSIDE
-      - DELIVERY
-      - DRIVE_THRU
-      - EAT_IN
-      - TABLE_SERVICE
-      - TAKEOUT
-    DateTime:
-      type: string
-      format: ISO 8601 Date Time
-      example: '1991-02-11T20:30:19Z'
-    PriceOrder:
-      title: PriceOrder
-      type: object
-      properties:
-        externalReferenceId:
-          $ref: '#/components/schemas/ExternalReferenceId'
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-        serviceMode:
-          $ref: '#/components/schemas/ServiceMode'
-        cart:
-          $ref: '#/components/schemas/Cart'
-        customer:
-          $ref: '#/components/schemas/Customer'
-        charges:
-          $ref: '#/components/schemas/Charges'
-        mpfOrderId:
-          $ref: '#/components/schemas/MpfOrderId'
-        deliveryAddress:
-          $ref: '#/components/schemas/Address'
-        loyalty:
-          $ref: '#/components/schemas/Loyalty'
-      required:
-      - storeId
-      - serviceMode
-      - cart
-      - customer
-    LoyaltyTransactionId:
-      title: Loyalty Transaction Id
-      description: The loyalty transaction id created for the identify request
-      example: a73ea594-202c-52b4-80af-1f6b518ef54d
-      type: string
-    FireOrderInSeconds:
-      title: Fire order in seconds
-      description: "Lead time in seconds before an injected order should be fired to the\nkitchen for preparation.\n- `fireOrderInSeconds=0` fire the order immediately to the kitchen.\n- `fireOrderInSeconds=null` hold the order in the POS without firing,\n  requiring an explicit [Fire Order](#operation/fireOrder) call.\n"
-      example: 600
-      type:
-      - integer
-      - 'null'
-      minimum: 0
-      maximum: 100000
-    CommitOrder:
-      title: CommitOrder
-      type: object
-      properties:
-        charges:
-          $ref: '#/components/schemas/Charges'
-        mpfOrderId:
-          $ref: '#/components/schemas/MpfOrderId'
-        paymentMethod:
-          $ref: '#/components/schemas/PaymentMethod'
-        fireOrderInSeconds:
-          $ref: '#/components/schemas/FireOrderInSeconds'
-        readyInSeconds:
-          $ref: '#/components/schemas/ReadyInSeconds'
-      required:
-      - paymentMethod
-      - fireOrderInSeconds
-    Customer:
-      title: Customer
-      description: Customer personal details
-      type: object
-      properties:
-        id:
-          type: string
-          description: Internal user ID
-          example: '500123'
-        externalReferenceId:
-          $ref: '#/components/schemas/ExternalReferenceId'
-        name:
-          type: string
-          description: 'Customers''s name. Format will depend on the context (full name, first name and initials, etc)
-
-            '
-          example: Whopper
-        username:
-          type: string
-          description: Customer's username in the given context
-          example: example
-        phone:
-          $ref: '#/components/schemas/Phone'
-        email:
-          type: string
-          description: Customer's email
-          format: email
-          example: guest@example.com
-      required:
-      - name
-      - email
-    Fee:
-      title: Fee
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'Type of fee.
-
-
-            |Fee Type|Description                  |
-
-            |--------|-----------------------------|
-
-            |BAG_FEE |A fee for bags, as present in some municipalities for single use plastic bags               |
-
-            |CUP_FEE |A fee for cups, as present in some municipalities for single use cups               |
-
-            |DELIVERY_FEE|A fee for delivery, as often charged by delivery fulfillment providers           |
-
-            |SERVICE_FEE|A generic service fee. An example might be California''s "driver benefits" fee (Proposition 22)        |
-
-            '
-          enum:
-          - BAG_FEE
-          - CUP_FEE
-          - DELIVERY_FEE
-          - SERVICE_FEE
-          example: BAG_FEE
-        total:
-          $ref: '#/components/schemas/Money'
-          description: Total amount to charge for the fee
-    Loyalty:
-      title: Loyalty information
-      description: User and transaction information regarding loyalty
-      type: object
-      properties:
-        loyaltyId:
-          $ref: '#/components/schemas/LoyaltyId'
-        transactionId:
-          $ref: '#/components/schemas/LoyaltyTransactionId'
-      required:
-      - loyaltyId
-      - transactionId
     OrderError:
       title: OrderError
       type: object
@@ -1797,137 +1919,7 @@ components:
       - code
       - message
       - errors
-    Feedback:
-      title: Menu Entry Feedback
-      description: 'Line item feedback for a cart entry.
-
-        '
-      type: object
-      required:
-      - entryId
-      properties:
-        entryId:
-          $ref: '#/components/schemas/EntryId'
-        isAvailable:
-          type: boolean
-          description: 'Up to date availability for the entry.
-
-
-            If omitted, entry will be assumed to be available.
-
-            '
-          example: true
-        price:
-          $ref: '#/components/schemas/Money'
-          description: 'Up to date price for the entry.
-
-
-            If omitted, entry will be assumed to have correct price.
-
-            '
-    Money:
-      title: Money
-      description: 'Representation of money. Money amounts are always provided in the smallest currency unit (e.g,. 100 where `currency=USD` represents 100 "cents" or 1 USD).
-
-        '
-      type: object
-      properties:
-        currency:
-          $ref: '#/components/schemas/Currency'
-        amount:
-          title: Amount
-          description: Amount in the specified currency
-          type: number
-          example: 100
-          format: integer
-      required:
-      - currency
-      - amount
-    PaymentMethod:
-      title: Payment Method
-      description: How the customer has paid or will pay
-      type: string
-      enum:
-      - APPLE_PAY
-      - CASH
-      - CREDIT_CARD
-      - GIFTCARD
-      - GOOGLE_PAY
-      - PAYPAL
-      - UNPAID
-      - VENMO
-    Discounts:
-      title: Discounts
-      description: Any discounts which ought to be applied to the order
-      type: array
-      items:
-        $ref: '#/components/schemas/Discount'
-    MenuSelectionPriced:
-      title: Priced Menu Selection
-      description: Priced menu selection in the cart
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/MenuSelection'
-      required:
-      - id
-      - price
-      - quantity
-    GeoPoint:
-      title: GeoPoint
-      description: The coordinates (latitude and longitude) for a given address.
-      type: object
-      required:
-      - latitude
-      - longitude
-      properties:
-        latitude:
-          description: Latitude
-          type: number
-          example: 25.782379
-        longitude:
-          description: Latitude
-          type: number
-          example: -80.289207
-    Currency:
-      title: Currency Code
-      description: Currency code in [ISO-4217 alpha](https://en.wikipedia.org/wiki/ISO_4217) format
-      format: ISO-4217 alpha
-      type: string
-      example: USD
-    Payment:
-      title: Payment
-      type: object
-      properties:
-        paymentMethod:
-          $ref: '#/components/schemas/PaymentMethod'
-    MFTaxes:
-      title: Market Place Facilitator Taxes
-      description: 'Representation of taxes calculated by the partner.
-
-        '
-      type: object
-      properties:
-        taxRemittedByMpf:
-          title: Tax Amount Remitted By Marketplace Facilitator
-          description: The subtotal taxes from the market place facilitator
-          $ref: '#/components/schemas/Money'
-        isTaxRemittedByMpf:
-          title: The taxes calculation is handled by the Marketplace Facilitator
-          description: Boolean which represents if the taxes are calculated from the Partner
-          type: boolean
-          example: true
-      required:
-      - taxRemittedByMpf
-      - isTaxRemittedByMpf
   parameters:
-    order-id:
-      description: Unique Order ID
-      name: orderId
-      in: path
-      required: true
-      schema:
-        type: string
-      example: '500123'
     region:
       description: 'The Unicode [Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)
 
@@ -1942,6 +1934,14 @@ components:
       example: US
       schema:
         type: string
+    order-id:
+      description: Unique Order ID
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: '500123'
   securitySchemes:
     bearer:
       scheme: bearer
